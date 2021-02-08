@@ -4,6 +4,10 @@ public class EventiBody {
 
 	private String stato;
 	
+	public EventiBody() {
+		
+	}
+	
 	public EventiBody(String s) {
 		this.stato = s;
 	}
