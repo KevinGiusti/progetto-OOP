@@ -13,6 +13,13 @@ import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.model.EventiBody;
 import it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner;
 
+/**
+ * 
+ * Controller della rotta eventi che ritorna una serie di eventi filtrati
+ * 
+ * @author RoccoAnzivino
+ *
+ */
 @RestController
 public class EventiController {
 
@@ -78,8 +85,8 @@ public class EventiController {
 				for (int h = 0; h < i; h++) {
 					String subP = paesi.elementAt(h);
 					subPaesi.add(subP);
-
 				}
+				
 				if (!subPaesi.contains(p)) {
 
 					chiamateEv.add(ChiamataEventi.chiamata(p));

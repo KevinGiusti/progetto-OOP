@@ -9,10 +9,32 @@ import org.json.simple.parser.ParseException;
 
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
+/**
+ * 
+ * Classe che analizza il codice json della chiamata alla rotta events dell'API di ticketmaster
+ * 
+ * @author RoccoAnzivino
+ *
+ */
 public class EventiParser {
 
+	/**
+	 * 
+	 * Vettore di Eventi nel quale vengono inseriti gli eventi creati
+	 * a partire dal json e poi viene restituito alla classe ChiamataEventi
+	 *
+	 */
 	private Vector<Eventi> listaEventi;
 	
+	/**
+	 * 
+	 * Metodo che analizza il json della chiamata events e restituisce un vettore di eventi
+	 * 
+	 * @param chiamata Fornisce il codice json che viene analizzato dal metodo
+	 * @return listaEventi Vettore di Eventi contenente gli eventi creati, poi restituito
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
+	 * @see it.univpm.progetto.studenti.ticketmaster.api
+	 */
 	public Vector<Eventi> parse(String chiamata) {
 		
 		listaEventi = new Vector<Eventi>();
