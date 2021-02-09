@@ -17,7 +17,7 @@ public class StatiScanner {
 			Scanner fileStati = new Scanner(new BufferedReader(new FileReader("resources/Stati.csv")));
 			
 			while (fileStati.hasNext())
-				statiVect.add(fileStati.next());
+				statiVect.add(fileStati.nextLine());
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

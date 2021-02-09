@@ -11,6 +11,7 @@ import it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi;
 import it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.model.EventiBody;
+import it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner;
 
 @RestController
 public class EventiController {
@@ -22,17 +23,46 @@ public class EventiController {
 		JSONObject responso = new JSONObject();
 		Vector<String> statiPaesi = eB.getStati();
 		Vector<String> stati = new Vector<String>();
-
+		
 		for (int i = 0; i < statiPaesi.size(); i++) {
+			
 			String s = statiPaesi.elementAt(i);
 			stati.add(s.substring(0, s.indexOf(",")));
+		
+		}
+
+		Vector<String> statiScanner = StatiScanner.getStati();
+		
+		for (int i = 0; i<stati.size(); i++) {
+			
+			String s = stati.elementAt(i);
+			
+			if (!statiScanner.contains(s)) {
+				
+				Vector<String> suggerimenti = new Vector<String>();
+				
+				for (String sugg : statiScanner) {
+					
+					if (sugg.charAt(0) == s.charAt(0))
+						suggerimenti.add(sugg);
+				
+				}
+
+				responso.put("Suggerimento", "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i+1) + " del vettore stati");
+				
+				return responso;
+
+			}
+		
 		}
 
 		Vector<String> paesi = new Vector<String>();
-
+		
 		for (int i = 0; i < statiPaesi.size(); i++) {
+			
 			String p = statiPaesi.elementAt(i);
 			paesi.add(p.substring(p.length() - 2, p.length()));
+		
 		}
 
 		Vector<Vector<Eventi>> chiamateEv = new Vector<Vector<Eventi>>();
@@ -50,15 +80,11 @@ public class EventiController {
 					subPaesi.add(subP);
 
 				}
-				System.out.println(paesi);
-				System.out.println(subPaesi);
-
 				if (!subPaesi.contains(p)) {
 
 					chiamateEv.add(ChiamataEventi.chiamata(p));
-					System.out.println("Cristo");
-				}
-				else
+//					System.out.println("Cristo");
+				} else
 					chiamateEv.add(chiamateEv.elementAt(subPaesi.indexOf(p)));
 
 			} else {
