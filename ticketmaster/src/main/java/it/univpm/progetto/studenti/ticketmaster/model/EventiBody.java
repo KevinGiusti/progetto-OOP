@@ -1,23 +1,24 @@
 package it.univpm.progetto.studenti.ticketmaster.model;
 
+import java.util.Vector;
+
 public class EventiBody {
 
-	private String stato;
+	private Vector<String> stati;
 	
 	public EventiBody() {
-		
 	}
 	
-	public EventiBody(String s) {
-		this.stato = s;
+	public EventiBody(Vector<String> sP) {
+		this.stati = sP;
 	}
 
-	public String getStato() {
-		return stato;
+	public Vector<String> getStati() {
+		return stati;
 	}
 
-	public void setStato(String stato) {
-		this.stato = stato;
+	public void setStati(Vector<String> sP) {
+		this.stati = sP;
 	}
 	
 }

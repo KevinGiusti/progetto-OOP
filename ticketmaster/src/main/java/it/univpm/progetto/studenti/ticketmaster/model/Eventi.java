@@ -2,50 +2,58 @@ package it.univpm.progetto.studenti.ticketmaster.model;
 
 public class Eventi {
 
-	private String nomeEvento;
-	private String tipoEvento;
-	private String idEvento;
-	private String urlEvento;
+	private String nome;
+	private String id;
+	private String url;
+	private String stato;
+	private String paese;
 	
-	public Eventi(String nE, String tE, String iE, String uE) {
-		this.nomeEvento = nE;
-		this.tipoEvento = tE;
-		this.idEvento = iE;
-		this.urlEvento = uE;
+	public Eventi(String n, String i, String u, String s, String p) {
+		this.nome = n;
+		this.id = i;
+		this.url = u;
+		this.stato = s;
+		this.paese = p;
 	}
 
-	public String getNomeEvento() {
-		return nomeEvento;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomeEvento(String nomeEvento) {
-		this.nomeEvento = nomeEvento;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getTipoEvento() {
-		return tipoEvento;
+	public String getId() {
+		return id;
 	}
 
-	public void setTipoEvento(String tipoEvento) {
-		this.tipoEvento = tipoEvento;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getIdEvento() {
-		return idEvento;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setIdEvento(String idEvento) {
-		this.idEvento = idEvento;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public String getUrlEvento() {
-		return urlEvento;
+	public String getStato() {
+		return stato;
 	}
 
-	public void setUrlEvento(String urlEvento) {
-		this.urlEvento = urlEvento;
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
-	
-	
+
+	public String getPaese() {
+		return paese;
+	}
+
+	public void setPaese(String paese) {
+		this.paese = paese;
+	}
 	
 }

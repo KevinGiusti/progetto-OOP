@@ -21,15 +21,21 @@ public class EventiParser {
 			
 			JSONParser parser = new JSONParser();
 			JSONObject jO = (JSONObject) parser.parse(chiamata);
-			JSONObject embedded = (JSONObject) jO.get("_embedded");
-			JSONArray events = (JSONArray) embedded.get("events");
+			JSONObject embedded1 = (JSONObject) jO.get("_embedded");
+			JSONArray events = (JSONArray) embedded1.get("events");
 			for (int i = 0; i < events.size(); i++) {
-				JSONObject x = (JSONObject) events.get(i);
-				String name = (String) x.get("name");
-				String type = (String) x.get("type");
-				String id = (String) x.get("id");
-				String url = (String) x.get("url");
-				Eventi e = new Eventi(name, type, id, url);
+				JSONObject eventoTemp = (JSONObject) events.get(i);
+				String name = (String) eventoTemp.get("name");
+				String id = (String) eventoTemp.get("id");
+				String url = (String) eventoTemp.get("url");
+				JSONObject embedded2 = (JSONObject) eventoTemp.get("_embedded");
+				JSONArray venues = (JSONArray) embedded2.get("venues");
+				JSONObject venuesTemp = (JSONObject) venues.get(0);
+				JSONObject state = (JSONObject) venuesTemp.get("state");
+				String stateName = (String) state.get("name");
+				JSONObject country = (JSONObject) venuesTemp.get("country");
+				String countryName = (String) country.get("name");
+				Eventi e = new Eventi(name, id, url, stateName, countryName);
 				listaEventi.add(e);
 			}
 			
