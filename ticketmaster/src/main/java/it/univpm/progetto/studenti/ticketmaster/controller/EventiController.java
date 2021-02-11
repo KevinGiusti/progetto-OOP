@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi;
+import it.univpm.progetto.studenti.ticketmaster.datestats.DatesStatistics;
+import it.univpm.progetto.studenti.ticketmaster.datestats.MinMaxAverage;
 import it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.model.EventiBody;
@@ -110,7 +112,41 @@ public class EventiController {
 		}
 
 		responso.put("eventi", eventiFiltratiPerStati);
-
+		
+		/**
+		 * oggetto per il calcolo eventi per ciascun mese
+		 *
+		 */
+		DatesStatistics sc= new DatesStatistics();
+		int[] numberArray= sc.numeroEventi(eventiFiltratiPerStati);
+		
+		/**
+		 * oggetto per l'ordinamento del numero eventi in ciascun mese
+		 *
+		 */
+		MinMaxAverage minMaxAverage= new MinMaxAverage();
+		minMaxAverage.sortSelectedEvents(numberArray);
+		
+		/**
+		 * attributo che indica il valore minimo richiesto dalla statistica
+		 *
+		 */
+		int numMinEventiMese= minMaxAverage.minimoNumeroEventiMese(numberArray); 
+		//System.out.println(numMinEventiMese);
+		
+		/**
+		 * attributo che indica il valore massimo richiesto dalla statistica
+		 *
+		 */
+		int numMaxEventiMese= minMaxAverage.massimoNumeroEventiMese(numberArray); 
+		//System.out.println(numMaxEventiMese);
+		
+		/**
+		 * attributo che indica la media dei valori richiesto dalla statistica
+		 *
+		 */
+		double mediaEventiMese= minMaxAverage.mediaNumeroEventiMese(numberArray); 
+		//System.out.println(mediaEventiMese);
 		return responso;
 
 	}
