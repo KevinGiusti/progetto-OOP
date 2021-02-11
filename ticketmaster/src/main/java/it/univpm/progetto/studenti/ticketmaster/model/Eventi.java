@@ -62,6 +62,13 @@ public class Eventi {
 	
 	/**
 	 * 
+	 * Costruttore di default utile a inizializzare gli eventi
+	 * 
+	 */
+	public Eventi() {}	
+	
+	/**
+	 * 
 	 * Costruttore utile a inizializzare gli eventi
 	 * 
 	 * @param n Assegna il nome all'evento

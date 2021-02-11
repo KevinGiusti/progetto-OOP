@@ -12,6 +12,7 @@ import it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.model.EventiBody;
 import it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner;
+import it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics;
 
 /**
  * 
@@ -110,6 +111,10 @@ public class EventiController {
 		}
 
 		responso.put("eventi", eventiFiltratiPerStati);
+		
+		//Calcolo eventi per ciascun mese
+		DatesStatistics sc= new DatesStatistics();
+		System.out.println(sc.numeroEventi(eventiFiltratiPerStati));
 
 		return responso;
 
