@@ -1,12 +1,6 @@
 package it.univpm.progetto.studenti.ticketmaster.parser;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
@@ -89,6 +83,15 @@ public class EventiParser {
 	
 	
 	//Method SECTION
+	
+	/**
+	 * 
+	 * Metodo che converte una Stringa che contiene informazioni circa 
+	 * la data dell'evento considerato in un oggetto di tipo LocalDate
+	 * 
+	 * @param date Stringa che contiene il valore "yyyy-mm-dd" dal Json
+	 * @return locD oggetto della classe LocalDate
+	 */
 	public LocalDate dateConverter(String date) {
 		
 		LocalDate locD= LocalDate.parse(date);

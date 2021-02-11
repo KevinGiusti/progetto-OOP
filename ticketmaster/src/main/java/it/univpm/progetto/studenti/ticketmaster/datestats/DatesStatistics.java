@@ -5,8 +5,28 @@ import java.util.Vector;
 
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
+/**
+ * 
+ * Classe che consente di determinare il numero totale di 
+ * eventi che si svolgono in uno specifico mese
+ *
+ */
 public class DatesStatistics {
 
+	/**
+	 * 
+	 * metodo che consente di determinare il numero totale di 
+	 * eventi relativi ad uno specifico stato 
+	 * che si svolgono in uno specifico mese
+	 * 
+	 * @param listaEventi vettore di oggetti della classe Eventi necessario contenente 
+	 * gli eventi dello stato considerato
+	 * 
+	 * @return monthsEvents array di interi contenente, in ciascuna posizione, 
+	 * il numero degli eventi svolti nello stato considerato relativamente ad uno specifico mese
+	 * ad esempio, gennaio è in posizione 0, febbraio in posizione 1, ecc...
+	 *
+	 */
 	public int[] numeroEventi(Vector<Eventi> listaEventi) {
 		
 		int[] monthsEvents= new int[12];

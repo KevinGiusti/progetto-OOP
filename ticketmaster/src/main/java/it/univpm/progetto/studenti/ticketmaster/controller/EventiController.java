@@ -113,19 +113,40 @@ public class EventiController {
 
 		responso.put("eventi", eventiFiltratiPerStati);
 		
-		//Calcolo eventi per ciascun mese
+		/**
+		 * oggetto per il calcolo eventi per ciascun mese
+		 *
+		 */
 		DatesStatistics sc= new DatesStatistics();
 		int[] numberArray= sc.numeroEventi(eventiFiltratiPerStati);
-		//Ordinamento numero eventi in ciascun mese
+		
+		/**
+		 * oggetto per l'ordinamento del numero eventi in ciascun mese
+		 *
+		 */
 		MinMaxAverage minMaxAverage= new MinMaxAverage();
 		minMaxAverage.sortSelectedEvents(numberArray);
-		//System.out.println(minMaxAverage.sortSelectedEvents(numberArray));
+		
+		/**
+		 * attributo che indica il valore minimo richiesto dalla statistica
+		 *
+		 */
 		int numMinEventiMese= minMaxAverage.minimoNumeroEventiMese(numberArray); 
-		System.out.println(numMinEventiMese);
+		//System.out.println(numMinEventiMese);
+		
+		/**
+		 * attributo che indica il valore massimo richiesto dalla statistica
+		 *
+		 */
 		int numMaxEventiMese= minMaxAverage.massimoNumeroEventiMese(numberArray); 
-		System.out.println(numMaxEventiMese);
+		//System.out.println(numMaxEventiMese);
+		
+		/**
+		 * attributo che indica la media dei valori richiesto dalla statistica
+		 *
+		 */
 		double mediaEventiMese= minMaxAverage.mediaNumeroEventiMese(numberArray); 
-		System.out.println(mediaEventiMese);
+		//System.out.println(mediaEventiMese);
 		return responso;
 
 	}
