@@ -1,4 +1,4 @@
-package it.univpm.progetto.studenti.ticketmaster.stats;
+package it.univpm.progetto.studenti.ticketmaster.datestats;
 
 import java.time.LocalDate;
 import java.util.Vector;
@@ -45,6 +45,7 @@ public class DatesStatistics {
 				
 			}
 		}
+		
 		/*System.out.println("gen "+monthsEvents[0]);
 		System.out.println("feb "+monthsEvents[1]);
 		System.out.println("mar "+monthsEvents[2]);
