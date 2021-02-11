@@ -1,7 +1,12 @@
 package it.univpm.progetto.studenti.ticketmaster.parser;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
@@ -60,8 +65,7 @@ public class EventiParser {
 				JSONObject dates= (JSONObject) eventoTemp.get("dates");
 				JSONObject start= (JSONObject) dates.get("start");
 				String localDate= (String) start.get("localDate");
-				String localTime= (String) start.get("localTime");
-				String localDateTime= (String) start.get("dateTime");
+				LocalDate locDt= dateConverter(localDate);
 				JSONObject embedded2 = (JSONObject) eventoTemp.get("_embedded");
 				JSONArray venues = (JSONArray) embedded2.get("venues");
 				JSONObject venuesTemp = (JSONObject) venues.get(0);
@@ -69,7 +73,7 @@ public class EventiParser {
 				String stateName = (String) state.get("name");
 				JSONObject country = (JSONObject) venuesTemp.get("country");
 				String countryName = (String) country.get("name");
-				Eventi e = new Eventi(name, id, url, stateName, countryName, localDate, localTime, localDateTime);
+				Eventi e = new Eventi(name, id, url, stateName, countryName, locDt);
 				listaEventi.add(e);
 			}
 			
@@ -81,4 +85,11 @@ public class EventiParser {
 		
 	}
 	
+	
+	//Method SECTION
+	public LocalDate dateConverter(String date) {
+		
+		LocalDate locD= LocalDate.parse(date);
+		return locD;
+	}
 }

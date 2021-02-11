@@ -1,7 +1,6 @@
 package it.univpm.progetto.studenti.ticketmaster.model;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * 
@@ -56,21 +55,8 @@ public class Eventi {
 	 * Variabile che descrive anno/mese/giorno dell'evento
 	 * 
 	 */
-	private String localDate;
+	private LocalDate data;
 	
-	/**
-	 * 
-	 * Variabile che descrive ora/minuto/secondo di inizio dell'evento
-	 * 
-	 */
-	private String localTime;
-	
-	/**
-	 * 
-	 * Variabile che descrive:
-	 * anno/giorno/mese/ora/minuto/secondo di inizio dell'evento
-	 */
-	private String localDateTime;
 	
 	//Builder Method SECTION
 	
@@ -85,19 +71,16 @@ public class Eventi {
 	 * @param p Assegna il paese all'evento
 	 * @param localDate Assegna la data all'evento
 	 * @param localTime Assegna l'ora all'evento
-	 * @param localDateTime Assegna data ed ora all'evento
 	 */
 	
 	//String n, String i, String u, String s, String p, LocalDate localDate, LocalTime localTime, LocalDate localDateTime
-	public Eventi(String n, String i, String u, String s, String p, String localDate, String localTime, String localDateTime) {
+	public Eventi(String n, String i, String u, String s, String p, LocalDate data) {
 		this.nome = n;
 		this.id = i;
 		this.url = u;
 		this.stato = s;
 		this.paese = p;
-		this.localDate= localDate;
-		this.localTime= localTime;
-		this.localDateTime= localDateTime;
+		this.data= data;
 	}
 
 	/**
@@ -206,8 +189,8 @@ public class Eventi {
 	 * 
 	 * @return localDate
 	 */
-	public String getLocalDate() {
-		return localDate;
+	public LocalDate getData() {
+		return data;
 	}
 	
 	/**
@@ -216,48 +199,7 @@ public class Eventi {
 	 * 
 	 * @param localDate Parametro del setter
 	 */
-	public void setLocalDate(String localDate) {
-		this.localDate = localDate;
+	public void setLocalDate(LocalDate localDate) {
+		this.data = localDate;
 	}
-	
-	/**
-	 * 
-	 * Getter dell'attributo localTime
-	 * 
-	 * @return localTime
-	 */
-	public String getLocalTime() {
-		return localTime;
-	}
-	
-	/**
-	 * 
-	 * Setter dell'attributo localTime
-	 * 
-	 * @param localTime Parametro del setter
-	 */
-	public void setLocalTime(String localTime) {
-		this.localTime = localTime;
-	}
-	
-	/**
-	 * 
-	 * Getter dell'attributo dateTime
-	 * 
-	 * @return dateTime
-	 */
-	public String getLocalDateTime() {
-		return localDateTime;
-	}
-	
-	/**
-	 * 
-	 * Setter dell'attributo dateTime
-	 * 
-	 * @param dateTime Parametro del setter
-	 */
-	public void setDateTime(String localDateTime) {
-		this.localDateTime = localDateTime;
-	}
-	
 }
