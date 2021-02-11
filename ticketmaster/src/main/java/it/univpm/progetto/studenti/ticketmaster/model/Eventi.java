@@ -56,21 +56,21 @@ public class Eventi {
 	 * Variabile che descrive anno/mese/giorno dell'evento
 	 * 
 	 */
-	private LocalDate localDate;
+	private String localDate;
 	
 	/**
 	 * 
 	 * Variabile che descrive ora/minuto/secondo di inizio dell'evento
 	 * 
 	 */
-	private LocalTime localTime;
+	private String localTime;
 	
 	/**
 	 * 
 	 * Variabile che descrive:
 	 * anno/giorno/mese/ora/minuto/secondo di inizio dell'evento
 	 */
-	private LocalDate localDateTime;
+	private String localDateTime;
 	
 	//Builder Method SECTION
 	
@@ -87,7 +87,9 @@ public class Eventi {
 	 * @param localTime Assegna l'ora all'evento
 	 * @param localDateTime Assegna data ed ora all'evento
 	 */
-	public Eventi(String n, String i, String u, String s, String p, LocalDate localDate, LocalTime localTime, LocalDate localDateTime) {
+	
+	//String n, String i, String u, String s, String p, LocalDate localDate, LocalTime localTime, LocalDate localDateTime
+	public Eventi(String n, String i, String u, String s, String p, String localDate, String localTime, String localDateTime) {
 		this.nome = n;
 		this.id = i;
 		this.url = u;
@@ -204,7 +206,7 @@ public class Eventi {
 	 * 
 	 * @return localDate
 	 */
-	public LocalDate getLocalDate() {
+	public String getLocalDate() {
 		return localDate;
 	}
 	
@@ -214,7 +216,7 @@ public class Eventi {
 	 * 
 	 * @param localDate Parametro del setter
 	 */
-	public void setLocalDate(LocalDate localDate) {
+	public void setLocalDate(String localDate) {
 		this.localDate = localDate;
 	}
 	
@@ -224,7 +226,7 @@ public class Eventi {
 	 * 
 	 * @return localTime
 	 */
-	public LocalTime getLocalTime() {
+	public String getLocalTime() {
 		return localTime;
 	}
 	
@@ -234,7 +236,7 @@ public class Eventi {
 	 * 
 	 * @param localTime Parametro del setter
 	 */
-	public void setLocalTime(LocalTime localTime) {
+	public void setLocalTime(String localTime) {
 		this.localTime = localTime;
 	}
 	
@@ -244,7 +246,7 @@ public class Eventi {
 	 * 
 	 * @return dateTime
 	 */
-	public LocalDate getLocalDateTime() {
+	public String getLocalDateTime() {
 		return localDateTime;
 	}
 	
@@ -254,7 +256,7 @@ public class Eventi {
 	 * 
 	 * @param dateTime Parametro del setter
 	 */
-	public void setDateTime(LocalDate localDateTime) {
+	public void setDateTime(String localDateTime) {
 		this.localDateTime = localDateTime;
 	}
 	

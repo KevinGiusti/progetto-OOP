@@ -1,5 +1,7 @@
 package it.univpm.progetto.studenti.ticketmaster.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Vector;
 
 /**
@@ -13,7 +15,7 @@ public class EventiBody {
 
 	/**
 	 * 
-	 * Variabile che memorizza gli stati inseriti nel body della chiamata
+	 * Attributo che memorizza gli stati inseriti nel body della chiamata
 	 * 
 	 */
 	private Vector<String> stati;
@@ -29,7 +31,8 @@ public class EventiBody {
 	 * 
 	 * Costruttore inizializza un oggetto EventiBody
 	 * 
-	 * @param s Vettore di stringhe da assegnare alla variabile stati
+	 * @param s Vettore di stringhe da assegnare all'attributo stati
+	 * 
 	 */
 	public EventiBody(Vector<String> s) {
 		this.stati = s;
@@ -37,7 +40,7 @@ public class EventiBody {
 
 	/**
 	 * 
-	 * Getter della variabile stati
+	 * Getter dell'attributo stati
 	 * 
 	 * @return stati
 	 */
@@ -47,12 +50,14 @@ public class EventiBody {
 
 	/**
 	 * 
-	 * Setter della variabile stati
+	 * Setter dell'attributo stati
 	 * 
 	 * @param s Parametro del setter
 	 */
 	public void setStati(Vector<String> s) {
 		this.stati = s;
 	}
-	
 }
+
+
+

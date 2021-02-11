@@ -59,9 +59,9 @@ public class EventiParser {
 				String url = (String) eventoTemp.get("url");
 				JSONObject dates= (JSONObject) eventoTemp.get("dates");
 				JSONObject start= (JSONObject) dates.get("start");
-				LocalDate localDate= (LocalDate) start.get("localDate");
-				LocalTime localTime= (LocalTime) start.get("localTime");
-				LocalDate localDateTime= (LocalDate) start.get("dateTime");
+				String localDate= (String) start.get("localDate");
+				String localTime= (String) start.get("localTime");
+				String localDateTime= (String) start.get("dateTime");
 				JSONObject embedded2 = (JSONObject) eventoTemp.get("_embedded");
 				JSONArray venues = (JSONArray) embedded2.get("venues");
 				JSONObject venuesTemp = (JSONObject) venues.get(0);

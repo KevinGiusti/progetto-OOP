@@ -35,7 +35,6 @@ public class EventiController {
 			
 			String s = statiPaesi.elementAt(i);
 			stati.add(s.substring(0, s.indexOf(",")));
-		
 		}
 
 		Vector<String> statiScanner = StatiScanner.getStati();
