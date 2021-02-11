@@ -23,8 +23,7 @@ public class EventiBody {
 	 * Costruttore di default
 	 * 
 	 */
-	public EventiBody() {
-	}
+	public EventiBody() {}
 	
 	/**
 	 * 

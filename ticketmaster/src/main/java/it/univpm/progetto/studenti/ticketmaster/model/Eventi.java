@@ -1,5 +1,8 @@
 package it.univpm.progetto.studenti.ticketmaster.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * 
  * Classe che definisce gli eventi 
@@ -60,14 +63,14 @@ public class Eventi {
 	 * Variabile che descrive ora/minuto/secondo di inizio dell'evento
 	 * 
 	 */
-	private LocalDate localTime;
+	private LocalTime localTime;
 	
 	/**
 	 * 
 	 * Variabile che descrive:
 	 * anno/giorno/mese/ora/minuto/secondo di inizio dell'evento
 	 */
-	private LocalDate localdateTime;
+	private LocalDate localDateTime;
 	
 	//Builder Method SECTION
 	
@@ -80,8 +83,11 @@ public class Eventi {
 	 * @param u Assegna l'url all'evento
 	 * @param s Assegna lo stato all'evento
 	 * @param p Assegna il paese all'evento
+	 * @param localDate Assegna la data all'evento
+	 * @param localTime Assegna l'ora all'evento
+	 * @param localDateTime Assegna data ed ora all'evento
 	 */
-	public Eventi(String n, String i, String u, String s, String p, LocalDate localDate, LocalDate LocalTime, LocalDate dateTime) {
+	public Eventi(String n, String i, String u, String s, String p, LocalDate localDate, LocalTime localTime, LocalDate localDateTime) {
 		this.nome = n;
 		this.id = i;
 		this.url = u;
@@ -89,7 +95,7 @@ public class Eventi {
 		this.paese = p;
 		this.localDate= localDate;
 		this.localTime= localTime;
-		this.dateTime= dateTime;
+		this.localDateTime= localDateTime;
 	}
 
 	/**
@@ -238,8 +244,8 @@ public class Eventi {
 	 * 
 	 * @return dateTime
 	 */
-	public LocalDate getDateTime() {
-		return dateTime;
+	public LocalDate getLocalDateTime() {
+		return localDateTime;
 	}
 	
 	/**
@@ -248,8 +254,8 @@ public class Eventi {
 	 * 
 	 * @param dateTime Parametro del setter
 	 */
-	public void setDateTime(LocalDate dateTime) {
-		this.dateTime = dateTime;
+	public void setDateTime(LocalDate localDateTime) {
+		this.localDateTime = localDateTime;
 	}
 	
 }

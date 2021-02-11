@@ -1,5 +1,7 @@
 package it.univpm.progetto.studenti.ticketmaster.parser;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
@@ -21,7 +23,7 @@ public class EventiParser {
 	/**
 	 * 
 	 * Vettore di Eventi nel quale vengono inseriti gli eventi creati
-	 * a partire dal json e poi viene restituito alla classe ChiamataEventi
+	 * a partire dal JSON e poi viene restituito alla classe ChiamataEventi
 	 *
 	 */
 	private Vector<Eventi> listaEventi;
@@ -41,6 +43,11 @@ public class EventiParser {
 		
 		try {
 			
+			/**
+			 * Oggetto che fornisce accesso diretto in sola lettura ai dati JSON in streaming.
+			 * Questo è il modo più efficiente per leggere i dati JSON
+			 * 
+			 */
 			JSONParser parser = new JSONParser();
 			JSONObject jO = (JSONObject) parser.parse(chiamata);
 			JSONObject embedded1 = (JSONObject) jO.get("_embedded");
@@ -50,6 +57,11 @@ public class EventiParser {
 				String name = (String) eventoTemp.get("name");
 				String id = (String) eventoTemp.get("id");
 				String url = (String) eventoTemp.get("url");
+				JSONObject dates= (JSONObject) eventoTemp.get("dates");
+				JSONObject start= (JSONObject) dates.get("start");
+				LocalDate localDate= (LocalDate) start.get("localDate");
+				LocalTime localTime= (LocalTime) start.get("localTime");
+				LocalDate localDateTime= (LocalDate) start.get("dateTime");
 				JSONObject embedded2 = (JSONObject) eventoTemp.get("_embedded");
 				JSONArray venues = (JSONArray) embedded2.get("venues");
 				JSONObject venuesTemp = (JSONObject) venues.get(0);
@@ -57,7 +69,7 @@ public class EventiParser {
 				String stateName = (String) state.get("name");
 				JSONObject country = (JSONObject) venuesTemp.get("country");
 				String countryName = (String) country.get("name");
-				Eventi e = new Eventi(name, id, url, stateName, countryName);
+				Eventi e = new Eventi(name, id, url, stateName, countryName, localDate, localTime, localDateTime);
 				listaEventi.add(e);
 			}
 			
