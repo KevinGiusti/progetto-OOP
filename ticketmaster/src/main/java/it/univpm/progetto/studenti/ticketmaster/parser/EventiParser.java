@@ -75,6 +75,7 @@ public class EventiParser {
 				String countryName = (String) country.get("name");
 				Eventi e = new Eventi(name, id, url, stateName, countryName, locDt);
 				listaEventi.add(e);
+				
 			}
 			
 		} catch (ParseException e) {
