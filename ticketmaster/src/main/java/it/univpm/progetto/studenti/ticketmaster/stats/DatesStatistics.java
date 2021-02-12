@@ -1,4 +1,4 @@
-package it.univpm.progetto.studenti.ticketmaster.datestats;
+package it.univpm.progetto.studenti.ticketmaster.stats;
 
 import java.time.LocalDate;
 import java.util.Vector;
@@ -9,6 +9,8 @@ import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
  * 
  * Classe che consente di determinare il numero totale di 
  * eventi che si svolgono in uno specifico mese
+ *
+ * @author KevinGiusti
  *
  */
 public class DatesStatistics {

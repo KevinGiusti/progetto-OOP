@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi;
-import it.univpm.progetto.studenti.ticketmaster.datestats.DatesStatistics;
-import it.univpm.progetto.studenti.ticketmaster.datestats.MinMaxAverage;
 import it.univpm.progetto.studenti.ticketmaster.exception.EventiException;
 import it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter;
 import it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter;
@@ -17,6 +15,8 @@ import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.model.EventiBody;
 import it.univpm.progetto.studenti.ticketmaster.scanner.GeneriScanner;
 import it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner;
+import it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics;
+import it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage;
 
 /**
  * 

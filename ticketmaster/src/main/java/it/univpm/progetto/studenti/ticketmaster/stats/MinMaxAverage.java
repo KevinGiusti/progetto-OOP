@@ -1,10 +1,12 @@
-package it.univpm.progetto.studenti.ticketmaster.datestats;
+package it.univpm.progetto.studenti.ticketmaster.stats;
 
 /**
  * 
  * Classe che consente di svolgere la statistica relativa alla 
  * determinazione di massimo, minimo e media degli eventi in base
  * ai mesi in cui gli eventi stessi sono tenuti
+ *
+ * @author KevinGiusti
  *
  */
 public class MinMaxAverage {
