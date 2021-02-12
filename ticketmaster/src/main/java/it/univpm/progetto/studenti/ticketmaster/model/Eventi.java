@@ -79,7 +79,6 @@ public class Eventi {
 	 * Costruttore utile a inizializzare gli eventi
 	 * 
 	 * @param n Assegna il nome all'evento
-	 * @param i Assegna l'id all'evento
 	 * @param u Assegna l'url all'evento
 	 * @param s Assegna lo stato all'evento
 	 * @param p Assegna il paese all'evento

@@ -39,8 +39,6 @@ public class EventiController {
 		Vector<String> statiScanner = StatiScanner.getStati();
 		Vector<String> generi = eB.getGeneri();
 		
-		System.out.println(generi);
-
 		try {
 
 			if (!eB.getStati().isEmpty())
@@ -54,8 +52,15 @@ public class EventiController {
 			Vector<String> stati = new Vector<String>();
 
 			for (int i = 0; i < statiPaesi.size(); i++) {
-
+				
 				String s = statiPaesi.elementAt(i);
+				
+				if(!s.contains(",")) {
+					key = "Errore";
+					value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
+					throw new EventiException();
+				}
+					
 				stati.add(s.substring(0, s.indexOf(",")));
 			}
 
@@ -146,42 +151,31 @@ public class EventiController {
 				eventiFiltratiPerGeneri.addAll(GeneriFilter.filterByGenre(g, eventiFiltratiPerStati));
 
 			}
-
+			
+			if(eventiFiltratiPerGeneri.isEmpty()) {
+				responso.put("eventi", eventiFiltratiPerStati);
+				return responso;
+			}
 			
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
-			/**
-			 * oggetto per il calcolo eventi per ciascun mese
-			 *
-			 */
+			//oggetto per il calcolo eventi per ciascun mese
 			DatesStatistics sc = new DatesStatistics();
 			int[] numberArray = sc.numeroEventi(eventiFiltratiPerStati);
 
-			/**
-			 * oggetto per l'ordinamento del numero eventi in ciascun mese
-			 *
-			 */
+			//oggetto per l'ordinamento del numero eventi in ciascun mese
 			MinMaxAverage minMaxAverage = new MinMaxAverage();
 			minMaxAverage.sortSelectedEvents(numberArray);
 
-			/**
-			 * attributo che indica il valore minimo richiesto dalla statistica
-			 *
-			 */
+			//attributo che indica il valore minimo richiesto dalla statistica
 			int numMinEventiMese = minMaxAverage.minimoNumeroEventiMese(numberArray);
 			// System.out.println(numMinEventiMese);
 
-			/**
-			 * attributo che indica il valore massimo richiesto dalla statistica
-			 *
-			 */
+			//attributo che indica il valore massimo richiesto dalla statistica
 			int numMaxEventiMese = minMaxAverage.massimoNumeroEventiMese(numberArray);
 			// System.out.println(numMaxEventiMese);
 
-			/**
-			 * attributo che indica la media dei valori richiesto dalla statistica
-			 *
-			 */
+			//attributo che indica la media dei valori richiesto dalla statistica
 			double mediaEventiMese = minMaxAverage.mediaNumeroEventiMese(numberArray);
 			// System.out.println(mediaEventiMese);
 
