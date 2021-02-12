@@ -1,5 +1,6 @@
 package it.univpm.progetto.studenti.ticketmaster.model;
 
+import java.time.LocalDate;
 import java.util.Vector;
 
 /**
@@ -25,6 +26,25 @@ public class EventiBody {
 	 */
 	private Vector<String> generi;
 	
+	
+	//LocalDate SECTION
+	
+	/**
+	 * 
+	 * Attributo che memorizza il periodo personalizzato inserito nel body della chiamata
+	 * 
+	 */
+	private Vector<String> periodoPersonalizzato;
+	
+	
+
+	/*
+	 * private LocalDate dataInizialeFiltraggio;
+	 * private LocalDate dataFinaleFiltraggio;
+	*/
+	
+	
+	
 	/**
 	 * 
 	 * Costruttore di default
@@ -37,11 +57,15 @@ public class EventiBody {
 	 * Costruttore inizializza un oggetto EventiBody
 	 * 
 	 * @param s Vettore di stringhe da assegnare all'attributo stati
+	 * @param g Vettore di Stringhe da assegnare all'attributo generi
+	 * @param dataInizialeFiltraggio oggetto di tipo LocalDate da assegnare all'oggetto/attributo dataInizialeFiltraggio
+	 * @param dataFinaleFiltraggio oggetto di tipo LocalDate da assegnare all'oggetto/attributo dataFinaleFiltraggio
 	 * 
 	 */
-	public EventiBody(Vector<String> s, Vector<String> g) {
+	public EventiBody(Vector<String> s, Vector<String> g, Vector<String> periodoPersonalizzato) {
 		this.stati = s;
 		this.generi = g;
+		this.periodoPersonalizzato= periodoPersonalizzato;
 	}
 
 	/**
@@ -83,5 +107,24 @@ public class EventiBody {
 	public void setGeneri(Vector<String> g) {
 		this.generi = g;
 	}
+	
+	/**
+	 *
+	 * 
+	 * 
+	 * @return dataInizialeFiltraggio
+	 */
+	public Vector<String> getPeriodoPersonalizzato() {
+		return periodoPersonalizzato;
+	}
 
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param dataIniz Parametro del setter
+	 */
+	public void setPeriodoPersonalizzato(Vector<String> dataPers) {
+		this.periodoPersonalizzato= dataPers;
+	}
 }

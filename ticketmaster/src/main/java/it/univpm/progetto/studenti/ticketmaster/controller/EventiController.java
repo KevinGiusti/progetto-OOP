@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi;
 import it.univpm.progetto.studenti.ticketmaster.exception.EventiException;
 import it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter;
+import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 import it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.model.EventiBody;
@@ -205,7 +206,7 @@ public class EventiController {
 						if (!subPaesi.contains(p)) {
 
 							chiamateEv.add(ChiamataEventi.chiamata(p));
-					System.out.println("Cristo");
+					
 						} else
 							chiamateEv.add(chiamateEv.elementAt(subPaesi.indexOf(p)));
 					} else {
@@ -224,7 +225,6 @@ public class EventiController {
 //			long fin = System.currentTimeMillis();
 //			
 //			System.out.println(fin - init);
-			
 			Vector<Eventi> eventiFiltratiPerStati = new Vector<Eventi>();
 
 			for (int i = 0; i < chiamateEv.size(); i++) {
@@ -233,37 +233,14 @@ public class EventiController {
 				eventiFiltratiPerStati.addAll(StatiFilter.filterByState(stati.elementAt(i), evTemp));
 
 			}
-
+			
 			if (eventiFiltratiPerStati.isEmpty()) {
 				key = "Attenzione";
 				value = "Non ci sono eventi disponibili";
 				throw new EventiException();
 			}
-
-			if (generi.isEmpty()) {
-				responso.put("numero totale di eventi", eventiFiltratiPerStati.size());
-				responso.put("eventi", eventiFiltratiPerStati);
-				return responso;
-			}
-
-			Vector<Eventi> eventiFiltratiPerGeneri = new Vector<Eventi>();
-
-			for (int i = 0; i < generi.size(); i++) {
-
-				String g = generi.elementAt(i);
-				eventiFiltratiPerGeneri.addAll(GeneriFilter.filterByGenre(g, eventiFiltratiPerStati));
-
-			}
-
-			if (eventiFiltratiPerGeneri.isEmpty()) {
-				key = "Attenzione";
-				value = "Non ci sono eventi disponibili";
-				throw new EventiException();
-			}
-
-			responso.put("numero totale di eventi", eventiFiltratiPerGeneri.size());
-			responso.put("eventi", eventiFiltratiPerGeneri);
-
+			
+			System.out.println("ciao");
 			// oggetto per il calcolo eventi per ciascun mese
 			DatesStatistics sc = new DatesStatistics();
 			int[] numberArray = sc.numeroEventi(eventiFiltratiPerStati);
@@ -282,7 +259,37 @@ public class EventiController {
 
 			// attributo che indica la media dei valori richiesto dalla statistica
 			double mediaEventiMese = minMaxAverage.mediaNumeroEventiMese(numberArray);
-			// System.out.println(mediaEventiMese);
+			//System.out.println(mediaEventiMese);
+			
+			//MinMaxAverageFilter mmaFilter= new MinMaxAverageFilter();
+			//mmaFilter.minMaxAverageFilterFunction(eventiFiltratiPerStati);
+			//System.out.println("mmaFilter");
+			
+			
+			System.out.println("ciao");
+			if (generi.isEmpty()) {
+				responso.put("numero totale di eventi", eventiFiltratiPerStati.size());
+				responso.put("eventi", eventiFiltratiPerStati);
+				return responso;
+			}
+			
+			Vector<Eventi> eventiFiltratiPerGeneri = new Vector<Eventi>();
+
+			for (int i = 0; i < generi.size(); i++) {
+
+				String g = generi.elementAt(i);
+				eventiFiltratiPerGeneri.addAll(GeneriFilter.filterByGenre(g, eventiFiltratiPerStati));
+
+			}
+			
+			if (eventiFiltratiPerGeneri.isEmpty()) {
+				key = "Attenzione";
+				value = "Non ci sono eventi disponibili";
+				throw new EventiException();
+			}
+			
+			responso.put("numero totale di eventi", eventiFiltratiPerGeneri.size());
+			responso.put("eventi", eventiFiltratiPerGeneri);
 
 		} catch (EventiException e) {
 			responso = e.generaJSON(key, value);
