@@ -15,6 +15,7 @@ import it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter;
 import it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.model.EventiBody;
+import it.univpm.progetto.studenti.ticketmaster.scanner.GeneriScanner;
 import it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner;
 
 /**
@@ -36,9 +37,10 @@ public class EventiController {
 
 		JSONObject responso = new JSONObject();
 		Vector<String> statiPaesi = null;
-		Vector<String> statiScanner = StatiScanner.getStati();
 		Vector<String> generi = eB.getGeneri();
-		
+		Vector<String> statiScanner = StatiScanner.getStati();
+		Vector<String> generiScanner = GeneriScanner.getGeneri();
+
 		try {
 
 			if (!eB.getStati().isEmpty())
@@ -52,21 +54,31 @@ public class EventiController {
 			Vector<String> stati = new Vector<String>();
 
 			for (int i = 0; i < statiPaesi.size(); i++) {
-				
+
 				String s = statiPaesi.elementAt(i);
-				
-				if(!s.contains(",")) {
+
+				if (!s.contains(",")) {
 					key = "Errore";
 					value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
 					throw new EventiException();
 				}
-					
+
 				stati.add(s.substring(0, s.indexOf(",")));
+
+//				if(stati.elementAt(i).contains(" ")) {
+//					key = "Errore";
+//					value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
+//					throw new EventiException();
+//				}
 			}
 
 			for (int i = 0; i < stati.size(); i++) {
 
-				String s = stati.elementAt(i);
+				String temp = stati.elementAt(i);
+
+				String s = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+
+				stati.set(i, s);
 
 				if (!statiScanner.contains(s)) {
 
@@ -79,22 +91,69 @@ public class EventiController {
 
 					}
 
+					if(suggerimenti.isEmpty()) {
+						key = "Attenzione";
+						value = "Nessuno stato inizia per " + s.charAt(0) + ". Lista stati: " + statiScanner;
+						throw new EventiException();
+					}
+					
 					key = "Suggerimento";
 					value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
 							+ " del vettore stati";
-					
+
 					throw new EventiException();
 
 				}
 
 			}
 
+			for (int i = 0; i < generi.size(); i++) {
+
+				String temp = generi.elementAt(i);
+
+				String g = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+
+				generi.set(i, g);
+
+				if (!generiScanner.contains(g)) {
+
+					Vector<String> suggerimenti = new Vector<String>();
+
+					for (String sugg : generiScanner) {
+
+						if (sugg.charAt(0) == g.charAt(0))
+							suggerimenti.add(sugg);
+
+					}
+
+					if(suggerimenti.isEmpty()) {
+						key = "Attenzione";
+						value = "Nessun genere inizia per " + g.charAt(0) + ". Lista generi: " + generiScanner;
+						throw new EventiException();
+					}
+					
+					key = "Suggerimento";
+					value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
+							+ " del vettore generi";
+
+					throw new EventiException();
+
+				}
+
+			}
+			
 			Vector<String> paesi = new Vector<String>();
 
 			for (int i = 0; i < statiPaesi.size(); i++) {
 
 				String p = statiPaesi.elementAt(i);
 				paesi.add(p.substring(p.length() - 2, p.length()));
+
+				if (paesi.elementAt(i).contains(",")) {
+					key = "Errore";
+					value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
+					throw new EventiException();
+				}
 
 			}
 
@@ -137,45 +196,51 @@ public class EventiController {
 
 			}
 
-			if(eventiFiltratiPerStati.isEmpty()) {
+			if (eventiFiltratiPerStati.isEmpty()) {
 				key = "Attenzione";
 				value = "Non ci sono eventi disponibili";
 				throw new EventiException();
 			}
-			
+
+			if (generi.isEmpty()) {
+				responso.put("eventi", eventiFiltratiPerStati);
+				return responso;
+			}
+
 			Vector<Eventi> eventiFiltratiPerGeneri = new Vector<Eventi>();
-			
+
 			for (int i = 0; i < generi.size(); i++) {
 
 				String g = generi.elementAt(i);
 				eventiFiltratiPerGeneri.addAll(GeneriFilter.filterByGenre(g, eventiFiltratiPerStati));
 
 			}
-			
-			if(eventiFiltratiPerGeneri.isEmpty()) {
-				responso.put("eventi", eventiFiltratiPerStati);
-				return responso;
+
+			if (eventiFiltratiPerGeneri.isEmpty()) {
+				key = "Attenzione";
+				value = "Non ci sono eventi disponibili";
+				throw new EventiException();
 			}
 			
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
-			//oggetto per il calcolo eventi per ciascun mese
+			// oggetto per il calcolo eventi per ciascun mese
 			DatesStatistics sc = new DatesStatistics();
 			int[] numberArray = sc.numeroEventi(eventiFiltratiPerStati);
 
-			//oggetto per l'ordinamento del numero eventi in ciascun mese
+			// oggetto per l'ordinamento del numero eventi in ciascun mese
 			MinMaxAverage minMaxAverage = new MinMaxAverage();
 			minMaxAverage.sortSelectedEvents(numberArray);
 
-			//attributo che indica il valore minimo richiesto dalla statistica
+			// attributo che indica il valore minimo richiesto dalla statistica
 			int numMinEventiMese = minMaxAverage.minimoNumeroEventiMese(numberArray);
 			// System.out.println(numMinEventiMese);
 
-			//attributo che indica il valore massimo richiesto dalla statistica
+			// attributo che indica il valore massimo richiesto dalla statistica
 			int numMaxEventiMese = minMaxAverage.massimoNumeroEventiMese(numberArray);
 			// System.out.println(numMaxEventiMese);
 
-			//attributo che indica la media dei valori richiesto dalla statistica
+			// attributo che indica la media dei valori richiesto dalla statistica
 			double mediaEventiMese = minMaxAverage.mediaNumeroEventiMese(numberArray);
 			// System.out.println(mediaEventiMese);
 
