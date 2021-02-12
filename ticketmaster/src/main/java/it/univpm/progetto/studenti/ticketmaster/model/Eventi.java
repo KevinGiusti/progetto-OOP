@@ -20,13 +20,6 @@ public class Eventi {
 	
 	/**
 	 * 
-	 * Variabile che descrive l'id dell'evento
-	 * 
-	 */
-	private String id;
-	
-	/**
-	 * 
 	 * Variabile che descrive l'url dell'evento
 	 * 
 	 */
@@ -57,6 +50,20 @@ public class Eventi {
 	 */
 	private LocalDate data;
 	
+	/**
+	 * 
+	 * Variabile che descrive il genere dell'evento
+	 * 
+	 */
+	private String genere;
+	
+	/**
+	 * 
+	 * Variabile che descrive il sotto genere dell'evento
+	 * 
+	 */
+	private String sottoGenere;
+	
 	
 	//Builder Method SECTION
 	
@@ -76,18 +83,19 @@ public class Eventi {
 	 * @param u Assegna l'url all'evento
 	 * @param s Assegna lo stato all'evento
 	 * @param p Assegna il paese all'evento
-	 * @param localDate Assegna la data all'evento
-	 * @param localTime Assegna l'ora all'evento
+	 * @param d Assegna la data all'evento
+	 * 
 	 */
 	
-	//String n, String i, String u, String s, String p, LocalDate localDate, LocalTime localTime, LocalDate localDateTime
-	public Eventi(String n, String i, String u, String s, String p, LocalDate data) {
+	//String n, String i, String u, String s, String p, LocalDate d, String g, String sG
+	public Eventi(String n, String i, String u, String s, String p, LocalDate d, String g, String sG) {
 		this.nome = n;
-		this.id = i;
 		this.url = u;
 		this.stato = s;
 		this.paese = p;
-		this.data= data;
+		this.data= d;
+		this.genere = g;
+		this.sottoGenere = sG;
 	}
 
 	/**
@@ -108,26 +116,6 @@ public class Eventi {
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	/**
-	 * 
-	 * Getter dell'attributo id
-	 * 
-	 * @return id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * 
-	 * Setter dell'attributo id
-	 * 
-	 * @param id Parametro del setter
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	/**
@@ -206,7 +194,36 @@ public class Eventi {
 	 * 
 	 * @param localDate Parametro del setter
 	 */
-	public void setLocalDate(LocalDate localDate) {
+	public void setData(LocalDate localDate) {
 		this.data = localDate;
 	}
+
+	/**
+	 * @return the genere
+	 */
+	public String getGenere() {
+		return genere;
+	}
+
+	/**
+	 * @param genere the genere to set
+	 */
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
+
+	/**
+	 * @return the sottoGenere
+	 */
+	public String getSottoGenere() {
+		return sottoGenere;
+	}
+
+	/**
+	 * @param sottoGenere the sottoGenere to set
+	 */
+	public void setSottoGenere(String sottoGenere) {
+		this.sottoGenere = sottoGenere;
+	}
+
 }
