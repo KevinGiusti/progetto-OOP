@@ -10,7 +10,6 @@ import org.json.simple.parser.ParseException;
 
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
-
 /**
  * 
  * Classe che analizza il codice json della chiamata alla rotta events dell'API di ticketmaster
@@ -43,32 +42,50 @@ public class EventiParser {
 		
 		try {
 			
-			/**
-			 * Oggetto che fornisce accesso diretto in sola lettura ai dati JSON in streaming.
-			 * Questo è il modo più efficiente per leggere i dati JSON
-			 * 
-			 */
 			JSONParser parser = new JSONParser();
+			
 			JSONObject jO = (JSONObject) parser.parse(chiamata);
+			
 			JSONObject embedded1 = (JSONObject) jO.get("_embedded");
+			
 			JSONArray events = (JSONArray) embedded1.get("events");
+			
 			for (int i = 0; i < events.size(); i++) {
+				
 				JSONObject eventoTemp = (JSONObject) events.get(i);
 				String name = (String) eventoTemp.get("name");
-				String id = (String) eventoTemp.get("id");
 				String url = (String) eventoTemp.get("url");
+				
 				JSONObject dates= (JSONObject) eventoTemp.get("dates");
+				
 				JSONObject start= (JSONObject) dates.get("start");
 				String localDate= (String) start.get("localDate");
 				LocalDate locDt= dateConverter(localDate);
+				
+				JSONArray classifications = (JSONArray) eventoTemp.get("classifications");
+				
+				JSONObject classificationsTemp = (JSONObject) classifications.get(0);
+				
+				JSONObject genre = (JSONObject) classificationsTemp.get("genre");
+				String nameGenre = (String) genre.get("name");
+				
+				JSONObject subGenre = (JSONObject) classificationsTemp.get("subGenre");
+				String nameSubGenre = (String) subGenre.get("name");
+				
 				JSONObject embedded2 = (JSONObject) eventoTemp.get("_embedded");
+				
 				JSONArray venues = (JSONArray) embedded2.get("venues");
+				
 				JSONObject venuesTemp = (JSONObject) venues.get(0);
+				
 				JSONObject state = (JSONObject) venuesTemp.get("state");
 				String stateName = (String) state.get("name");
+				
 				JSONObject country = (JSONObject) venuesTemp.get("country");
 				String countryName = (String) country.get("name");
-				Eventi e = new Eventi(name, id, url, stateName, countryName, locDt);
+				
+				Eventi e = new Eventi(name, url, stateName, countryName, locDt, nameGenre, nameSubGenre);
+				
 				listaEventi.add(e);
 				
 			}
@@ -80,9 +97,6 @@ public class EventiParser {
 		return listaEventi;
 		
 	}
-	
-	
-	//Method SECTION
 	
 	/**
 	 * 
@@ -96,5 +110,7 @@ public class EventiParser {
 		
 		LocalDate locD= LocalDate.parse(date);
 		return locD;
+	
 	}
+
 }
