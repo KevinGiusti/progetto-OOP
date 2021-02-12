@@ -1,7 +1,5 @@
 package it.univpm.progetto.studenti.ticketmaster.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Vector;
 
 /**
@@ -22,6 +20,13 @@ public class EventiBody {
 	
 	/**
 	 * 
+	 * 
+	 * 
+	 */
+	private Vector<String> generi;
+	
+	/**
+	 * 
 	 * Costruttore di default
 	 * 
 	 */
@@ -34,8 +39,9 @@ public class EventiBody {
 	 * @param s Vettore di stringhe da assegnare all'attributo stati
 	 * 
 	 */
-	public EventiBody(Vector<String> s) {
+	public EventiBody(Vector<String> s, Vector<String> g) {
 		this.stati = s;
+		this.generi = g;
 	}
 
 	/**
@@ -57,7 +63,25 @@ public class EventiBody {
 	public void setStati(Vector<String> s) {
 		this.stati = s;
 	}
+
+	/**
+	 *
+	 * 
+	 * 
+	 * @return the generi
+	 */
+	public Vector<String> getGeneri() {
+		return generi;
+	}
+
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param generi the generi to set
+	 */
+	public void setGeneri(Vector<String> g) {
+		this.generi = g;
+	}
+
 }
-
-
-

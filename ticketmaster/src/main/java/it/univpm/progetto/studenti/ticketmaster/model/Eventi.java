@@ -87,8 +87,8 @@ public class Eventi {
 	 * 
 	 */
 	
-	//String n, String i, String u, String s, String p, LocalDate d, String g, String sG
-	public Eventi(String n, String i, String u, String s, String p, LocalDate d, String g, String sG) {
+	//String n, String u, String s, String p, LocalDate d, String g, String sG
+	public Eventi(String n, String u, String s, String p, LocalDate d, String g, String sG) {
 		this.nome = n;
 		this.url = u;
 		this.stato = s;
