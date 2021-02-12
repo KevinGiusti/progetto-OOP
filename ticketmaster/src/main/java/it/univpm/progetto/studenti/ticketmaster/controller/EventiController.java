@@ -34,7 +34,7 @@ public class EventiController {
 	@SuppressWarnings("unchecked")
 	@PostMapping("/eventi")
 	public JSONObject eventi(@RequestBody EventiBody eB) {
-
+		long init = System.currentTimeMillis();
 		JSONObject responso = new JSONObject();
 		Vector<String> statiPaesi = null;
 		Vector<String> generi = eB.getGeneri();
@@ -65,20 +65,35 @@ public class EventiController {
 
 				stati.add(s.substring(0, s.indexOf(",")));
 
-//				if(stati.elementAt(i).contains(" ")) {
-//					key = "Errore";
-//					value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
-//					throw new EventiException();
-//				}
 			}
 
 			for (int i = 0; i < stati.size(); i++) {
 
 				String temp = stati.elementAt(i);
+				String s = null;
 
-				String s = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+				if (!temp.contains(" ")) {
 
-				stati.set(i, s);
+					s = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+					stati.set(i, s);
+
+				} else {
+
+					String t = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+					char[] cArr = t.toCharArray(); // Trasforma la stringa in array di char
+
+					for (int j = 0; j < cArr.length; j++) {
+
+						char c = cArr[j];
+						if (c == ' ' && j != cArr.length - 1)
+							cArr[j + 1] = Character.toUpperCase(cArr[j + 1]);
+
+					}
+
+					s = new String(cArr);
+
+					stati.set(i, s);
+				}
 
 				if (!statiScanner.contains(s)) {
 
@@ -91,12 +106,11 @@ public class EventiController {
 
 					}
 
-					if(suggerimenti.isEmpty()) {
+					if (suggerimenti.isEmpty()) {
 						key = "Attenzione";
 						value = "Nessuno stato inizia per " + s.charAt(0) + ". Lista stati: " + statiScanner;
 						throw new EventiException();
 					}
-					
 					key = "Suggerimento";
 					value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
 							+ " del vettore stati";
@@ -126,12 +140,12 @@ public class EventiController {
 
 					}
 
-					if(suggerimenti.isEmpty()) {
+					if (suggerimenti.isEmpty()) {
 						key = "Attenzione";
 						value = "Nessun genere inizia per " + g.charAt(0) + ". Lista generi: " + generiScanner;
 						throw new EventiException();
 					}
-					
+
 					key = "Suggerimento";
 					value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
 							+ " del vettore generi";
@@ -141,7 +155,7 @@ public class EventiController {
 				}
 
 			}
-			
+
 			Vector<String> paesi = new Vector<String>();
 
 			for (int i = 0; i < statiPaesi.size(); i++) {
@@ -157,28 +171,48 @@ public class EventiController {
 
 			}
 
+//			long init = System.currentTimeMillis();
+			
+			Vector<String> australia = new Vector<String>();
+			australia.addAll(statiScanner);
+			australia.remove(australia.size() - 1);
+			australia.add("AU");
+
+			Vector<String> newZealand = new Vector<String>();
+			newZealand.add(statiScanner.elementAt(statiScanner.size() - 1));
+			newZealand.add("NZ");
+
 			Vector<Vector<Eventi>> chiamateEv = new Vector<Vector<Eventi>>();
 
 			for (int i = 0; i < paesi.size(); i++) {
 
 				String p = paesi.elementAt(i);
 
+				String s = stati.elementAt(i);
+
 				if (p.equals("AU") || p.equals("NZ")) {
 
-					Vector<String> subPaesi = new Vector<String>();
+					if ((australia.contains(p) && australia.contains(s))
+							|| (newZealand.contains(p) && newZealand.contains(s))) {
 
-					for (int h = 0; h < i; h++) {
-						String subP = paesi.elementAt(h);
-						subPaesi.add(subP);
+						Vector<String> subPaesi = new Vector<String>();
+
+						for (int h = 0; h < i; h++) {
+							String subP = paesi.elementAt(h);
+							subPaesi.add(subP);
+						}
+
+						if (!subPaesi.contains(p)) {
+
+							chiamateEv.add(ChiamataEventi.chiamata(p));
+					System.out.println("Cristo");
+						} else
+							chiamateEv.add(chiamateEv.elementAt(subPaesi.indexOf(p)));
+					} else {
+						key = "Errore";
+						value = "Lo stato " + s + " non appartiene al paese " + p;
+						throw new EventiException();
 					}
-
-					if (!subPaesi.contains(p)) {
-
-						chiamateEv.add(ChiamataEventi.chiamata(p));
-//					System.out.println("Cristo");
-					} else
-						chiamateEv.add(chiamateEv.elementAt(subPaesi.indexOf(p)));
-
 				} else {
 					key = "Errore";
 					value = "Lo stato " + p + " non è disponibile";
@@ -187,6 +221,10 @@ public class EventiController {
 
 			}
 
+//			long fin = System.currentTimeMillis();
+//			
+//			System.out.println(fin - init);
+			
 			Vector<Eventi> eventiFiltratiPerStati = new Vector<Eventi>();
 
 			for (int i = 0; i < chiamateEv.size(); i++) {
@@ -203,6 +241,7 @@ public class EventiController {
 			}
 
 			if (generi.isEmpty()) {
+				responso.put("numero totale di eventi", eventiFiltratiPerStati.size());
 				responso.put("eventi", eventiFiltratiPerStati);
 				return responso;
 			}
@@ -221,7 +260,8 @@ public class EventiController {
 				value = "Non ci sono eventi disponibili";
 				throw new EventiException();
 			}
-			
+
+			responso.put("numero totale di eventi", eventiFiltratiPerGeneri.size());
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
 			// oggetto per il calcolo eventi per ciascun mese
@@ -247,6 +287,7 @@ public class EventiController {
 		} catch (EventiException e) {
 			responso = e.generaJSON(key, value);
 		}
+
 		return responso;
 	}
 }
