@@ -1,5 +1,6 @@
 package it.univpm.progetto.studenti.ticketmaster.controller;
 
+import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import org.json.simple.JSONObject;
@@ -18,7 +19,6 @@ import it.univpm.progetto.studenti.ticketmaster.scanner.GeneriScanner;
 import it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner;
 import it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics;
 import it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage;
-import it.univpm.progetto.studenti.ticketmaster.stats.NumTotEventi;
 
 /**
  * 
@@ -43,7 +43,8 @@ public class EventiController {
 		Vector<String> periodoPersonalizzato= eB.getPeriodoPersonalizzato();
 		Vector<String> statiScanner = StatiScanner.getStati();
 		Vector<String> generiScanner = GeneriScanner.getGeneri();
-
+		LinkedHashMap<String, Integer> contatoreEventiPerStati = new LinkedHashMap<String, Integer>();
+		
 		try {
 
 			if (!eB.getStati().isEmpty())
@@ -232,7 +233,9 @@ public class EventiController {
 			for (int i = 0; i < chiamateEv.size(); i++) {
 
 				Vector<Eventi> evTemp = chiamateEv.elementAt(i);
-				eventiFiltratiPerStati.addAll(StatiFilter.filterByState(stati.elementAt(i), evTemp));
+				Vector<Eventi> evFiltrati = StatiFilter.filterByState(stati.elementAt(i), evTemp);
+				eventiFiltratiPerStati.addAll(evFiltrati);
+				contatoreEventiPerStati.put("in " + stati.elementAt(i), evFiltrati.size());
 
 			}
 			
@@ -267,7 +270,8 @@ public class EventiController {
 			
 	
 			if (generi.isEmpty()) {
-				responso.put("numero totale di eventi", eventiFiltratiPerStati.size());
+//				responso.put("numero totale di eventi", eventiFiltratiPerStati.size());
+				responso.put("numero totale eventi", contatoreEventiPerStati);
 				responso.put("eventi", eventiFiltratiPerStati);
 				return responso;
 			}
@@ -287,8 +291,8 @@ public class EventiController {
 				throw new EventiException();
 			}
 			
-			//responso.put("numero totale di eventi per ogni stato", NumTotEventi.statsNumTotEventi(callFiltro));
-			responso.put("numero totale di eventi", eventiFiltratiPerGeneri.size());
+//			responso.put("numero totale di eventi", eventiFiltratiPerGeneri.size());
+			responso.put("numero totale eventi", contatoreEventiPerStati);
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
 		} catch (EventiException e) {
