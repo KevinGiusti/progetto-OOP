@@ -1,5 +1,7 @@
 package it.univpm.progetto.studenti.ticketmaster.stats;
 
+import java.text.DecimalFormat;
+
 /**
  * 
  * Classe che consente di svolgere la statistica relativa alla 
@@ -11,9 +13,9 @@ package it.univpm.progetto.studenti.ticketmaster.stats;
  */
 public class MinMaxAverage {
 	
-	private int minimoMese;
-	private int massimoMese;
-	private double mediaMese;
+	private int minimo;
+	private int massimo;
+	private double media;
 	
 	public MinMaxAverage() {}
 	
@@ -60,9 +62,9 @@ public class MinMaxAverage {
 	 * @return minimo è il minimo cercato dalla statistica
 	 *
 	 */
-	public int minimoNumeroEventiMese(int[] numEventi) {
-		this.minimoMese= numEventi[0];
-		return this.minimoMese;
+	public /*int*/ void minimoNumeroEventiMese(int[] numEventi) {
+		this.minimo= numEventi[0];
+//		return this.minimo;
 	}
 	
 	/**
@@ -74,11 +76,11 @@ public class MinMaxAverage {
 	 * @return massimo è il massimo cercato dalla statistica
 	 *
 	 */
-	public int massimoNumeroEventiMese(int[] numEventi) {
+	public /*int*/ void massimoNumeroEventiMese(int[] numEventi) {
 		
 		int maxLength= numEventi.length-1;
-		this.massimoMese= numEventi[maxLength];
-		return this.massimoMese;
+		this.massimo= numEventi[maxLength];
+//		return this.massimo;
 	}
 	
 	/**
@@ -90,7 +92,7 @@ public class MinMaxAverage {
 	 * @return media è la media cercata dalla statistica
 	 *
 	 */
-	public double mediaNumeroEventiMese(int[] numEventi) {
+	public /*double*/ void mediaNumeroEventiMese(int[] numEventi) {
 		
 		int[] accumulatore= new int[1];
 		for(int i= 0; i<numEventi.length; i++) {
@@ -98,7 +100,28 @@ public class MinMaxAverage {
 			accumulatore[0]+= numEventi[i];
 		}
 		int lunghezzaArray= numEventi.length;
-		this.mediaMese= (double)accumulatore[0]/(double)lunghezzaArray;
-		return this.mediaMese;
+		this.media = Double.parseDouble(new DecimalFormat("##.##").format((double)accumulatore[0]/(double)lunghezzaArray).replace(",", "."));
+//		return this.media;
+	}
+
+	/**
+	 * @return the minimo
+	 */
+	public int getminimo() {
+		return minimo;
+	}
+
+	/**
+	 * @return the massimo
+	 */
+	public int getmassimo() {
+		return massimo;
+	}
+
+	/**
+	 * @return the media
+	 */
+	public double getmedia() {
+		return media;
 	}
 }

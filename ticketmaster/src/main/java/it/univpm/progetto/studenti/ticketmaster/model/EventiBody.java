@@ -33,7 +33,7 @@ public class EventiBody {
 	 * Attributo che memorizza il periodo personalizzato inserito nel body della chiamata
 	 * 
 	 */
-	private Vector<String> periodoPersonalizzato;
+	private Vector<String> periodo;
 	
 	
 	/**
@@ -55,7 +55,7 @@ public class EventiBody {
 	public EventiBody(Vector<String> s, Vector<String> g, Vector<String> periodoPersonalizzato) {
 		this.stati = s;
 		this.generi = g;
-		this.periodoPersonalizzato= periodoPersonalizzato;
+		this.periodo = periodoPersonalizzato;
 	}
 
 	/**
@@ -104,8 +104,8 @@ public class EventiBody {
 	 * 
 	 * @return dataInizialeFiltraggio
 	 */
-	public Vector<String> getPeriodoPersonalizzato() {
-		return periodoPersonalizzato;
+	public Vector<String> getPeriodo() {
+		return periodo;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class EventiBody {
 	 * 
 	 * @param dataIniz Parametro del setter
 	 */
-	public void setPeriodoPersonalizzato(Vector<String> dataPers) {
-		this.periodoPersonalizzato= dataPers;
+	public void setPeriodo(Vector<String> dataPers) {
+		this.periodo = dataPers;
 	}
 }

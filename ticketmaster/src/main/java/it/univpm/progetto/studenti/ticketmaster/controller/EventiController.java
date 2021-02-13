@@ -40,7 +40,7 @@ public class EventiController {
 		JSONObject responso = new JSONObject();
 		Vector<String> statiPaesi = null;
 		Vector<String> generi = eB.getGeneri();
-		Vector<String> periodoPersonalizzato= eB.getPeriodoPersonalizzato();
+		Vector<String> periodo = eB.getPeriodo();
 		Vector<String> statiScanner = StatiScanner.getStati();
 		Vector<String> generiScanner = GeneriScanner.getGeneri();
 		LinkedHashMap<String, Integer> contatoreEventiPerStati = new LinkedHashMap<String, Integer>();
@@ -229,7 +229,7 @@ public class EventiController {
 //			
 //			System.out.println(fin - init);
 			Vector<Eventi> eventiFiltratiPerStati = new Vector<Eventi>();
-			Vector<MinMaxAverage> minMaxAverage = new Vector<MinMaxAverage>();
+			LinkedHashMap<String, MinMaxAverage> minMaxAverage = new LinkedHashMap<String, MinMaxAverage>();
 			
 			for (int i = 0; i < chiamateEv.size(); i++) {
 
@@ -239,13 +239,20 @@ public class EventiController {
 				contatoreEventiPerStati.put("in " + stati.elementAt(i), evFiltrati.size());
 				// oggetto per il calcolo eventi per ciascun mese
 				DatesStatistics sc = new DatesStatistics();
+				MinMaxAverage mMA = new MinMaxAverage();
 				int[] numberArray = sc.numeroEventi(evFiltrati);
-				
+				mMA.sortSelectedEvents(numberArray);
+				mMA.minimoNumeroEventiMese(numberArray);
+				mMA.massimoNumeroEventiMese(numberArray);
+				mMA.mediaNumeroEventiMese(numberArray);
+				minMaxAverage.put("in " + stati.elementAt(i), mMA);
+				for(int n : numberArray)
+					System.out.println(n);
 				// oggetto per l'ordinamento del numero eventi in ciascun mese
-				minMaxAverage.elementAt(i).sortSelectedEvents(numberArray);
-				responso.put("numero minimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).minimoNumeroEventiMese(numberArray));
-				responso.put("numero massimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).massimoNumeroEventiMese(numberArray));
-				responso.put("numero medio mensile di eventi in ogni stato", minMaxAverage.elementAt(i).mediaNumeroEventiMese(numberArray));
+//				minMaxAverage.elementAt(i).sortSelectedEvents(numberArray);
+//				responso.put("numero minimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).minimoNumeroEventiMese(numberArray));
+//				responso.put("numero massimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).massimoNumeroEventiMese(numberArray));
+//				responso.put("numero medio mensile di eventi in ogni stato", minMaxAverage.elementAt(i).mediaNumeroEventiMese(numberArray));
 			}
 			
 			if (eventiFiltratiPerStati.isEmpty()) {
@@ -277,7 +284,7 @@ public class EventiController {
 			}
 			
 			responso.put("numero totale eventi", contatoreEventiPerStati);
-			//responso.put("numero minimo mensile di eventi in ogni stato", minMaxAverage.minimoNumeroEventiMese(numberArray));
+			responso.put("statistiche mensili di eventi", minMaxAverage);
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
 		} catch (EventiException e) {
