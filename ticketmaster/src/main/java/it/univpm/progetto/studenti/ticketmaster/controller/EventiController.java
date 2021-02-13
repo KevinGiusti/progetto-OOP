@@ -1,5 +1,6 @@
 package it.univpm.progetto.studenti.ticketmaster.controller;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Vector;
 
@@ -44,7 +45,8 @@ public class EventiController {
 		Vector<String> statiScanner = StatiScanner.getStati();
 		Vector<String> generiScanner = GeneriScanner.getGeneri();
 		LinkedHashMap<String, Integer> contatoreEventiPerStati = new LinkedHashMap<String, Integer>();
-		
+		LinkedHashMap<String, Integer> contatoreEventiPerGeneri = new LinkedHashMap<String, Integer>();
+
 		try {
 
 			if (!eB.getStati().isEmpty())
@@ -129,11 +131,31 @@ public class EventiController {
 
 				String temp = generi.elementAt(i);
 
-				String g = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+				String g = null;
 
-				generi.set(i, g);
+				if (!(temp.contains(" ") || temp.contains("/"))) {
 
-				if (!generiScanner.contains(g)) {
+					g = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+					generi.set(i, g);
+
+				} else {
+					String t = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+					char[] cArr = t.toCharArray(); // Trasforma la stringa in array di char
+
+					for (int j = 0; j < cArr.length; j++) {
+
+						char c = cArr[j];
+						if ((c == ' ' || c == '/') && j != cArr.length - 1)
+							cArr[j + 1] = Character.toUpperCase(cArr[j + 1]);
+
+					}
+
+					g = new String(cArr);
+
+					generi.set(i, g);
+				}
+
+				if (!generiScanner.contains(generi.elementAt(i))) {
 
 					Vector<String> suggerimenti = new Vector<String>();
 
@@ -153,7 +175,6 @@ public class EventiController {
 					key = "Suggerimento";
 					value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
 							+ " del vettore generi";
-
 					throw new EventiException();
 
 				}
@@ -176,7 +197,7 @@ public class EventiController {
 			}
 
 //			long init = System.currentTimeMillis();
-			
+
 			Vector<String> australia = new Vector<String>();
 			australia.addAll(statiScanner);
 			australia.remove(australia.size() - 1);
@@ -209,7 +230,7 @@ public class EventiController {
 						if (!subPaesi.contains(p)) {
 
 							chiamateEv.add(ChiamataEventi.chiamata(p));
-					
+
 						} else
 							chiamateEv.add(chiamateEv.elementAt(subPaesi.indexOf(p)));
 					} else {
@@ -230,13 +251,14 @@ public class EventiController {
 //			System.out.println(fin - init);
 			Vector<Eventi> eventiFiltratiPerStati = new Vector<Eventi>();
 			LinkedHashMap<String, MinMaxAverage> minMaxAverage = new LinkedHashMap<String, MinMaxAverage>();
-			
+
 			for (int i = 0; i < chiamateEv.size(); i++) {
 
 				Vector<Eventi> evTemp = chiamateEv.elementAt(i);
 				Vector<Eventi> evFiltrati = StatiFilter.filterByState(stati.elementAt(i), evTemp);
 				eventiFiltratiPerStati.addAll(evFiltrati);
 				contatoreEventiPerStati.put("in " + stati.elementAt(i), evFiltrati.size());
+
 				// oggetto per il calcolo eventi per ciascun mese
 				DatesStatistics sc = new DatesStatistics();
 				MinMaxAverage mMA = new MinMaxAverage();
@@ -246,44 +268,61 @@ public class EventiController {
 				mMA.massimoNumeroEventiMese(numberArray);
 				mMA.mediaNumeroEventiMese(numberArray);
 				minMaxAverage.put("in " + stati.elementAt(i), mMA);
-				for(int n : numberArray)
-					System.out.println(n);
+//				for(int n : numberArray)
+//					System.out.println(n);
 				// oggetto per l'ordinamento del numero eventi in ciascun mese
 //				minMaxAverage.elementAt(i).sortSelectedEvents(numberArray);
 //				responso.put("numero minimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).minimoNumeroEventiMese(numberArray));
 //				responso.put("numero massimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).massimoNumeroEventiMese(numberArray));
 //				responso.put("numero medio mensile di eventi in ogni stato", minMaxAverage.elementAt(i).mediaNumeroEventiMese(numberArray));
 			}
-			
+
 			if (eventiFiltratiPerStati.isEmpty()) {
 				key = "Attenzione";
 				value = "Non ci sono eventi disponibili";
 				throw new EventiException();
-			}	
-	
+			}
+
 			if (generi.isEmpty()) {
-//				responso.put("numero totale di eventi", eventiFiltratiPerStati.size());
+
+				HashSet<String> generiHash = new HashSet<String>();
+
+				for (Eventi e : eventiFiltratiPerStati)
+					generiHash.add(e.getGenere());
+				
+				for (String g : generiHash) {
+					
+					int cont = GeneriFilter.filterByGenre(g, eventiFiltratiPerStati).size();
+					contatoreEventiPerGeneri.put(g, cont);
+					
+				}
+
 				responso.put("numero totale eventi", contatoreEventiPerStati);
+				responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
+				responso.put("statistiche mensili di eventi", minMaxAverage);
 				responso.put("eventi", eventiFiltratiPerStati);
 				return responso;
 			}
-			
+
 			Vector<Eventi> eventiFiltratiPerGeneri = new Vector<Eventi>();
 
 			for (int i = 0; i < generi.size(); i++) {
 
 				String g = generi.elementAt(i);
-				eventiFiltratiPerGeneri.addAll(GeneriFilter.filterByGenre(g, eventiFiltratiPerStati));
+				Vector<Eventi> evFiltrati = GeneriFilter.filterByGenre(g, eventiFiltratiPerStati);
+				eventiFiltratiPerGeneri.addAll(evFiltrati);
+				contatoreEventiPerGeneri.put(generi.elementAt(i), evFiltrati.size());
 
 			}
-			
+
 			if (eventiFiltratiPerGeneri.isEmpty()) {
 				key = "Attenzione";
 				value = "Non ci sono eventi disponibili";
 				throw new EventiException();
 			}
-			
+
 			responso.put("numero totale eventi", contatoreEventiPerStati);
+			responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
 			responso.put("statistiche mensili di eventi", minMaxAverage);
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
