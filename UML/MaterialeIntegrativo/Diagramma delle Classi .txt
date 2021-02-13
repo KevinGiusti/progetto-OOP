@@ -1,0 +1,104 @@
+->I diagrammi di classe (Class Diagram) sono una notazione
+(grafica) per la descrizione dei tipi degli oggetti (classi) che
+fanno parte di un sistema ed i tipi di relazioni (statiche) che
+esistono tra di questi (es: associazioni, sottotipo, ecc.)
+-> Scopoe` comunicare con un formalismo indipendente dai linguaggi di programmazione i concetti che guidano la realizzazione di un sistema orientato agli
+oggetti.  Un programma scritto in un linguaggio orientato agli oggetti
+e` spesso difficile da leggere e capire (non ha una struttura
+“sequenziale”).
+Legenda :
+
+Png 1 allegato per descrivere struttura->folder MaterialIntegrativo
+
+Classe -> Struttura : 
+-il nome della classe
+-gli attibuti della classe
+specificandone il tipo, la
+visibilita` e l’eventuale
+inizializzazione
+-le operazioni (metodi)
+contenute nella classe e le loro
+signature.
+
+
+
+Attributi -> Strutture  :
+Simile alle associazioni ma il
+loro tipo e` associato a semplici
+classi come stringhe, interi, reali,
+booleani. Indicano un valore
+piuttosto che un puntatore (o
+riferimento)
+Puo` essere associato un valore
+di inizializzazione.
+La visibilita` e` indicata mediate i
+simboli + (public), # (protected) e
+- (private)
+
+
+Operazioni ->Struttura :
+-Corrispondono nei linguaggi di
+programmazione ai metodi delle
+classi
+-Come per gli attributi la visibilita`
+e` indicata mediate i simboli +
+(public), # (protected) e -
+(private)
+
+Generalizzazione->Struttura: 
+-Descrive la relazione di
+ereditarieta` tra le varie classi di
+un progetto
+- Denota la specializzazione di
+una classe
+-Le sottoclassi estendono una
+sopraclasse, le sottoclassi
+ereditano i metodi delle
+sopraclassi e definiscono nuove
+funzionalita`
+
+
+Associazione -> Struttura 
+- Descrive le relazioni esistenti tra le
+istanze di varie classi
+-E` possibile indicare direzzione di
+accessibilita` (mediante una
+freccia)
+-E` possibile indicare la
+molteciplicita`
+
+
+
+Aggregazioni e Composizione-> Struttura:
+
+-Aggregazione: descrive le
+relazioni “e` parte-di”
+-Composizione: descrive il fatto
+che oggetti siano composti di
+altri oggetti
+- Difficile separare nettamente
+associazioni, aggegrazioni,
+composizione. In genere
+aggregazioni e composizioni
+indicano una piu` stretta
+dipendenza tra le istanze delle
+classi
+-Esprimono (insieme
+all’associazione) la relazione di
+contenimento
+
+
+Interfacce-> Struttura 
+-Le interfacce sono indicate
+esplicitamente mediante
+apposita dicitura
+- Analogamente le classi astratte
+- Nomi delle classi e nomi dei
+metodi (astratti) in italico
+-Una freccia tratteggiata unisce
+una intefaccia ad una sua
+implementazione
+- Un altro tipo di freccia
+tratteggiata esprime dipendenza
+(intefacce e abstract non hanno
+istanze)
