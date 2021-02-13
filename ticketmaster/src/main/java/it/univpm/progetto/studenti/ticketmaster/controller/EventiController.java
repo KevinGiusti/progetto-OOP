@@ -274,16 +274,18 @@ public class EventiController {
 				for(int n : numberArray)
 					System.out.println(n);
 				
+				if(!periodo.isEmpty()) {
 				MinMaxAverageFilter mma= new MinMaxAverageFilter();
 				int[] numArray= mma.minMaxAverageFilterFunction(evFiltrati, periodo);
-				numberArray= numArray;
+				numberArray = numArray;
 				mMA.sortSelectedEvents(numberArray);
 				mMA.minimoNumeroEventiMese(numberArray);
 				mMA.massimoNumeroEventiMese(numberArray);
 				mMA.mediaNumeroEventiMese(numberArray);
 				minMaxAverageFilter.put("in " + stati.elementAt(i), mMA);
-				for(int n : numArray)
-					System.out.println(n);
+//				for(int n : numArray)
+//					System.out.println(n);
+				}
 			}
 
 			if (eventiFiltratiPerStati.isEmpty()) {
@@ -308,7 +310,10 @@ public class EventiController {
 
 				responso.put("numero totale eventi", contatoreEventiPerStati);
 				responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
-				responso.put("statistiche mensili di eventi", minMaxAverage);
+				if(periodo.isEmpty())
+					responso.put("statistiche mensili di eventi", minMaxAverage);
+				else
+					responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
 				responso.put("eventi", eventiFiltratiPerStati);
 				return responso;
 			}
@@ -332,8 +337,10 @@ public class EventiController {
 
 			responso.put("numero totale eventi", contatoreEventiPerStati);
 			responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
-			responso.put("statistiche mensili di eventi", minMaxAverage);
-			responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
+			if(periodo.isEmpty())
+				responso.put("statistiche mensili di eventi", minMaxAverage);
+			else
+				responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
 			responso.put("eventi", eventiFiltratiPerGeneri);
 			
 		} catch (EventiException e) {
