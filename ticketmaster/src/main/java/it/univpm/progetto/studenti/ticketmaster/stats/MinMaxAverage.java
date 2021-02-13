@@ -62,9 +62,8 @@ public class MinMaxAverage {
 	 * @return minimo è il minimo cercato dalla statistica
 	 *
 	 */
-	public /*int*/ void minimoNumeroEventiMese(int[] numEventi) {
+	public void minimoNumeroEventiMese(int[] numEventi) {
 		this.minimo= numEventi[0];
-//		return this.minimo;
 	}
 	
 	/**
@@ -76,11 +75,10 @@ public class MinMaxAverage {
 	 * @return massimo è il massimo cercato dalla statistica
 	 *
 	 */
-	public /*int*/ void massimoNumeroEventiMese(int[] numEventi) {
+	public void massimoNumeroEventiMese(int[] numEventi) {
 		
 		int maxLength= numEventi.length-1;
 		this.massimo= numEventi[maxLength];
-//		return this.massimo;
 	}
 	
 	/**
@@ -92,7 +90,7 @@ public class MinMaxAverage {
 	 * @return media è la media cercata dalla statistica
 	 *
 	 */
-	public /*double*/ void mediaNumeroEventiMese(int[] numEventi) {
+	public void mediaNumeroEventiMese(int[] numEventi) {
 		
 		int[] accumulatore= new int[1];
 		for(int i= 0; i<numEventi.length; i++) {
@@ -101,7 +99,6 @@ public class MinMaxAverage {
 		}
 		int lunghezzaArray= numEventi.length;
 		this.media = Double.parseDouble(new DecimalFormat("##.##").format((double)accumulatore[0]/(double)lunghezzaArray).replace(",", "."));
-//		return this.media;
 	}
 
 	/**
