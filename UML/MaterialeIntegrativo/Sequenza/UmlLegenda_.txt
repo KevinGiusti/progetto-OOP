@@ -1,0 +1,22 @@
+I diagrammi di sequenza servono per descrivere, in maniera dinamica, ciò che accade,
+all'interno del sistema, quando si compie una determinata operazione.
+Leggenda per comprensione :
+ 
+-> ogni blocco rappresenta un oggetto già istanziato. 
+->sotto ogni blocco la linea tratteggiata che rappresenta lo scorrere del
+  tempo.(proporzionalità diretta distanza-tempo ).
+-> i rettangoli da dove partono le frecce rappresentano il punto esatto nel quale
+   l'oggetto entra in gioco.
+-> l'arrivo in un altro rettangolino di un oggetto rappresentano l'operazione effettuata. 
+-> informazioni sulla freccia:numero progressivo che indica quando viene eseguita
+  l'operazione (nel nostro caso, come nell'organizzazione del progetto a seconda del livello dell'esecuzione abbiamo usato una rappresentazione 0.0.0.0) e l'operazione eseguita.
+-> freccia tratteggiata in direzione dell'oggetto 
+  rappresenta il risultato dell'esecuzione dell'operazione eseguita precedentemente . 
+Rilascio in allegato sulla cartella MaterialeIntegrativo, un png per rendere la lettura più efficace e semplice nella quale viene implementato un UML di sequenza di chiamata con descrizione sintetiche degli elementi costitutivi .
+
+Riferimenti: 
+->UML Intro_Diag-Casiuso_Diag-Classi_Diag-Seq.pdf
+->G. Berio, Introduzione a UML, http://www.di.unito.it/~susi/DIDATTICA/IS-0102/UML.pdf
+->- S. De Vito, UML, Unified Modelling Language, http://www.lit.ing.unicas.it/Docs/UML_Cassino.pdf
+
+
