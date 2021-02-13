@@ -18,6 +18,7 @@ import it.univpm.progetto.studenti.ticketmaster.scanner.GeneriScanner;
 import it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner;
 import it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics;
 import it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage;
+import it.univpm.progetto.studenti.ticketmaster.stats.NumTotEventi;
 
 /**
  * 
@@ -35,10 +36,11 @@ public class EventiController {
 	@SuppressWarnings("unchecked")
 	@PostMapping("/eventi")
 	public JSONObject eventi(@RequestBody EventiBody eB) {
-		long init = System.currentTimeMillis();
+//		long init = System.currentTimeMillis();
 		JSONObject responso = new JSONObject();
 		Vector<String> statiPaesi = null;
 		Vector<String> generi = eB.getGeneri();
+		Vector<String> periodoPersonalizzato= eB.getPeriodoPersonalizzato();
 		Vector<String> statiScanner = StatiScanner.getStati();
 		Vector<String> generiScanner = GeneriScanner.getGeneri();
 
@@ -240,7 +242,6 @@ public class EventiController {
 				throw new EventiException();
 			}
 			
-			System.out.println("ciao");
 			// oggetto per il calcolo eventi per ciascun mese
 			DatesStatistics sc = new DatesStatistics();
 			int[] numberArray = sc.numeroEventi(eventiFiltratiPerStati);
@@ -251,22 +252,20 @@ public class EventiController {
 
 			// attributo che indica il valore minimo richiesto dalla statistica
 			int numMinEventiMese = minMaxAverage.minimoNumeroEventiMese(numberArray);
-			// System.out.println(numMinEventiMese);
+			System.out.println(numMinEventiMese);
 
 			// attributo che indica il valore massimo richiesto dalla statistica
 			int numMaxEventiMese = minMaxAverage.massimoNumeroEventiMese(numberArray);
-			// System.out.println(numMaxEventiMese);
+			System.out.println(numMaxEventiMese);
 
 			// attributo che indica la media dei valori richiesto dalla statistica
 			double mediaEventiMese = minMaxAverage.mediaNumeroEventiMese(numberArray);
-			//System.out.println(mediaEventiMese);
+			System.out.println(mediaEventiMese);
 			
-			//MinMaxAverageFilter mmaFilter= new MinMaxAverageFilter();
-			//mmaFilter.minMaxAverageFilterFunction(eventiFiltratiPerStati);
-			//System.out.println("mmaFilter");
+			MinMaxAverageFilter mmaFilter= new MinMaxAverageFilter();
+			mmaFilter.minMaxAverageFilterFunction(eventiFiltratiPerStati, periodoPersonalizzato);
 			
-			
-			System.out.println("ciao");
+	
 			if (generi.isEmpty()) {
 				responso.put("numero totale di eventi", eventiFiltratiPerStati.size());
 				responso.put("eventi", eventiFiltratiPerStati);
@@ -288,6 +287,7 @@ public class EventiController {
 				throw new EventiException();
 			}
 			
+			//responso.put("numero totale di eventi per ogni stato", NumTotEventi.statsNumTotEventi(callFiltro));
 			responso.put("numero totale di eventi", eventiFiltratiPerGeneri.size());
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
