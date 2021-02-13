@@ -11,6 +11,11 @@ package it.univpm.progetto.studenti.ticketmaster.stats;
  */
 public class MinMaxAverage {
 	
+	private int minimoMese;
+	private int massimoMese;
+	private double mediaMese;
+	
+	public MinMaxAverage() {}
 	
 	/**
 	 * 
@@ -55,11 +60,9 @@ public class MinMaxAverage {
 	 * @return minimo è il minimo cercato dalla statistica
 	 *
 	 */
-	public static int minimoNumeroEventiMese(int[] numEventi) {
-		
-		int minimo= 0;
-		minimo= numEventi[0];
-		return minimo;
+	public int minimoNumeroEventiMese(int[] numEventi) {
+		this.minimoMese= numEventi[0];
+		return this.minimoMese;
 	}
 	
 	/**
@@ -73,10 +76,9 @@ public class MinMaxAverage {
 	 */
 	public int massimoNumeroEventiMese(int[] numEventi) {
 		
-		int massimo= 0;
 		int maxLength= numEventi.length-1;
-		massimo= numEventi[maxLength];
-		return massimo;
+		this.massimoMese= numEventi[maxLength];
+		return this.massimoMese;
 	}
 	
 	/**
@@ -90,14 +92,13 @@ public class MinMaxAverage {
 	 */
 	public double mediaNumeroEventiMese(int[] numEventi) {
 		
-		double media= 0;
 		int[] accumulatore= new int[1];
 		for(int i= 0; i<numEventi.length; i++) {
 			
 			accumulatore[0]+= numEventi[i];
 		}
 		int lunghezzaArray= numEventi.length;
-		media= (double)accumulatore[0]/(double)lunghezzaArray;
-		return media;
+		this.mediaMese= (double)accumulatore[0]/(double)lunghezzaArray;
+		return this.mediaMese;
 	}
 }

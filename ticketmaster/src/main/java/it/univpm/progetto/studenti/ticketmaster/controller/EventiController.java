@@ -229,8 +229,8 @@ public class EventiController {
 //			
 //			System.out.println(fin - init);
 			Vector<Eventi> eventiFiltratiPerStati = new Vector<Eventi>();
-			MinMaxAverage minMaxAverage = new MinMaxAverage();
-
+			Vector<MinMaxAverage> minMaxAverage = new Vector<MinMaxAverage>();
+			
 			for (int i = 0; i < chiamateEv.size(); i++) {
 
 				Vector<Eventi> evTemp = chiamateEv.elementAt(i);
@@ -242,20 +242,10 @@ public class EventiController {
 				int[] numberArray = sc.numeroEventi(evFiltrati);
 				
 				// oggetto per l'ordinamento del numero eventi in ciascun mese
-				minMaxAverage.sortSelectedEvents(numberArray);
-
-				// attributo che indica il valore minimo richiesto dalla statistica
-				int numMinEventiMese = minMaxAverage.minimoNumeroEventiMese(numberArray);
-				System.out.println(numMinEventiMese);
-
-				// attributo che indica il valore massimo richiesto dalla statistica
-				int numMaxEventiMese = minMaxAverage.massimoNumeroEventiMese(numberArray);
-				System.out.println(numMaxEventiMese);
-
-				// attributo che indica la media dei valori richiesto dalla statistica
-				double mediaEventiMese = minMaxAverage.mediaNumeroEventiMese(numberArray);
-				System.out.println(mediaEventiMese);
-
+				minMaxAverage.elementAt(i).sortSelectedEvents(numberArray);
+				responso.put("numero minimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).minimoNumeroEventiMese(numberArray));
+				responso.put("numero massimo mensile di eventi in ogni stato", minMaxAverage.elementAt(i).massimoNumeroEventiMese(numberArray));
+				responso.put("numero medio mensile di eventi in ogni stato", minMaxAverage.elementAt(i).mediaNumeroEventiMese(numberArray));
 			}
 			
 			if (eventiFiltratiPerStati.isEmpty()) {
@@ -287,7 +277,7 @@ public class EventiController {
 			}
 			
 			responso.put("numero totale eventi", contatoreEventiPerStati);
-			//responso.put("numero minimo mensile di eventi in ogni stato", minMaxAverage);
+			//responso.put("numero minimo mensile di eventi in ogni stato", minMaxAverage.minimoNumeroEventiMese(numberArray));
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
 		} catch (EventiException e) {
