@@ -11,6 +11,7 @@ package it.univpm.progetto.studenti.ticketmaster.stats;
  */
 public class MinMaxAverage {
 	
+	
 	/**
 	 * 
 	 * Metodo che consente di ordinare l'array contenente il numero di
@@ -54,7 +55,7 @@ public class MinMaxAverage {
 	 * @return minimo è il minimo cercato dalla statistica
 	 *
 	 */
-	public int minimoNumeroEventiMese(int[] numEventi) {
+	public static int minimoNumeroEventiMese(int[] numEventi) {
 		
 		int minimo= 0;
 		minimo= numEventi[0];
