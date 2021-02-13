@@ -102,3 +102,9 @@ implementazione
 tratteggiata esprime dipendenza
 (intefacce e abstract non hanno
 istanze)
+
+
+
+Riferimenti :
+ http://www.di.unito.it/~baldoni/didattica/aa0203/ProgInRete/
+ ->UML Intro_Diag-Casiuso_Diag-Classi_Diag-Seq.pdf
