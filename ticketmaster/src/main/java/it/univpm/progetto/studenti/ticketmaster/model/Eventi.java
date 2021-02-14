@@ -21,6 +21,11 @@ public class Eventi {
 	private String url;
 	
 	/**
+	 * Variabile che descrive la citta dell'evento
+	 */
+	private String citta;
+	
+	/**
 	 * Variabile che descrive lo stato in cui si terrà l'evento
 	 */
 	private String stato;
@@ -34,6 +39,11 @@ public class Eventi {
 	 * Variabile che descrive anno/mese/giorno dell'evento
 	 */
 	private LocalDate data;
+	
+	/**
+	 * Variabile che descrive ora/minuti/secondi di inizio dell'evento
+	 */
+	private String ora;
 	
 	/**
 	 * Variabile che descrive il genere dell'evento
@@ -55,16 +65,22 @@ public class Eventi {
 	 * 
 	 * @param n Assegna il nome all'evento
 	 * @param u Assegna l'url all'evento
+	 * @param c Assegna la citta all'evento
 	 * @param s Assegna lo stato all'evento
 	 * @param p Assegna il paese all'evento
 	 * @param d Assegna la data all'evento
+	 * @param o Assegna l'ora d'inizio all'evento
+	 * @param g Assegna il genere all'evento
+	 * @param sG Assegna il sotto genere all'evento
 	 */
-	public Eventi(String n, String u, String s, String p, LocalDate d, String g, String sG) {
+	public Eventi(String n, String u, String c, String s, String p, LocalDate d, String o, String g, String sG) {
 		this.nome = n;
 		this.url = u;
+		this.citta = c;
 		this.stato = s;
 		this.paese = p;
-		this.data= d;
+		this.data = d;
+		this.ora = o;
 		this.genere = g;
 		this.sottoGenere = sG;
 	}
@@ -103,6 +119,24 @@ public class Eventi {
 	 */
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	/**
+	 * Getter dell'attributo citta
+	 * 
+	 * @return citta
+	 */
+	public String getCitta() {
+		return citta;
+	}
+
+	/**
+	 * Setter dell'attributo citta
+	 * 
+	 * @param citta Parametro del setter
+	 */
+	public void setCitta(String citta) {
+		this.citta = citta;
 	}
 
 	/**
@@ -160,6 +194,24 @@ public class Eventi {
 	}
 
 	/**
+	 * Getter dell'attributo ora
+	 * 
+	 * @return ora
+	 */
+	public String getOra() {
+		return ora;
+	}
+
+	/**
+	 * Setter dell'attributo ora
+	 * 
+	 * @param ora Parametro del setter
+	 */
+	public void setOra(String ora) {
+		this.ora = ora;
+	}
+	
+	/**
 	 * Getter dell'attributo genere
 	 * 
 	 * @return genere
@@ -194,4 +246,5 @@ public class Eventi {
 	public void setSottoGenere(String sottoGenere) {
 		this.sottoGenere = sottoGenere;
 	}
+
 }

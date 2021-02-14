@@ -58,6 +58,7 @@ public class EventiParser {
 				JSONObject start = (JSONObject) dates.get("start");
 				String localDate = (String) start.get("localDate");
 				LocalDate locDt = MinMaxAverageFilter.dateConverter(localDate);
+				String localTime = (String) start.get("localTime");
 				
 				JSONArray classifications = (JSONArray) eventoTemp.get("classifications");
 				
@@ -75,16 +76,20 @@ public class EventiParser {
 				
 				JSONObject venuesTemp = (JSONObject) venues.get(0);
 				
+				JSONObject city = (JSONObject) venuesTemp.get("city");
+				String cityName = (String) city.get("name");
+				
 				JSONObject state = (JSONObject) venuesTemp.get("state");
 				String stateName = (String) state.get("name");
 				
 				JSONObject country = (JSONObject) venuesTemp.get("country");
 				String countryName = (String) country.get("name");
 				
-				Eventi e = new Eventi(name, url, stateName, countryName, locDt, nameGenre, nameSubGenre);
-				
+				Eventi e = new Eventi(name, url, cityName, stateName, countryName, locDt, localTime, 
+						nameGenre, nameSubGenre);
+
 				listaEventi.add(e);
-				
+			
 			}
 			
 		} catch (ParseException e) {

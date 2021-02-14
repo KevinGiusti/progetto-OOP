@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"it.univpm.progetto.studenti.ticketmaster.controller"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"it.univpm.progetto.studenti.ticketmaster.model"}];updateSearchResults();

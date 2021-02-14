@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"it.univpm.progetto.studenti.ticketmaster.controller","l":"EventiController"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"it.univpm.progetto.studenti.ticketmaster.model","l":"Eventi"}];updateSearchResults();
