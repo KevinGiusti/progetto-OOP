@@ -83,57 +83,57 @@ public class EventiController {
 	 * 
 	 */
 	private static Vector<String> stati;
-	
+
 	/**
 	 * 
 	 */
 	private static Vector<String> paesi;
-	
+
 	/**
 	 * 
 	 */
 	private static Vector<String> australia;
-	
+
 	/**
 	 * 
 	 */
 	private static Vector<String> newZealand;
-	
+
 	/**
 	 * 
 	 */
 	private static Vector<Vector<Eventi>> chiamateEv;
-	
+
 	/**
 	 * 
 	 */
 	private static Vector<Eventi> eventiFiltratiPerStati;
-	
+
 	/**
 	 * 
 	 */
 	private static LinkedHashMap<String, MinMaxAverage> minMaxAverage;
-	
+
 	/**
 	 * 
 	 */
 	private static LinkedHashMap<String, MinMaxAverage> minMaxAverageFilter;
-	
+
 	/**
 	 * 
 	 */
 	private static Vector<Eventi> evFiltratiPerStato;
-	
+
 	/**
 	 * 
 	 */
 	private static MinMaxAverage mMA;
-	
+
 	/**
 	 * 
 	 */
 	private static int[] numberArray;
-	
+
 	/**
 	 * 
 	 * 
@@ -143,7 +143,7 @@ public class EventiController {
 	@SuppressWarnings("unchecked")
 	@PostMapping("/eventi")
 	public JSONObject eventi(@RequestBody EventiBody eB) {
-		
+
 		responso = new JSONObject();
 		generi = eB.getGeneri();
 		periodo = eB.getPeriodo();
@@ -159,65 +159,41 @@ public class EventiController {
 		eventiFiltratiPerStati = new Vector<Eventi>();
 		minMaxAverage = new LinkedHashMap<String, MinMaxAverage>();
 		minMaxAverageFilter = new LinkedHashMap<String, MinMaxAverage>();
-		
-		
+
 		try {
-			
+
 			controlloStatiEventiBody(eB);
-			
+
 			popolatoreStati();
-			
+
 			controlloSpazioECaseSensitivePerStati();
 
 			controlloSpazioESlashECaseSensitivePerGeneri();
-			
+
 			popolatorePaesi();
-			
+
 			popolatoreAustralia();
-			
+
 			popolatoreNewZealand();
-			
+
 			algoritmoChiamataEventi();
-			
+
 			filtroStati();
 
-
-			
-			
-			
-
-			
-
-			if (eventiFiltratiPerStati.isEmpty()) {
-				key = "Attenzione";
-				value = "Non ci sono eventi disponibili";
-				throw new EventiException();
-			}
+			controlloFiltroStati();
 
 			if (generi.isEmpty()) {
 
-				HashSet<String> generiHash = new HashSet<String>();
+				controlloGeneriEventiBody();
 
-				for (Eventi e : eventiFiltratiPerStati)
-					generiHash.add(e.getGenere());
-				
-				for (String g : generiHash) {
-					
-					int cont = GeneriFilter.filterByGenre(g, eventiFiltratiPerStati).size();
-					contatoreEventiPerGeneri.put(g, cont);
-					
-				}
-
-				responso.put("numero totale eventi", contatoreEventiPerStati);
-				responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
-				if(periodo.isEmpty())
-					responso.put("statistiche mensili di eventi", minMaxAverage);
-				else
-					responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
-				responso.put("eventi", eventiFiltratiPerStati);
 				return responso;
+
 			}
 
+			
+			
+			
+			
 			Vector<Eventi> eventiFiltratiPerGeneri = new Vector<Eventi>();
 
 			for (int i = 0; i < generi.size(); i++) {
@@ -237,21 +213,20 @@ public class EventiController {
 
 			responso.put("numero totale eventi", contatoreEventiPerStati);
 			responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
-			if(periodo.isEmpty())
+			if (periodo.isEmpty())
 				responso.put("statistiche mensili di eventi", minMaxAverage);
 			else
 				responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
 			responso.put("eventi", eventiFiltratiPerGeneri);
-			
-		}catch(
 
-	EventiException e)
-	{
-		responso = e.generaJSON(key, value);
-	}
+		} catch (
 
-	return responso;
-	
+		EventiException e) {
+			responso = e.generaJSON(key, value);
+		}
+
+		return responso;
+
 	}
 
 	/**
@@ -293,7 +268,8 @@ public class EventiController {
 	}
 
 	/**
-	 * Metodo ausiliario che effettua un controllo sulla virgola per le stringhe del vettore stati
+	 * Metodo ausiliario che effettua un controllo sulla virgola per le stringhe del
+	 * vettore stati
 	 * 
 	 * @param s Stringa del vettore stati da controllare
 	 * @throws EventiException
@@ -311,10 +287,10 @@ public class EventiController {
 	}
 
 	/**
-	 * Metodo ausiliario che effettua un doppio controllo sullo spazio
-	 * e sul Case Sensitive delle stringhe del vettore stati
+	 * Metodo ausiliario che effettua un doppio controllo sullo spazio e sul Case
+	 * Sensitive delle stringhe del vettore stati
 	 * 
-	 * @throws EventiException 
+	 * @throws EventiException
 	 */
 	private static void controlloSpazioECaseSensitivePerStati() throws EventiException {
 
@@ -343,24 +319,25 @@ public class EventiController {
 
 				s = new String(cArr);
 				stati.set(i, s);
-			
+
 			}
-		
+
 			generatoreSuggerimentiPerStati(s, i);
-			
+
 		}
-	
+
 	}
 
 	/**
 	 * Metodo che genera i suggerimenti per il vettore stati
 	 * 
 	 * @param s Stringa del vettore stati da analizzare
-	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del vettore stati
+	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del
+	 *          vettore stati
 	 * @throws EventiException
 	 */
 	private static void generatoreSuggerimentiPerStati(String s, int i) throws EventiException {
-		
+
 		if (!statiScanner.contains(s)) {
 
 			Vector<String> suggerimenti = new Vector<String>();
@@ -373,30 +350,29 @@ public class EventiController {
 			}
 
 			if (suggerimenti.isEmpty()) {
-				
+
 				key = "Attenzione";
 				value = "Nessuno stato inizia per " + s.charAt(0) + ". Lista stati: " + statiScanner;
 				throw new EventiException();
-			
+
 			}
-			
+
 			key = "Suggerimento";
-			value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
-					+ " del vettore stati";
+			value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1) + " del vettore stati";
 			throw new EventiException();
 
 		}
-		
+
 	}
-	
+
 	/**
 	 * Metodo ausiliario che effettua un triplo controllo sullo spazio, sullo slash
 	 * e sul Case Sensitive delle stringhe del vettore generi
 	 * 
-	 * @throws EventiException 
+	 * @throws EventiException
 	 */
 	private static void controlloSpazioESlashECaseSensitivePerGeneri() throws EventiException {
-		
+
 		for (int i = 0; i < generi.size(); i++) {
 
 			String temp = generi.elementAt(i);
@@ -408,14 +384,14 @@ public class EventiController {
 				generi.set(i, g);
 
 			} else {
-				
+
 				String t = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
 				char[] cArr = t.toCharArray(); // Trasforma la stringa in array di char
 
 				for (int j = 0; j < cArr.length; j++) {
 
 					char c = cArr[j];
-					
+
 					if ((c == ' ' || c == '/') && j != cArr.length - 1)
 						cArr[j + 1] = Character.toUpperCase(cArr[j + 1]);
 
@@ -423,24 +399,25 @@ public class EventiController {
 
 				g = new String(cArr);
 				generi.set(i, g);
-				
+
 			}
 
 			generatoreSuggerimentiPerGeneri(g, i);
 
 		}
-		
+
 	}
-	
+
 	/**
 	 * Metodo che genera i suggerimenti per il vettore generi
 	 * 
 	 * @param g Stringa del vettore generi da analizzare
-	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del vettore stati
+	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del
+	 *          vettore stati
 	 * @throws EventiException
 	 */
 	private static void generatoreSuggerimentiPerGeneri(String g, int i) throws EventiException {
-		
+
 		if (!generiScanner.contains(generi.elementAt(i))) {
 
 			Vector<String> suggerimenti = new Vector<String>();
@@ -453,29 +430,28 @@ public class EventiController {
 			}
 
 			if (suggerimenti.isEmpty()) {
-				
+
 				key = "Attenzione";
 				value = "Nessun genere inizia per " + g.charAt(0) + ". Lista generi: " + generiScanner;
 				throw new EventiException();
-			
+
 			}
 
 			key = "Suggerimento";
-			value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
-					+ " del vettore generi";
+			value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1) + " del vettore generi";
 			throw new EventiException();
 
 		}
-		
+
 	}
-	
+
 	/**
 	 * Metodo ausiliario che popola il vettore paesi
 	 * 
 	 * @throws EventiException
 	 */
 	private static void popolatorePaesi() throws EventiException {
-		
+
 		for (int i = 0; i < statiPaesi.size(); i++) {
 
 			String p = statiPaesi.elementAt(i);
@@ -486,55 +462,58 @@ public class EventiController {
 		}
 
 	}
-	
+
 	/**
-	 * Metodo ausiliario che effettua un controllo sulla virgola per le stringhe del vettore paesi
+	 * Metodo ausiliario che effettua un controllo sulla virgola per le stringhe del
+	 * vettore paesi
 	 * 
-	 * @param i Iteratore del ciclo for che scorre le stringhe del vettore statiPaesi
+	 * @param i Iteratore del ciclo for che scorre le stringhe del vettore
+	 *          statiPaesi
 	 * @throws EventiException
 	 */
 	private static void controlloVirgolaPerPaesi(int i) throws EventiException {
-		
+
 		if (paesi.elementAt(i).contains(",")) {
-			
+
 			key = "Errore";
 			value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
 			throw new EventiException();
-		
+
 		}
-		
+
 	}
 
 	/**
 	 * Metodo ausiliario che popola il vettore australia
 	 */
 	private static void popolatoreAustralia() {
-		
+
 		australia.addAll(statiScanner);
 		australia.remove(australia.size() - 1);
 		australia.add("AU");
-		
+
 	}
-	
+
 	/**
 	 * Metodo ausiliario che popola il vettore newZealand
 	 */
 	private static void popolatoreNewZealand() {
-		
+
 		newZealand.add(statiScanner.elementAt(statiScanner.size() - 1));
 		newZealand.add("NZ");
-		
+
 	}
 
 	/**
-	 * Metodo ausiliario che effettua l'algoritmo utile per la chiamata alla rotta events dell'API di ticketmaster.
-	 * L'algoritmo evita di ripetere chiamate inutili, effettuandole in base ai paesi (2 nel nostro caso)
-	 * e copiando la chiamata nelle successive ripetizioni per paesi uguali
+	 * Metodo ausiliario che effettua l'algoritmo utile per la chiamata alla rotta
+	 * events dell'API di ticketmaster. L'algoritmo evita di ripetere chiamate
+	 * inutili, effettuandole in base ai paesi (2 nel nostro caso) e copiando la
+	 * chiamata nelle successive ripetizioni per paesi uguali
 	 * 
 	 * @throws EventiException
 	 */
 	private static void algoritmoChiamataEventi() throws EventiException {
-		
+
 		for (int i = 0; i < paesi.size(); i++) {
 
 			String p = paesi.elementAt(i);
@@ -571,83 +550,138 @@ public class EventiController {
 			}
 
 		}
-		
+
 	}
-	
+
 	/**
 	 * Metodo ausiliario che effettua un filtro per stati sul vettore chiamateEv
 	 */
 	private static void filtroStati() {
-		
+
 		for (int i = 0; i < chiamateEv.size(); i++) {
 
 			Vector<Eventi> evTemp = chiamateEv.elementAt(i);
 			evFiltratiPerStato = StatiFilter.filterByState(stati.elementAt(i), evTemp);
-			
+
 			eventiFiltratiPerStati.addAll(evFiltratiPerStato);
-			
+
 			contatoreEventiPerStati.put("in " + stati.elementAt(i), evFiltratiPerStato.size());
-			
+
 			DatesStatistics dS = new DatesStatistics();
-			
+
 			statisticheMensili(dS, i);
-			
-			if(!periodo.isEmpty())
+
+			if (!periodo.isEmpty())
 				filtroStatistichePeriodiche(mMA, numberArray, i);
-			
-			
+
 		}
-		
+
 	}
-	
+
 	/**
-	 * Metodo ausiliario che effettua le statistiche minimo, massimo e media in un periodo di default di 30 giorni
+	 * Metodo ausiliario che effettua le statistiche minimo, massimo e media in un
+	 * periodo di default di 30 giorni
 	 * 
 	 * @param dS Oggetto della classe DatesStatistics
-	 * @param i Iteratore del ciclo for che scorre gli oggetti del vettore chiamateEv
+	 * @param i  Iteratore del ciclo for che scorre gli oggetti del vettore
+	 *           chiamateEv
 	 */
 	private static void statisticheMensili(DatesStatistics dS, int i) {
-		
+
 		mMA = new MinMaxAverage();
-		
+
 		numberArray = dS.numeroEventi(evFiltratiPerStato);
-		
+
 		mMA.sortSelectedEvents(numberArray);
-		
+
 		mMA.minimoNumeroEventiMese(numberArray);
 		mMA.massimoNumeroEventiMese(numberArray);
 		mMA.mediaNumeroEventiMese(numberArray);
-		
+
 		minMaxAverage.put("in " + stati.elementAt(i), mMA);
-		
+
 	}
-	
+
 	/**
-	 * Metodo ausiliario che effettua un filtro sulle statistiche minimo, massimo e media, 
-	 * al fine di produrre queste statistiche in un periodo di tempo personalizzato
+	 * Metodo ausiliario che effettua un filtro sulle statistiche minimo, massimo e
+	 * media, al fine di produrre queste statistiche in un periodo di tempo
+	 * personalizzato
 	 * 
 	 * @param mMA
 	 * @param numberArray
 	 * @param i
 	 */
 	private static void filtroStatistichePeriodiche(MinMaxAverage mMA, int[] numberArray, int i) {
-		
-			MinMaxAverageFilter mma= new MinMaxAverageFilter();
-			
-			int[] numArray= mma.minMaxAverageFilterFunction(evFiltratiPerStato, periodo);
-			
-			numberArray = numArray;
-			
-			mMA.sortSelectedEvents(numberArray);
-			
-			mMA.minimoNumeroEventiMese(numberArray);
-			mMA.massimoNumeroEventiMese(numberArray);
-			mMA.mediaNumeroEventiMese(numberArray);
-			
-			minMaxAverageFilter.put("in " + stati.elementAt(i), mMA);
-		
+
+		MinMaxAverageFilter mma = new MinMaxAverageFilter();
+
+		int[] numArray = mma.minMaxAverageFilterFunction(evFiltratiPerStato, periodo);
+
+		numberArray = numArray;
+
+		mMA.sortSelectedEvents(numberArray);
+
+		mMA.minimoNumeroEventiMese(numberArray);
+		mMA.massimoNumeroEventiMese(numberArray);
+		mMA.mediaNumeroEventiMese(numberArray);
+
+		minMaxAverageFilter.put("in " + stati.elementAt(i), mMA);
+
 	}
-	
+
+	/**
+	 * Metodo ausiliario che effettua un controllo nel caso in cui non ci fossero
+	 * eventi disponibili dopo il filtro per stati
+	 * 
+	 * @throws EventiException
+	 */
+	private static void controlloFiltroStati() throws EventiException {
+
+		if (eventiFiltratiPerStati.isEmpty()) {
+
+			key = "Attenzione";
+			value = "Non ci sono eventi disponibili";
+			throw new EventiException();
+
+		}
+
+	}
+
+	/**
+	 * Metodo ausiliario che effettua un controllo sul vettore di generi
+	 * dell'oggetto eB, vedendo se è vuoto e ritornando un responso alternativo
+	 * 
+	 * @param eB Oggetto della classe EventiBody
+	 * @return responso
+	 */
+	@SuppressWarnings("unchecked")
+	private static void controlloGeneriEventiBody() {
+
+		HashSet<String> generiHash = new HashSet<String>();
+
+		for (Eventi e : eventiFiltratiPerStati)
+			generiHash.add(e.getGenere());
+
+		for (String g : generiHash) {
+
+			int cont = GeneriFilter.filterByGenre(g, eventiFiltratiPerStati).size();
+			contatoreEventiPerGeneri.put(g, cont);
+
+		}
+
+		responso.put("numero totale eventi", contatoreEventiPerStati);
+
+		responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
+
+		if (periodo.isEmpty())
+			responso.put("statistiche mensili di eventi", minMaxAverage);
+		else
+			responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
+
+		responso.put("eventi", eventiFiltratiPerStati);
+
+	}
+
 	
 	
 }
