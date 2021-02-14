@@ -121,6 +121,21 @@ public class EventiController {
 	
 	/**
 	 * 
+	 */
+	private static Vector<Eventi> evFiltratiPerStato;
+	
+	/**
+	 * 
+	 */
+	private static MinMaxAverage mMA;
+	
+	/**
+	 * 
+	 */
+	private static int[] numberArray;
+	
+	/**
+	 * 
 	 * 
 	 * @param eB
 	 * @return
@@ -164,47 +179,14 @@ public class EventiController {
 			
 			algoritmoChiamataEventi();
 			
-			
+			filtroStati();
 
 
 			
 			
 			
 
-			for (int i = 0; i < chiamateEv.size(); i++) {
-
-				Vector<Eventi> evTemp = chiamateEv.elementAt(i);
-				Vector<Eventi> evFiltrati = StatiFilter.filterByState(stati.elementAt(i), evTemp);
-				eventiFiltratiPerStati.addAll(evFiltrati);
-				contatoreEventiPerStati.put("in " + stati.elementAt(i), evFiltrati.size());
-				
-
-				// oggetto per il calcolo eventi per ciascun mese/periodo
-				DatesStatistics sc = new DatesStatistics();
-				
-				MinMaxAverage mMA = new MinMaxAverage();
-				int[] numberArray = sc.numeroEventi(evFiltrati);
-				mMA.sortSelectedEvents(numberArray);
-				mMA.minimoNumeroEventiMese(numberArray);
-				mMA.massimoNumeroEventiMese(numberArray);
-				mMA.mediaNumeroEventiMese(numberArray);
-				minMaxAverage.put("in " + stati.elementAt(i), mMA);
-				for(int n : numberArray)
-					System.out.println(n);
-				
-				if(!periodo.isEmpty()) {
-				MinMaxAverageFilter mma= new MinMaxAverageFilter();
-				int[] numArray= mma.minMaxAverageFilterFunction(evFiltrati, periodo);
-				numberArray = numArray;
-				mMA.sortSelectedEvents(numberArray);
-				mMA.minimoNumeroEventiMese(numberArray);
-				mMA.massimoNumeroEventiMese(numberArray);
-				mMA.mediaNumeroEventiMese(numberArray);
-				minMaxAverageFilter.put("in " + stati.elementAt(i), mMA);
-//				for(int n : numArray)
-//					System.out.println(n);
-				}
-			}
+			
 
 			if (eventiFiltratiPerStati.isEmpty()) {
 				key = "Attenzione";
@@ -544,6 +526,13 @@ public class EventiController {
 		
 	}
 
+	/**
+	 * Metodo ausiliario che effettua l'algoritmo utile per la chiamata alla rotta events dell'API di ticketmaster.
+	 * L'algoritmo evita di ripetere chiamate inutili, effettuandole in base ai paesi (2 nel nostro caso)
+	 * e copiando la chiamata nelle successive ripetizioni per paesi uguali
+	 * 
+	 * @throws EventiException
+	 */
 	private static void algoritmoChiamataEventi() throws EventiException {
 		
 		for (int i = 0; i < paesi.size(); i++) {
@@ -584,5 +573,81 @@ public class EventiController {
 		}
 		
 	}
+	
+	/**
+	 * Metodo ausiliario che effettua un filtro per stati sul vettore chiamateEv
+	 */
+	private static void filtroStati() {
+		
+		for (int i = 0; i < chiamateEv.size(); i++) {
+
+			Vector<Eventi> evTemp = chiamateEv.elementAt(i);
+			evFiltratiPerStato = StatiFilter.filterByState(stati.elementAt(i), evTemp);
+			
+			eventiFiltratiPerStati.addAll(evFiltratiPerStato);
+			
+			contatoreEventiPerStati.put("in " + stati.elementAt(i), evFiltratiPerStato.size());
+			
+			DatesStatistics dS = new DatesStatistics();
+			
+			statisticheMensili(dS, i);
+			
+			if(!periodo.isEmpty())
+				filtroStatistichePeriodiche(mMA, numberArray, i);
+			
+			
+		}
+		
+	}
+	
+	/**
+	 * Metodo ausiliario che effettua le statistiche minimo, massimo e media in un periodo di default di 30 giorni
+	 * 
+	 * @param dS Oggetto della classe DatesStatistics
+	 * @param i Iteratore del ciclo for che scorre gli oggetti del vettore chiamateEv
+	 */
+	private static void statisticheMensili(DatesStatistics dS, int i) {
+		
+		mMA = new MinMaxAverage();
+		
+		numberArray = dS.numeroEventi(evFiltratiPerStato);
+		
+		mMA.sortSelectedEvents(numberArray);
+		
+		mMA.minimoNumeroEventiMese(numberArray);
+		mMA.massimoNumeroEventiMese(numberArray);
+		mMA.mediaNumeroEventiMese(numberArray);
+		
+		minMaxAverage.put("in " + stati.elementAt(i), mMA);
+		
+	}
+	
+	/**
+	 * Metodo ausiliario che effettua un filtro sulle statistiche minimo, massimo e media, 
+	 * al fine di produrre queste statistiche in un periodo di tempo personalizzato
+	 * 
+	 * @param mMA
+	 * @param numberArray
+	 * @param i
+	 */
+	private static void filtroStatistichePeriodiche(MinMaxAverage mMA, int[] numberArray, int i) {
+		
+			MinMaxAverageFilter mma= new MinMaxAverageFilter();
+			
+			int[] numArray= mma.minMaxAverageFilterFunction(evFiltratiPerStato, periodo);
+			
+			numberArray = numArray;
+			
+			mMA.sortSelectedEvents(numberArray);
+			
+			mMA.minimoNumeroEventiMese(numberArray);
+			mMA.massimoNumeroEventiMese(numberArray);
+			mMA.mediaNumeroEventiMese(numberArray);
+			
+			minMaxAverageFilter.put("in " + stati.elementAt(i), mMA);
+		
+	}
+	
+	
 	
 }
