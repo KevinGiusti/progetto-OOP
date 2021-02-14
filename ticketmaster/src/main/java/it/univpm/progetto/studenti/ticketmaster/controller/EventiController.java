@@ -747,6 +747,10 @@ public class EventiController {
 				
 				String data = periodo.elementAt(k);
 				
+				if(data.length() != 10) {
+					controlloScritturaMese();
+				}
+				
 				char firstNumber = data.charAt(5);
 				char secondNumber = data.charAt(6);
 				
@@ -878,6 +882,10 @@ public class EventiController {
 			for(int k = 0; k < 2; k++) {
 				
 				String data = periodo.elementAt(k);
+				
+				if(data.length() != 10) {
+					controlloScritturaMese();
+				}
 				
 				Vector<Character> dataVector = new Vector<Character>();
 				
