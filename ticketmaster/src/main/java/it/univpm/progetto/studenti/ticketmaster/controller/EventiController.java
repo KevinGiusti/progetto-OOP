@@ -133,7 +133,17 @@ public class EventiController {
 	 * 
 	 */
 	private static int[] numberArray;
-
+	
+	/**
+	 * 
+	 */
+	private static Vector<Eventi> eventiFiltratiPerGeneri;
+	
+	/**
+	 * 
+	 */
+	private static Vector<Eventi> evFiltratiPerGenere;
+	
 	/**
 	 * 
 	 * 
@@ -159,7 +169,8 @@ public class EventiController {
 		eventiFiltratiPerStati = new Vector<Eventi>();
 		minMaxAverage = new LinkedHashMap<String, MinMaxAverage>();
 		minMaxAverageFilter = new LinkedHashMap<String, MinMaxAverage>();
-
+		eventiFiltratiPerGeneri = new Vector<Eventi>();
+		
 		try {
 
 			controlloStatiEventiBody(eB);
@@ -190,33 +201,19 @@ public class EventiController {
 
 			}
 
+			filtroGeneri();
 			
-			
-			
-			
-			Vector<Eventi> eventiFiltratiPerGeneri = new Vector<Eventi>();
-
-			for (int i = 0; i < generi.size(); i++) {
-
-				String g = generi.elementAt(i);
-				Vector<Eventi> evFiltrati = GeneriFilter.filterByGenre(g, eventiFiltratiPerStati);
-				eventiFiltratiPerGeneri.addAll(evFiltrati);
-				contatoreEventiPerGeneri.put(generi.elementAt(i), evFiltrati.size());
-
-			}
-
-			if (eventiFiltratiPerGeneri.isEmpty()) {
-				key = "Attenzione";
-				value = "Non ci sono eventi disponibili";
-				throw new EventiException();
-			}
+			controlloFiltroGeneri();
 
 			responso.put("numero totale eventi", contatoreEventiPerStati);
+			
 			responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
+			
 			if (periodo.isEmpty())
 				responso.put("statistiche mensili di eventi", minMaxAverage);
 			else
 				responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
+			
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
 		} catch (
@@ -682,6 +679,40 @@ public class EventiController {
 
 	}
 
+	/**
+	 * Metodo ausiliario che effettua un filtro per generi sul vettore eventiFiltratiPerStati 
+	 */
+	private static void filtroGeneri() {
+		
+		for (int i = 0; i < generi.size(); i++) {
+
+			String g = generi.elementAt(i);
+			evFiltratiPerGenere = GeneriFilter.filterByGenre(g, eventiFiltratiPerStati);
+			
+			eventiFiltratiPerGeneri.addAll(evFiltratiPerGenere);
+			
+			contatoreEventiPerGeneri.put(generi.elementAt(i), evFiltratiPerGenere.size());
+
+		}
+		
+	}
 	
+	/**
+	 * Metodo ausiliario che effettua un controllo nel caso in cui non ci fossero
+	 * eventi disponibili dopo il filtro per generi
+	 * 
+	 * @throws EventiException
+	 */
+	private static void controlloFiltroGeneri() throws EventiException {
+		
+		if (eventiFiltratiPerGeneri.isEmpty()) {
+			
+			key = "Attenzione";
+			value = "Non ci sono eventi disponibili";
+			throw new EventiException();
+		
+		}
+		
+	}
 	
 }
