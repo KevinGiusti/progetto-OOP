@@ -83,6 +83,11 @@ public class EventiController {
 	 * 
 	 */
 	private static Vector<String> stati;
+	
+	/**
+	 * 
+	 */
+	private static Vector<String> paesi;
 
 	/**
 	 * 
@@ -102,6 +107,7 @@ public class EventiController {
 		contatoreEventiPerStati = new LinkedHashMap<String, Integer>();
 		contatoreEventiPerGeneri = new LinkedHashMap<String, Integer>();
 		stati = new Vector<String>();
+		paesi = new Vector<String>();
 		
 		try {
 			
@@ -109,78 +115,14 @@ public class EventiController {
 			
 			popolatoreStati();
 			
-			controlloSpazioECaseSensitive();
+			controlloSpazioECaseSensitivePerStati();
 
+			controlloSpazioESlashECaseSensitive();
+			
+			popolatorePaesi();
+			
 
-			for (int i = 0; i < generi.size(); i++) {
-
-				String temp = generi.elementAt(i);
-
-				String g = null;
-
-				if (!(temp.contains(" ") || temp.contains("/"))) {
-
-					g = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
-					generi.set(i, g);
-
-				} else {
-					String t = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
-					char[] cArr = t.toCharArray(); // Trasforma la stringa in array di char
-
-					for (int j = 0; j < cArr.length; j++) {
-
-						char c = cArr[j];
-						if ((c == ' ' || c == '/') && j != cArr.length - 1)
-							cArr[j + 1] = Character.toUpperCase(cArr[j + 1]);
-
-					}
-
-					g = new String(cArr);
-
-					generi.set(i, g);
-				}
-
-				if (!generiScanner.contains(generi.elementAt(i))) {
-
-					Vector<String> suggerimenti = new Vector<String>();
-
-					for (String sugg : generiScanner) {
-
-						if (sugg.charAt(0) == g.charAt(0))
-							suggerimenti.add(sugg);
-
-					}
-
-					if (suggerimenti.isEmpty()) {
-						key = "Attenzione";
-						value = "Nessun genere inizia per " + g.charAt(0) + ". Lista generi: " + generiScanner;
-						throw new EventiException();
-					}
-
-					key = "Suggerimento";
-					value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
-							+ " del vettore generi";
-					throw new EventiException();
-
-				}
-
-			}
-
-			Vector<String> paesi = new Vector<String>();
-
-			for (int i = 0; i < statiPaesi.size(); i++) {
-
-				String p = statiPaesi.elementAt(i);
-				paesi.add(p.substring(p.length() - 2, p.length()));
-
-				if (paesi.elementAt(i).contains(",")) {
-					key = "Errore";
-					value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
-					throw new EventiException();
-				}
-
-			}
-
+			
 //			long init = System.currentTimeMillis();
 
 			Vector<String> australia = new Vector<String>();
@@ -377,7 +319,7 @@ public class EventiController {
 	}
 
 	/**
-	 * Metodo ausiliario che effettua un controllo sulla virgola
+	 * Metodo ausiliario che effettua un controllo sulla virgola per le stringhe del vettore stati
 	 * 
 	 * @param s Stringa del vettore stati da controllare
 	 * @throws EventiException
@@ -400,7 +342,7 @@ public class EventiController {
 	 * 
 	 * @throws EventiException 
 	 */
-	private static void controlloSpazioECaseSensitive() throws EventiException {
+	private static void controlloSpazioECaseSensitivePerStati() throws EventiException {
 
 		for (int i = 0; i < stati.size(); i++) {
 
@@ -430,7 +372,7 @@ public class EventiController {
 			
 			}
 		
-			generatoreSuggerimenti(s, i);
+			generatoreSuggerimentiPerStati(s, i);
 			
 		}
 	
@@ -443,7 +385,7 @@ public class EventiController {
 	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del vettore stati
 	 * @throws EventiException
 	 */
-	private static void generatoreSuggerimenti(String s, int i) throws EventiException {
+	private static void generatoreSuggerimentiPerStati(String s, int i) throws EventiException {
 		
 		if (!statiScanner.contains(s)) {
 
@@ -469,6 +411,122 @@ public class EventiController {
 					+ " del vettore stati";
 			throw new EventiException();
 
+		}
+		
+	}
+	
+	/**
+	 * Metodo ausiliario che effettua un triplo controllo sullo spazio, sullo slash
+	 * e sul Case Sensitive delle stringhe del vettore generi
+	 * 
+	 * @throws EventiException 
+	 */
+	private static void controlloSpazioESlashECaseSensitive() throws EventiException {
+		
+		for (int i = 0; i < generi.size(); i++) {
+
+			String temp = generi.elementAt(i);
+			String g = null;
+
+			if (!(temp.contains(" ") || temp.contains("/"))) {
+
+				g = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+				generi.set(i, g);
+
+			} else {
+				
+				String t = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+				char[] cArr = t.toCharArray(); // Trasforma la stringa in array di char
+
+				for (int j = 0; j < cArr.length; j++) {
+
+					char c = cArr[j];
+					
+					if ((c == ' ' || c == '/') && j != cArr.length - 1)
+						cArr[j + 1] = Character.toUpperCase(cArr[j + 1]);
+
+				}
+
+				g = new String(cArr);
+				generi.set(i, g);
+				
+			}
+
+			generatoreSuggerimentiPerGeneri(g, i);
+
+		}
+		
+	}
+	
+	/**
+	 * Metodo che genera i suggerimenti per il vettore generi
+	 * 
+	 * @param g Stringa del vettore generi da analizzare
+	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del vettore stati
+	 * @throws EventiException
+	 */
+	private static void generatoreSuggerimentiPerGeneri(String g, int i) throws EventiException {
+		
+		if (!generiScanner.contains(generi.elementAt(i))) {
+
+			Vector<String> suggerimenti = new Vector<String>();
+
+			for (String sugg : generiScanner) {
+
+				if (sugg.charAt(0) == g.charAt(0))
+					suggerimenti.add(sugg);
+
+			}
+
+			if (suggerimenti.isEmpty()) {
+				
+				key = "Attenzione";
+				value = "Nessun genere inizia per " + g.charAt(0) + ". Lista generi: " + generiScanner;
+				throw new EventiException();
+			
+			}
+
+			key = "Suggerimento";
+			value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
+					+ " del vettore generi";
+			throw new EventiException();
+
+		}
+		
+	}
+	
+	/**
+	 * Metodo ausiliario che popola il vettore paesi
+	 * 
+	 * @throws EventiException
+	 */
+	private static void popolatorePaesi() throws EventiException {
+		
+		for (int i = 0; i < statiPaesi.size(); i++) {
+
+			String p = statiPaesi.elementAt(i);
+			paesi.add(p.substring(p.length() - 2, p.length()));
+
+			controlloVirgolaPerPaesi(i);
+
+		}
+
+	}
+	
+	/**
+	 * Metodo ausiliario che effettua un controllo sulla virgola per le stringhe del vettore paesi
+	 * 
+	 * @param i Iteratore del ciclo for che scorre le stringhe del vettore statiPaesi
+	 * @throws EventiException
+	 */
+	private static void controlloVirgolaPerPaesi(int i) throws EventiException {
+		
+		if (paesi.elementAt(i).contains(",")) {
+			
+			key = "Errore";
+			value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
+			throw new EventiException();
+		
 		}
 		
 	}
