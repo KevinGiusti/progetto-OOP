@@ -22,110 +22,95 @@ import it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics;
 import it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage;
 
 /**
- * 
  * Controller della rotta eventi che ritorna una serie di eventi filtrati
  * 
  * @author RoccoAnzivino
- *
  */
 @RestController
 public class EventiController {
 
-	private String key;
-	private String value;
+	/**
+	 *  
+	 */
+	private static String key;
 
+	/**
+	 * 
+	 */
+	private static String value;
+
+	/**
+	 * 
+	 */
+	private static JSONObject responso;
+
+	/**
+	 * 
+	 */
+	private static Vector<String> statiPaesi;
+
+	/**
+	 * 
+	 */
+	private static Vector<String> generi;
+
+	/**
+	 * 
+	 */
+	private static Vector<String> periodo;
+
+	/**
+	 * 
+	 */
+	private static Vector<String> statiScanner;
+
+	/**
+	 * 
+	 */
+	private static Vector<String> generiScanner;
+
+	/**
+	 * 
+	 */
+	private static LinkedHashMap<String, Integer> contatoreEventiPerStati;
+
+	/**
+	 * 
+	 */
+	private static LinkedHashMap<String, Integer> contatoreEventiPerGeneri;
+
+	/**
+	 * 
+	 */
+	private static Vector<String> stati;
+
+	/**
+	 * 
+	 * 
+	 * @param eB
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@PostMapping("/eventi")
 	public JSONObject eventi(@RequestBody EventiBody eB) {
-//		long init = System.currentTimeMillis();
-		JSONObject responso = new JSONObject();
-		Vector<String> statiPaesi = null;
-		Vector<String> generi = eB.getGeneri();
-		Vector<String> periodo = eB.getPeriodo();
-		Vector<String> statiScanner = StatiScanner.getStati();
-		Vector<String> generiScanner = GeneriScanner.getGeneri();
-		LinkedHashMap<String, Integer> contatoreEventiPerStati = new LinkedHashMap<String, Integer>();
-		LinkedHashMap<String, Integer> contatoreEventiPerGeneri = new LinkedHashMap<String, Integer>();
-
+		
+		responso = new JSONObject();
+		generi = eB.getGeneri();
+		periodo = eB.getPeriodo();
+		statiScanner = StatiScanner.getStati();
+		generiScanner = GeneriScanner.getGeneri();
+		contatoreEventiPerStati = new LinkedHashMap<String, Integer>();
+		contatoreEventiPerGeneri = new LinkedHashMap<String, Integer>();
+		stati = new Vector<String>();
+		
 		try {
+			
+			controlloStatiEventiBody(eB);
+			
+			popolatoreStati();
+			
+			controlloSpazioECaseSensitive();
 
-			if (!eB.getStati().isEmpty())
-				statiPaesi = eB.getStati();
-			else {
-				key = "Attenzione";
-				value = "Non è stato specificato nessuno stato. Lista stati: " + statiScanner;
-				throw new EventiException();
-			}
-
-			Vector<String> stati = new Vector<String>();
-
-			for (int i = 0; i < statiPaesi.size(); i++) {
-
-				String s = statiPaesi.elementAt(i);
-
-				if (!s.contains(",")) {
-					key = "Errore";
-					value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
-					throw new EventiException();
-				}
-
-				stati.add(s.substring(0, s.indexOf(",")));
-
-			}
-
-			for (int i = 0; i < stati.size(); i++) {
-
-				String temp = stati.elementAt(i);
-				String s = null;
-
-				if (!temp.contains(" ")) {
-
-					s = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
-					stati.set(i, s);
-
-				} else {
-
-					String t = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
-					char[] cArr = t.toCharArray(); // Trasforma la stringa in array di char
-
-					for (int j = 0; j < cArr.length; j++) {
-
-						char c = cArr[j];
-						if (c == ' ' && j != cArr.length - 1)
-							cArr[j + 1] = Character.toUpperCase(cArr[j + 1]);
-
-					}
-
-					s = new String(cArr);
-
-					stati.set(i, s);
-				}
-
-				if (!statiScanner.contains(s)) {
-
-					Vector<String> suggerimenti = new Vector<String>();
-
-					for (String sugg : statiScanner) {
-
-						if (sugg.charAt(0) == s.charAt(0))
-							suggerimenti.add(sugg);
-
-					}
-
-					if (suggerimenti.isEmpty()) {
-						key = "Attenzione";
-						value = "Nessuno stato inizia per " + s.charAt(0) + ". Lista stati: " + statiScanner;
-						throw new EventiException();
-					}
-					key = "Suggerimento";
-					value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
-							+ " del vettore stati";
-
-					throw new EventiException();
-
-				}
-
-			}
 
 			for (int i = 0; i < generi.size(); i++) {
 
@@ -343,10 +328,149 @@ public class EventiController {
 				responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
 			responso.put("eventi", eventiFiltratiPerGeneri);
 			
-		} catch (EventiException e) {
-			responso = e.generaJSON(key, value);
+		}catch(
+
+	EventiException e)
+	{
+		responso = e.generaJSON(key, value);
+	}
+
+	return responso;
+	}
+
+	/**
+	 * Metodo ausiliario che effettua un controllo sul vettore di stati dell'oggetto
+	 * eB, vedendo se è vuoto
+	 * 
+	 * @param eB Oggetto della classe EventiBody
+	 * @throws EventiException
+	 */
+	private static void controlloStatiEventiBody(EventiBody eB) throws EventiException {
+
+		if (!eB.getStati().isEmpty())
+			statiPaesi = eB.getStati();
+		else {
+			key = "Attenzione";
+			value = "Non è stato specificato nessuno stato. Lista stati: " + statiScanner;
+			throw new EventiException();
 		}
 
-		return responso;
 	}
+
+	/**
+	 * Metodo ausiliario che popola il vettore stati
+	 * 
+	 * @throws EventiException
+	 */
+	private static void popolatoreStati() throws EventiException {
+
+		for (int i = 0; i < statiPaesi.size(); i++) {
+
+			String s = statiPaesi.elementAt(i);
+
+			controlloVirgolaPerStati(s);
+
+			stati.add(s.substring(0, s.indexOf(",")));
+
+		}
+
+	}
+
+	/**
+	 * Metodo ausiliario che effettua un controllo sulla virgola
+	 * 
+	 * @param s Stringa del vettore stati da controllare
+	 * @throws EventiException
+	 */
+	private static void controlloVirgolaPerStati(String s) throws EventiException {
+
+		if (!s.contains(",")) {
+
+			key = "Errore";
+			value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
+			throw new EventiException();
+
+		}
+
+	}
+
+	/**
+	 * Metodo ausiliario che effettua un doppio controllo sullo spazio
+	 * e sul Case Sensitive delle stringhe del vettore stati
+	 * 
+	 * @throws EventiException 
+	 */
+	private static void controlloSpazioECaseSensitive() throws EventiException {
+
+		for (int i = 0; i < stati.size(); i++) {
+
+			String temp = stati.elementAt(i);
+			String s = null;
+
+			if (!temp.contains(" ")) {
+
+				s = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+				stati.set(i, s);
+
+			} else {
+
+				String t = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+				char[] cArr = t.toCharArray(); // Trasforma la stringa in array di char
+
+				for (int j = 0; j < cArr.length; j++) {
+
+					char c = cArr[j];
+					if (c == ' ' && j != cArr.length - 1)
+						cArr[j + 1] = Character.toUpperCase(cArr[j + 1]);
+
+				}
+
+				s = new String(cArr);
+				stati.set(i, s);
+			
+			}
+		
+			generatoreSuggerimenti(s, i);
+			
+		}
+	
+	}
+
+	/**
+	 * Metodo che genera i suggerimenti per il vettore stati
+	 * 
+	 * @param s Stringa del vettore stati da analizzare
+	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del vettore stati
+	 * @throws EventiException
+	 */
+	private static void generatoreSuggerimenti(String s, int i) throws EventiException {
+		
+		if (!statiScanner.contains(s)) {
+
+			Vector<String> suggerimenti = new Vector<String>();
+
+			for (String sugg : statiScanner) {
+
+				if (sugg.charAt(0) == s.charAt(0))
+					suggerimenti.add(sugg);
+
+			}
+
+			if (suggerimenti.isEmpty()) {
+				
+				key = "Attenzione";
+				value = "Nessuno stato inizia per " + s.charAt(0) + ". Lista stati: " + statiScanner;
+				throw new EventiException();
+			
+			}
+			
+			key = "Suggerimento";
+			value = "Forse volevi inserire " + suggerimenti + " nell'elemento " + (i + 1)
+					+ " del vettore stati";
+			throw new EventiException();
+
+		}
+		
+	}
+	
 }
