@@ -88,7 +88,37 @@ public class EventiController {
 	 * 
 	 */
 	private static Vector<String> paesi;
-
+	
+	/**
+	 * 
+	 */
+	private static Vector<String> australia;
+	
+	/**
+	 * 
+	 */
+	private static Vector<String> newZealand;
+	
+	/**
+	 * 
+	 */
+	private static Vector<Vector<Eventi>> chiamateEv;
+	
+	/**
+	 * 
+	 */
+	private static Vector<Eventi> eventiFiltratiPerStati;
+	
+	/**
+	 * 
+	 */
+	private static LinkedHashMap<String, MinMaxAverage> minMaxAverage;
+	
+	/**
+	 * 
+	 */
+	private static LinkedHashMap<String, MinMaxAverage> minMaxAverageFilter;
+	
 	/**
 	 * 
 	 * 
@@ -108,6 +138,13 @@ public class EventiController {
 		contatoreEventiPerGeneri = new LinkedHashMap<String, Integer>();
 		stati = new Vector<String>();
 		paesi = new Vector<String>();
+		australia = new Vector<String>();
+		newZealand = new Vector<String>();
+		chiamateEv = new Vector<Vector<Eventi>>();
+		eventiFiltratiPerStati = new Vector<Eventi>();
+		minMaxAverage = new LinkedHashMap<String, MinMaxAverage>();
+		minMaxAverageFilter = new LinkedHashMap<String, MinMaxAverage>();
+		
 		
 		try {
 			
@@ -117,68 +154,22 @@ public class EventiController {
 			
 			controlloSpazioECaseSensitivePerStati();
 
-			controlloSpazioESlashECaseSensitive();
+			controlloSpazioESlashECaseSensitivePerGeneri();
 			
 			popolatorePaesi();
 			
+			popolatoreAustralia();
+			
+			popolatoreNewZealand();
+			
+			algoritmoChiamataEventi();
+			
+			
+
 
 			
-//			long init = System.currentTimeMillis();
-
-			Vector<String> australia = new Vector<String>();
-			australia.addAll(statiScanner);
-			australia.remove(australia.size() - 1);
-			australia.add("AU");
-
-			Vector<String> newZealand = new Vector<String>();
-			newZealand.add(statiScanner.elementAt(statiScanner.size() - 1));
-			newZealand.add("NZ");
-
-			Vector<Vector<Eventi>> chiamateEv = new Vector<Vector<Eventi>>();
-
-			for (int i = 0; i < paesi.size(); i++) {
-
-				String p = paesi.elementAt(i);
-
-				String s = stati.elementAt(i);
-
-				if (p.equals("AU") || p.equals("NZ")) {
-
-					if ((australia.contains(p) && australia.contains(s))
-							|| (newZealand.contains(p) && newZealand.contains(s))) {
-
-						Vector<String> subPaesi = new Vector<String>();
-
-						for (int h = 0; h < i; h++) {
-							String subP = paesi.elementAt(h);
-							subPaesi.add(subP);
-						}
-
-						if (!subPaesi.contains(p)) {
-
-							chiamateEv.add(ChiamataEventi.chiamata(p));
-
-						} else
-							chiamateEv.add(chiamateEv.elementAt(subPaesi.indexOf(p)));
-					} else {
-						key = "Errore";
-						value = "Lo stato " + s + " non appartiene al paese " + p;
-						throw new EventiException();
-					}
-				} else {
-					key = "Errore";
-					value = "Lo stato " + p + " non è disponibile";
-					throw new EventiException();
-				}
-
-			}
-
-//			long fin = System.currentTimeMillis();
-//			
-//			System.out.println(fin - init);
-			Vector<Eventi> eventiFiltratiPerStati = new Vector<Eventi>();
-			LinkedHashMap<String, MinMaxAverage> minMaxAverage = new LinkedHashMap<String, MinMaxAverage>();
-			LinkedHashMap<String, MinMaxAverage> minMaxAverageFilter = new LinkedHashMap<String, MinMaxAverage>();
+			
+			
 
 			for (int i = 0; i < chiamateEv.size(); i++) {
 
@@ -278,6 +269,7 @@ public class EventiController {
 	}
 
 	return responso;
+	
 	}
 
 	/**
@@ -421,7 +413,7 @@ public class EventiController {
 	 * 
 	 * @throws EventiException 
 	 */
-	private static void controlloSpazioESlashECaseSensitive() throws EventiException {
+	private static void controlloSpazioESlashECaseSensitivePerGeneri() throws EventiException {
 		
 		for (int i = 0; i < generi.size(); i++) {
 
@@ -527,6 +519,68 @@ public class EventiController {
 			value = "Il formato consentito nel vettore 'stati' è il seguente: 'Stato, Paese'";
 			throw new EventiException();
 		
+		}
+		
+	}
+
+	/**
+	 * Metodo ausiliario che popola il vettore australia
+	 */
+	private static void popolatoreAustralia() {
+		
+		australia.addAll(statiScanner);
+		australia.remove(australia.size() - 1);
+		australia.add("AU");
+		
+	}
+	
+	/**
+	 * Metodo ausiliario che popola il vettore newZealand
+	 */
+	private static void popolatoreNewZealand() {
+		
+		newZealand.add(statiScanner.elementAt(statiScanner.size() - 1));
+		newZealand.add("NZ");
+		
+	}
+
+	private static void algoritmoChiamataEventi() throws EventiException {
+		
+		for (int i = 0; i < paesi.size(); i++) {
+
+			String p = paesi.elementAt(i);
+
+			String s = stati.elementAt(i);
+
+			if (p.equals("AU") || p.equals("NZ")) {
+
+				if ((australia.contains(p) && australia.contains(s))
+						|| (newZealand.contains(p) && newZealand.contains(s))) {
+
+					Vector<String> subPaesi = new Vector<String>();
+
+					for (int h = 0; h < i; h++) {
+						String subP = paesi.elementAt(h);
+						subPaesi.add(subP);
+					}
+
+					if (!subPaesi.contains(p)) {
+
+						chiamateEv.add(ChiamataEventi.chiamata(p));
+
+					} else
+						chiamateEv.add(chiamateEv.elementAt(subPaesi.indexOf(p)));
+				} else {
+					key = "Errore";
+					value = "Lo stato " + s + " non appartiene al paese " + p;
+					throw new EventiException();
+				}
+			} else {
+				key = "Errore";
+				value = "Lo stato " + p + " non è disponibile";
+				throw new EventiException();
+			}
+
 		}
 		
 	}
