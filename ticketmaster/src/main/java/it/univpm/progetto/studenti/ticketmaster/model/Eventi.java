@@ -3,81 +3,54 @@ package it.univpm.progetto.studenti.ticketmaster.model;
 import java.time.LocalDate;
 
 /**
- * 
  * Classe che definisce gli eventi 
  * 
  * @author RoccoAnzivino
- *
+ * @author KevinGiusti
  */
 public class Eventi {
 
 	/**
-	 * 
 	 * Variabile che descrive il nome dell'evento
-	 * 
 	 */
 	private String nome;
 	
 	/**
-	 * 
 	 * Variabile che descrive l'url dell'evento
-	 * 
 	 */
 	private String url;
 	
 	/**
-	 * 
 	 * Variabile che descrive lo stato in cui si terrà l'evento
-	 * 
 	 */
 	private String stato;
 	
 	/**
-	 * 
 	 * Variabile che descrive il paese in cui si terrà l'evento
-	 * 
 	 */
 	private String paese;
 	
-	
-	
-	//LocalDate Attributes SECTION
-	
 	/**
-	 * 
 	 * Variabile che descrive anno/mese/giorno dell'evento
-	 * 
 	 */
 	private LocalDate data;
 	
-	
-	
 	/**
-	 * 
 	 * Variabile che descrive il genere dell'evento
-	 * 
 	 */
 	private String genere;
 	
 	/**
-	 * 
 	 * Variabile che descrive il sotto genere dell'evento
-	 * 
 	 */
 	private String sottoGenere;
 	
-	
-	//Builder Method SECTION
-	
 	/**
-	 * 
 	 * Costruttore di default utile a inizializzare gli eventi
-	 * 
 	 */
 	public Eventi() {}	
 	
 	/**
-	 * 
 	 * Costruttore utile a inizializzare gli eventi
 	 * 
 	 * @param n Assegna il nome all'evento
@@ -85,7 +58,6 @@ public class Eventi {
 	 * @param s Assegna lo stato all'evento
 	 * @param p Assegna il paese all'evento
 	 * @param d Assegna la data all'evento
-	 * 
 	 */
 	public Eventi(String n, String u, String s, String p, LocalDate d, String g, String sG) {
 		this.nome = n;
@@ -98,7 +70,6 @@ public class Eventi {
 	}
 	
 	/**
-	 * 
 	 * Getter dell'attributo nome
 	 * 
 	 * @return nome 
@@ -108,7 +79,6 @@ public class Eventi {
 	}
 
 	/**
-	 * 
 	 * Setter dell'attributo nome
 	 * 
 	 * @param nome Parametro del setter
@@ -118,7 +88,6 @@ public class Eventi {
 	}
 
 	/**
-	 * 
 	 * Getter dell'attributo url
 	 * 
 	 * @return url
@@ -128,7 +97,6 @@ public class Eventi {
 	}
 
 	/**
-	 * 
 	 * Setter dell'attributo url
 	 * 
 	 * @param url Parametro del setter
@@ -138,7 +106,6 @@ public class Eventi {
 	}
 
 	/**
-	 * 
 	 * Getter dell'attributo stato
 	 * 
 	 * @return stato
@@ -148,7 +115,6 @@ public class Eventi {
 	}
 
 	/**
-	 * 
 	 * Setter dell'attributo stato
 	 * 
 	 * @param stato Parametro del setter
@@ -158,7 +124,6 @@ public class Eventi {
 	}
 
 	/**
-	 * 
 	 * Getter dell'attributo paese
 	 * 
 	 * @return paese
@@ -168,7 +133,6 @@ public class Eventi {
 	}
 
 	/**
-	 * 
 	 * Setter dell'attributo paese
 	 * 
 	 * @param paese Parametro del setter
@@ -178,7 +142,6 @@ public class Eventi {
 	}
 	
 	/**
-	 * 
 	 * Getter dell'attributo localDate
 	 * 
 	 * @return localDate
@@ -188,7 +151,6 @@ public class Eventi {
 	}
 	
 	/**
-	 * 
 	 * Setter dell'attributo localDate
 	 * 
 	 * @param localDate Parametro del setter
@@ -198,28 +160,36 @@ public class Eventi {
 	}
 
 	/**
-	 * @return the genere
+	 * Getter dell'attributo genere
+	 * 
+	 * @return genere
 	 */
 	public String getGenere() {
 		return genere;
 	}
 
 	/**
-	 * @param genere the genere to set
+	 * Setter dell'attributo genere
+	 * 
+	 * @param genere Parametro del setter
 	 */
 	public void setGenere(String genere) {
 		this.genere = genere;
 	}
 
 	/**
-	 * @return the sottoGenere
+	 * Getter dell'attributo sottoGenere
+	 * 
+	 * @return sottoGenere
 	 */
 	public String getSottoGenere() {
 		return sottoGenere;
 	}
 
 	/**
-	 * @param sottoGenere the sottoGenere to set
+	 * Setter dell'attributo sottoGenere
+	 * 
+	 * @param sottoGenere Parametro del setter
 	 */
 	public void setSottoGenere(String sottoGenere) {
 		this.sottoGenere = sottoGenere;

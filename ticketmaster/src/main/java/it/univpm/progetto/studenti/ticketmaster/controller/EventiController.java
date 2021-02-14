@@ -25,130 +25,141 @@ import it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage;
  * Controller della rotta eventi che ritorna una serie di eventi filtrati
  * 
  * @author RoccoAnzivino
+ * @author KevinGiusti
  */
 @RestController
 public class EventiController {
 
 	/**
-	 *  
+	 *  Variabile che descrive la chiave del responso nelle eccezioni
 	 */
 	private static String key;
 
 	/**
-	 * 
+	 * Variabile che descrive il valore delle chiavi del responso nelle eccezioni
 	 */
 	private static String value;
 
 	/**
-	 * 
+	 * Variabile che descrive il responso ottenuto a partire dal body fornito dall'utente
 	 */
 	private static JSONObject responso;
 
 	/**
-	 * 
+	 * Variabile che immagazzina il vettore stati dell'oggetto EventiBody
 	 */
 	private static Vector<String> statiPaesi;
 
 	/**
-	 * 
+	 * Variabile che immagazzina il vettore generi dell'oggetto EventiBody
 	 */
 	private static Vector<String> generi;
 
 	/**
-	 * 
+	 * Variabile che immagazzina il vettore periodo dell'oggetto EventiBody
 	 */
 	private static Vector<String> periodo;
 
 	/**
-	 * 
+	 * Variabile che immagazzina il vettore statiVect dell'oggetto StatiScanner
 	 */
 	private static Vector<String> statiScanner;
 
 	/**
-	 * 
+	 * Variabile che immagazzina il vettore generiVect dell'oggetto GeneriScanner
 	 */
 	private static Vector<String> generiScanner;
 
 	/**
-	 * 
+	 * Variabile che contiene le coppie di chiave/valore che descrivono
+	 * il numero totale di eventi per ogni stato inserito nel body
 	 */
 	private static LinkedHashMap<String, Integer> contatoreEventiPerStati;
 
 	/**
-	 * 
+	 * Variabile che contiene le coppie di chiave/valore che descrivono
+	 * il numero totale di eventi per ogni genere inserito nel body
 	 */
 	private static LinkedHashMap<String, Integer> contatoreEventiPerGeneri;
 
 	/**
-	 * 
+	 * Variabile che contiene l'informazione relativa allo stato, presa dal vettore statiPaesi
 	 */
 	private static Vector<String> stati;
 
 	/**
-	 * 
+	 * Variabile che contiene l'informazione relativa ai paesi, presa dal vettore statiPaesi
 	 */
 	private static Vector<String> paesi;
 
 	/**
-	 * 
+	 * Variabile che contiene tutti gli stati dell'Australia con l'aggiunta del codice nazionale
 	 */
 	private static Vector<String> australia;
 
 	/**
-	 * 
+	 * Variabile che contiene tutti gli stati della Nuova Zelanda con l'aggiunta del codice nazionale
 	 */
 	private static Vector<String> newZealand;
 
 	/**
-	 * 
+	 * Variabile che contiene i vettori di eventi relativi a ogni chiamata per ogni paese (max 2 nel nostro caso)
 	 */
 	private static Vector<Vector<Eventi>> chiamateEv;
 
 	/**
-	 * 
+	 * Variabile che contiene gli eventi che sono stati filtrati tramite gli stati inseriti nel body dall'utente
 	 */
 	private static Vector<Eventi> eventiFiltratiPerStati;
 
 	/**
-	 * 
+	 * Variabile che contiene le coppie chiave/valore che descrivono le informazioni
+	 * relative alle statistiche minimo, massimo e media mensili
 	 */
 	private static LinkedHashMap<String, MinMaxAverage> minMaxAverage;
 
 	/**
-	 * 
+	 * Variabile che contiene le coppie chiave/valore che descrivono le informazioni
+	 * relative alle statistiche minimo, massimo e media filtrate
+	 * per un periodo personalizzato inserito dall'utente nel body
 	 */
 	private static LinkedHashMap<String, MinMaxAverage> minMaxAverageFilter;
 
 	/**
-	 * 
+	 * Variabile che contiene gli eventi per ogni stato inserito nel body dall'utente,
+	 * da cui poi viene generato il contatore contatoreEventiPerStati
 	 */
 	private static Vector<Eventi> evFiltratiPerStato;
 
 	/**
-	 * 
+	 * Oggetto della classe MinMaxAverage, il cui stato descrive le statistiche mensili minimo, massimo e media 
 	 */
 	private static MinMaxAverage mMA;
 
 	/**
-	 * 
+	 * Array di numeri interi che contiene le informazioni preliminari
+	 * dalle quali attingono le statistiche minimo, massimo e media
 	 */
 	private static int[] numberArray;
 	
 	/**
-	 * 
+	 * Variabile che contiene gli eventi che sono stati filtrati tramite i generi
+	 * inseriti nel body dall'utente a partire dagli eventi filtrati per stati
 	 */
 	private static Vector<Eventi> eventiFiltratiPerGeneri;
 	
 	/**
-	 * 
+	 * Variabile che contiene gli eventi per ogni genere inserito nel body dall'utente,
+	 * da cui poi viene generato il contatore contatoreEventiPerGeneri
 	 */
 	private static Vector<Eventi> evFiltratiPerGenere;
 	
 	/**
+	 * Metodo associato alla rotta post /eventi, che è in grado di generare
+	 * filtri e statistiche in base al body fornito dall'utente
 	 * 
-	 * 
-	 * @param eB
-	 * @return
+	 * @param eB Oggetto della classe EventiBody
+	 * @return responso
 	 */
 	@SuppressWarnings("unchecked")
 	@PostMapping("/eventi")
@@ -216,9 +227,7 @@ public class EventiController {
 			
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
-		} catch (
-
-		EventiException e) {
+		} catch (EventiException e) {
 			responso = e.generaJSON(key, value);
 		}
 
@@ -231,7 +240,7 @@ public class EventiController {
 	 * eB, vedendo se è vuoto
 	 * 
 	 * @param eB Oggetto della classe EventiBody
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void controlloStatiEventiBody(EventiBody eB) throws EventiException {
 
@@ -248,7 +257,7 @@ public class EventiController {
 	/**
 	 * Metodo ausiliario che popola il vettore stati
 	 * 
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void popolatoreStati() throws EventiException {
 
@@ -269,7 +278,7 @@ public class EventiController {
 	 * vettore stati
 	 * 
 	 * @param s Stringa del vettore stati da controllare
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void controlloVirgolaPerStati(String s) throws EventiException {
 
@@ -287,7 +296,7 @@ public class EventiController {
 	 * Metodo ausiliario che effettua un doppio controllo sullo spazio e sul Case
 	 * Sensitive delle stringhe del vettore stati
 	 * 
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void controlloSpazioECaseSensitivePerStati() throws EventiException {
 
@@ -331,7 +340,7 @@ public class EventiController {
 	 * @param s Stringa del vettore stati da analizzare
 	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del
 	 *          vettore stati
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void generatoreSuggerimentiPerStati(String s, int i) throws EventiException {
 
@@ -366,7 +375,7 @@ public class EventiController {
 	 * Metodo ausiliario che effettua un triplo controllo sullo spazio, sullo slash
 	 * e sul Case Sensitive delle stringhe del vettore generi
 	 * 
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void controlloSpazioESlashECaseSensitivePerGeneri() throws EventiException {
 
@@ -411,7 +420,7 @@ public class EventiController {
 	 * @param g Stringa del vettore generi da analizzare
 	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del
 	 *          vettore stati
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void generatoreSuggerimentiPerGeneri(String g, int i) throws EventiException {
 
@@ -445,7 +454,7 @@ public class EventiController {
 	/**
 	 * Metodo ausiliario che popola il vettore paesi
 	 * 
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void popolatorePaesi() throws EventiException {
 
@@ -466,7 +475,7 @@ public class EventiController {
 	 * 
 	 * @param i Iteratore del ciclo for che scorre le stringhe del vettore
 	 *          statiPaesi
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void controlloVirgolaPerPaesi(int i) throws EventiException {
 
@@ -507,7 +516,7 @@ public class EventiController {
 	 * inutili, effettuandole in base ai paesi (2 nel nostro caso) e copiando la
 	 * chiamata nelle successive ripetizioni per paesi uguali
 	 * 
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void algoritmoChiamataEventi() throws EventiException {
 
@@ -604,9 +613,14 @@ public class EventiController {
 	 * media, al fine di produrre queste statistiche in un periodo di tempo
 	 * personalizzato
 	 * 
-	 * @param mMA
-	 * @param numberArray
-	 * @param i
+	 * @param mMA Oggetto della classe MinMaxAverage, il cui stato descrive
+	 * le statistiche mensili minimo, massimo e media
+	 * 
+	 * @param numberArray Array di numeri interi che contiene le informazioni preliminari
+	 * dalle quali attingono le statistiche minimo, massimo e media
+	 * 
+	 * @param i Iteratore del ciclo for che scorre gli oggetti del vettore
+	 *           chiamateEv
 	 */
 	private static void filtroStatistichePeriodiche(MinMaxAverage mMA, int[] numberArray, int i) {
 
@@ -630,7 +644,7 @@ public class EventiController {
 	 * Metodo ausiliario che effettua un controllo nel caso in cui non ci fossero
 	 * eventi disponibili dopo il filtro per stati
 	 * 
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void controlloFiltroStati() throws EventiException {
 
@@ -647,9 +661,6 @@ public class EventiController {
 	/**
 	 * Metodo ausiliario che effettua un controllo sul vettore di generi
 	 * dell'oggetto eB, vedendo se è vuoto e ritornando un responso alternativo
-	 * 
-	 * @param eB Oggetto della classe EventiBody
-	 * @return responso
 	 */
 	@SuppressWarnings("unchecked")
 	private static void controlloGeneriEventiBody() {
@@ -701,7 +712,7 @@ public class EventiController {
 	 * Metodo ausiliario che effettua un controllo nel caso in cui non ci fossero
 	 * eventi disponibili dopo il filtro per generi
 	 * 
-	 * @throws EventiException
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
 	 */
 	private static void controlloFiltroGeneri() throws EventiException {
 		

@@ -6,93 +6,105 @@ import java.time.temporal.ChronoUnit;
 import java.util.Vector;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
+/**
+ * Classe che consente di determinare il numero totale di eventi svolti in uno
+ * stato relativamente ad uno specifico periodo di tempo inserito dall'user
+ *
+ * @author KevinGiusti
+ */
 public class MinMaxAverageFilter {
 
 	/**
+	 * Metodo
 	 * 
-	 * Classe che consente di determinare il numero totale di eventi svolti in uno
-	 * stato relativamente ad uno specifico periodo di tempo inserito dall'user
-	 *
-	 * @author KevinGiusti
-	 *
+	 * @param listaEventi
+	 * @param datePeriodo
+	 * @return
 	 */
 	public int[] minMaxAverageFilterFunction(Vector<Eventi> listaEventi, Vector<String> datePeriodo) {
 
 		int[] numeroEventi = null;
 		
-//		System.out.println("dim datePeriodo "+datePeriodo.size());
-//		System.out.println("size listaEventi: "+listaEventi.size());
-			LocalDate dataIniziale = dateConverter(datePeriodo.elementAt(0));
-			LocalDate dataFinale = dateConverter(datePeriodo.elementAt(1));
-			int annoLimite = 0;
+		LocalDate dataIniziale = dateConverter(datePeriodo.elementAt(0));
+		
+		LocalDate dataFinale = dateConverter(datePeriodo.elementAt(1));
+		
+		int annoLimite = 0;
 
-			long periodo = ChronoUnit.DAYS.between(dataIniziale, dataFinale);
-//		System.out.println("days: "+periodo);
-			long[] periodiAdder = new long[1];
-			periodiAdder[0] = 0;
+		long periodo = ChronoUnit.DAYS.between(dataIniziale, dataFinale);
+		long[] periodiAdder = new long[1];
+		periodiAdder[0] = 0;
 
-			Eventi eventoScelto = new Eventi();
-			int[] massimaRipetizionePossibileDelPeriodo = new int[1];
-			massimaRipetizionePossibileDelPeriodo[0] = 1;
+		Eventi eventoScelto = new Eventi();
+		int[] massimaRipetizionePossibileDelPeriodo = new int[1];
+		massimaRipetizionePossibileDelPeriodo[0] = 1;
 
-			for (int i = 0; i < listaEventi.size(); i++) {
+		for (int i = 0; i < listaEventi.size(); i++) {
 
-				eventoScelto = listaEventi.get(i);
-				LocalDate dataEvento = eventoScelto.getData();
-				annoLimite = dataEvento.getYear();
+			eventoScelto = listaEventi.get(i);
+			LocalDate dataEvento = eventoScelto.getData();
+			annoLimite = dataEvento.getYear();
 
-				periodiAdder[0] += periodo;
-				// 728 poichè 365*2
-				if (periodiAdder[0] < 728) {
-					LocalDate dataAggiornata = dataIniziale.plusDays(periodiAdder[0]);
-					LocalDate dataLimite = LocalDate.of(annoLimite, Month.DECEMBER, 31);
+			periodiAdder[0] += periodo;
+			
+			if (periodiAdder[0] < 728) {
+				
+				LocalDate dataAggiornata = dataIniziale.plusDays(periodiAdder[0]);
+				LocalDate dataLimite = LocalDate.of(annoLimite, Month.DECEMBER, 31);
 
 					if (dataAggiornata.isBefore(dataLimite)) {
 						massimaRipetizionePossibileDelPeriodo[0] += 1;
 					} else
 						massimaRipetizionePossibileDelPeriodo[0] += 0;
-				}
+				
 			}
+			
+		}
 
-//		System.out.println("NUMERO PERIODI: "+massimaRipetizionePossibileDelPeriodo[0]);
+		periodiAdder[0] = 0;
 
-			periodiAdder[0] = 0;
+		numeroEventi = new int[massimaRipetizionePossibileDelPeriodo[0]];
+			
+		for (int j = 0; j < massimaRipetizionePossibileDelPeriodo[0]; j++) {
 
-			numeroEventi = new int[massimaRipetizionePossibileDelPeriodo[0]];
-			for (int j = 0; j < massimaRipetizionePossibileDelPeriodo[0]; j++) {
+			LocalDate dataAggiornataIniz = dataIniziale.plusDays(periodiAdder[0]);
+			LocalDate dataAggiornataFin = dataFinale.plusDays(periodiAdder[0]);
 
-//			System.out.println("periodiAdder "+periodiAdder[0]);
-				LocalDate dataAggiornataIniz = dataIniziale.plusDays(periodiAdder[0]);
-//			System.out.println("data aggggg "+ dataAggiornataIniz);
-				LocalDate dataAggiornataFin = dataFinale.plusDays(periodiAdder[0]);
+			for (int i = 0; i < listaEventi.size(); i++) {
 
-				for (int i = 0; i < listaEventi.size(); i++) {
-
-					eventoScelto = listaEventi.get(i);
-					LocalDate dataEvento = eventoScelto.getData();
-//				System.out.println("data aggggg prima del controllo "+ dataAggiornataIniz);
-//				System.out.println("data aggggg prima del controllo "+ dataAggiornataFin);
-					if ((dataEvento.isAfter(dataAggiornataIniz)) && (dataEvento.isBefore(dataAggiornataFin))) {
+				eventoScelto = listaEventi.get(i);
+				LocalDate dataEvento = eventoScelto.getData();
+					
+				if ((dataEvento.isAfter(dataAggiornataIniz)) && (dataEvento.isBefore(dataAggiornataFin))) {
 						numeroEventi[j] += 1;
 					} else {
 						numeroEventi[j] += 0;
 					}
-				}
-
-				periodiAdder[0] += periodo;
-
+				
 			}
-			
-//		for(int i= 0; i<numeroEventi.length; i++) {
-//			System.out.println("alolala "+numeroEventi[i]);
-//		}
 
+			periodiAdder[0] += periodo;
+
+			
+		}
+			
 		return numeroEventi;
+	
 	}
 
-	public LocalDate dateConverter(String date) {
+	/**
+	 * Metodo che converte una Stringa che contiene informazioni circa 
+	 * la data dell'evento considerato in un oggetto di tipo LocalDate
+	 * 
+	 * @param date Stringa che contiene il valore "yyyy-mm-dd" dal Json
+	 * @return locD Oggetto della classe LocalDate
+	 */
+	public static LocalDate dateConverter(String date) {
 
 		LocalDate locD = LocalDate.parse((CharSequence) date);
+		
 		return locD;
+	
 	}
+
 }

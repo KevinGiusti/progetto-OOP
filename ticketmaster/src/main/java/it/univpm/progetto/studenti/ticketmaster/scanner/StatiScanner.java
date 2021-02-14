@@ -7,16 +7,13 @@ import java.util.Scanner;
 import java.util.Vector;
 
 /**
- * 
  * Classe che scannerizza in lettura il file Stati.csv contenente gli stati
  * 
  * @author RoccoAnzivino
- *
  */
 public class StatiScanner {
 
 	/**
-	 * 
 	 * Metodo che restituisce un vettore di stringhe costituito dagli stati letti dal file
 	 * 
 	 * @return statiVect Vettore di stringhe contenenti gli stati del file

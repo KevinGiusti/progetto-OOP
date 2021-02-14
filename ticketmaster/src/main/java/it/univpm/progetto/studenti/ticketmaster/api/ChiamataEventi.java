@@ -12,16 +12,13 @@ import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.parser.EventiParser;
 
 /**
- * 
  * Classe contenente la chiamata alla rotta events
  * 
  * @author RoccoAnzivino
- *
  */
 public class ChiamataEventi {
 	
 	/**
-	 * 
 	 * Metodo static che effettua la chiamata alla rotta events 
 	 * e passa il json al metodo parse della classe EventiParser
 	 * 
@@ -36,11 +33,17 @@ public class ChiamataEventi {
 		
 		try {
 			
-			URL url = new URL("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=" + paese + "&apikey=GYG4nHiptHvMOEacUHSlhyHIYwA3zrI4");
+			URL url = new URL("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=" 
+								+ paese + "&apikey=GYG4nHiptHvMOEacUHSlhyHIYwA3zrI4");
+			
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+					
 			BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			
 			String json = input.readLine();
+			
 			EventiParser eP = new EventiParser();
+			
 			listaEventi = eP.parse(json);
 			
 		} catch (MalformedURLException e) {
@@ -48,6 +51,7 @@ public class ChiamataEventi {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return listaEventi;
 	
 	}

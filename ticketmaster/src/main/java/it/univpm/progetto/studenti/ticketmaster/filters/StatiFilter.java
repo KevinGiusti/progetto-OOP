@@ -5,16 +5,13 @@ import java.util.Vector;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
 /**
- * 
  * Classe che effettua un filtro sugli stati
  * 
  * @author RoccoAnzivino
- *
  */
 public class StatiFilter {
 
 	/**
-	 * 
 	 * Metodo che filtra per stati gli eventi
 	 * 
 	 * @param stato Definisce lo stato utilizzato per filtrare gli eventi

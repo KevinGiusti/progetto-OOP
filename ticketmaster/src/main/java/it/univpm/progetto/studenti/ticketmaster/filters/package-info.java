@@ -1,5 +1,4 @@
 /**
- *
  * Package contenente le classi che effettuano filtri
  * 
  * @author RoccoAnzivino

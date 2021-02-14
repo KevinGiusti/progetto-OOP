@@ -8,27 +8,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
 /**
- * 
  * Classe che analizza il codice json della chiamata alla rotta events dell'API di ticketmaster
  * 
  * @author RoccoAnzivino
- *
+ * @author KevinGiusti
  */
 public class EventiParser {
 
 	/**
-	 * 
 	 * Vettore di Eventi nel quale vengono inseriti gli eventi creati
 	 * a partire dal JSON e poi viene restituito alla classe ChiamataEventi
-	 *
 	 */
 	private Vector<Eventi> listaEventi;
 	
 	/**
-	 * 
 	 * Metodo che analizza il json della chiamata events e restituisce un vettore di eventi
 	 * 
 	 * @param chiamata Fornisce il codice json che viene analizzato dal metodo
@@ -56,11 +53,11 @@ public class EventiParser {
 				String name = (String) eventoTemp.get("name");
 				String url = (String) eventoTemp.get("url");
 				
-				JSONObject dates= (JSONObject) eventoTemp.get("dates");
+				JSONObject dates = (JSONObject) eventoTemp.get("dates");
 				
-				JSONObject start= (JSONObject) dates.get("start");
-				String localDate= (String) start.get("localDate");
-				LocalDate locDt= dateConverter(localDate);
+				JSONObject start = (JSONObject) dates.get("start");
+				String localDate = (String) start.get("localDate");
+				LocalDate locDt = MinMaxAverageFilter.dateConverter(localDate);
 				
 				JSONArray classifications = (JSONArray) eventoTemp.get("classifications");
 				
@@ -96,21 +93,6 @@ public class EventiParser {
 		
 		return listaEventi;
 		
-	}
-	
-	/**
-	 * 
-	 * Metodo che converte una Stringa che contiene informazioni circa 
-	 * la data dell'evento considerato in un oggetto di tipo LocalDate
-	 * 
-	 * @param date Stringa che contiene il valore "yyyy-mm-dd" dal Json
-	 * @return locD oggetto della classe LocalDate
-	 */
-	public LocalDate dateConverter(String date) {
-		
-		LocalDate locD= LocalDate.parse(date);
-		return locD;
-	
 	}
 
 }

@@ -5,16 +5,13 @@ import java.util.Vector;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
 /**
- * 
  * Classe che effettua un filtro sui generi
  * 
- * @author KejvinSkiti
- *
+ * @author RoccoAnzivino
  */
 public class GeneriFilter {
 
-	/**
-	 * 
+	/**s
 	 * Metodo che filtra per generi gli eventi
 	 * 
 	 * @param genere Definisce il genere utilizzato per filtrare gli eventi

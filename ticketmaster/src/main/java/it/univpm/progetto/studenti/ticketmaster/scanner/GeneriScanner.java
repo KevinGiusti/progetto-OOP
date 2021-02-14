@@ -7,16 +7,13 @@ import java.util.Scanner;
 import java.util.Vector;
 
 /**
- * 
  * Classe che scannerizza in lettura il file Generi.csv contenente i generi
  * 
  * @author RoccoAnzivino
- *
  */
 public class GeneriScanner {
 
 	/**
-	 * 
 	 * Metodo che restituisce un vettore di stringhe costituito dai generi letti dal file
 	 * 
 	 * @return generiVect Vettore di stringhe contenenti i generi del file

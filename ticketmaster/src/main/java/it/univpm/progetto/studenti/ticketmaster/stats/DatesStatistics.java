@@ -27,32 +27,31 @@ public class DatesStatistics {
 	 */
 	public int[] numeroEventi(Vector<Eventi> listaEventi) {
 		
-		int[] monthsEvents= new int[12];
+		int[] monthsEvents = new int[12];
 		
-		for(int i= 0; i<listaEventi.size(); i++) {
+		for(int i = 0; i < listaEventi.size(); i++) {
 			
-			Eventi eventoProv= new Eventi();
-			eventoProv= listaEventi.get(i);
-			LocalDate mese1= eventoProv.getData(); 
+			Eventi eventoProv = new Eventi();
+			eventoProv = listaEventi.get(i);
+			LocalDate mese1 = eventoProv.getData(); 
 
-			for(int j= 1; j<=12; j++) {
+			for(int j = 1; j <= 12; j++) {
 				
-				LocalDate mese2= mese1.withMonth(j);
+				LocalDate mese2 = mese1.withMonth(j);
 				
 				if(mese1.equals(mese2)) {
 					
-					int pre_counter= j-1;
-					monthsEvents[pre_counter]+=1;
+					int pre_counter = j - 1;
+					monthsEvents[pre_counter] += 1;
 				
-				}
-				else {
+				} else {
 					
-					int pre_counter= j-1;
+					int pre_counter = j - 1;
 					monthsEvents[pre_counter]+=0;
 				
 				}
 				
-				int accumulatore= j+1;
+				int accumulatore = j + 1;
 				mese2.plusMonths(accumulatore);
 				
 			}
