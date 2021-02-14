@@ -57,6 +57,7 @@ public class EventiParser {
 				
 				JSONObject start = (JSONObject) dates.get("start");
 				String localDate = (String) start.get("localDate");
+				
 				LocalDate locDt = MinMaxAverageFilter.dateConverter(localDate);
 				String localTime = (String) start.get("localTime");
 				

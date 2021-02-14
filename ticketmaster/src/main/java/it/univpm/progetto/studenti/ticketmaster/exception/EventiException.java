@@ -27,7 +27,7 @@ public class EventiException extends Exception {
 	 * 
 	 * @param key Descrive la chiave del responso nelle eccezioni
 	 * @param value Descrive il valore delle chiavi del responso nelle eccezioni
-	 * @return
+	 * @return responso 
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject generaJSON(String key, String value) {

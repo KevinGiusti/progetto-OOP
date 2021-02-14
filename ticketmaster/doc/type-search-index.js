@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"it.univpm.progetto.studenti.ticketmaster.model","l":"Eventi"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"it.univpm.progetto.studenti.ticketmaster.filters","l":"MinMaxAverageFilter"}];updateSearchResults();

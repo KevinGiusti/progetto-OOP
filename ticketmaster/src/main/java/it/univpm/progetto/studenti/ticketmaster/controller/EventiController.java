@@ -35,7 +35,7 @@ public class EventiController {
 	 */
 	private static String key;
 
-	/**
+	/** 
 	 * Variabile che descrive il valore delle chiavi del responso nelle eccezioni
 	 */
 	private static String value;
@@ -191,17 +191,21 @@ public class EventiController {
 			controlloSpazioECaseSensitivePerStati();
 
 			controlloSpazioESlashECaseSensitivePerGeneri();
-
+			
+			validatorePeriodi();
+						
 			popolatorePaesi();
 
 			popolatoreAustralia();
-
+			
 			popolatoreNewZealand();
-
+			
 			algoritmoChiamataEventi();
-
+			
 			filtroStati();
-
+			
+			controlloFiltroStatistichePeriodiche();
+			
 			controlloFiltroStati();
 
 			if (generi.isEmpty()) {
@@ -222,8 +226,10 @@ public class EventiController {
 			
 			if (periodo.isEmpty())
 				responso.put("statistiche mensili di eventi", minMaxAverage);
-			else
+			else {
 				responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
+			}
+				
 			
 			responso.put("eventi", eventiFiltratiPerGeneri);
 
@@ -488,7 +494,69 @@ public class EventiController {
 		}
 
 	}
+	
+	/**
+	 * Metodo ausiliario che effettua un controllo sul mese inserito nel
+	 * periodo personalizzato, relativo alle stringhe del vettore periodo,
+	 * per accertarsi che vengano inseriti valori accettabili per rappresentare
+	 * un mese
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloScritturaMese() throws EventiException {
 
+			key = "Errore";
+			value = "Il formato consentito per il mese nel vettore 'periodo' è il seguente: da 01 a 12";
+			throw new EventiException();
+
+	}
+	
+	/**
+	 * Metodo ausiliario che effettua un controllo sul giorno inserito nel
+	 * periodo personalizzato, relativo alle stringhe del vettore periodo,
+	 * per accertarsi che vengano inseriti valori accettabili per rappresentare
+	 * un giorno
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloScritturaGiorno() throws EventiException {
+
+			key = "Errore";
+			value = "Il formato consentito per il giorno nel vettore 'periodo' è il seguente: da 01 a 31 a seconda del mese";
+			throw new EventiException();
+
+	}
+	
+	/**
+	 * Metodo ausiliario che effettua un controllo sulle stringhe del vettore periodo,
+	 * per accertarsi che vengano inseriti numeri per rappresentare
+	 * anno, giorno e mese e non lettere
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloLettereInPeriodo() throws EventiException {
+
+			key = "Errore";
+			value = "le date non possono contenere lettere, ma solo numeri; scrivere la data nel seguente formato: yyyy--mm--dd";
+			throw new EventiException();
+
+	}
+	
+	/**
+	 * Metodo ausiliario che effettua un controllo sul trattino, che separa 
+	 * anno, mese e giorno del periodo personalizzato, relativo alle stringhe del
+	 * vettore periodo
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloScritturaPeriodo() throws EventiException {
+
+			key = "Errore";
+			value = "Il formato consentito nel vettore 'periodo' è il seguente: 'yyyy-mm-dd'";
+			throw new EventiException();
+
+	}
+	
 	/**
 	 * Metodo ausiliario che popola il vettore australia
 	 */
@@ -576,10 +644,10 @@ public class EventiController {
 			DatesStatistics dS = new DatesStatistics();
 
 			statisticheMensili(dS, i);
-
-			if (!periodo.isEmpty())
+			
+			int dimVectorCounter = 2;
+			if (!periodo.isEmpty() && dimVectorCounter == periodo.size())
 				filtroStatistichePeriodiche(mMA, numberArray, i);
-
 		}
 
 	}
@@ -639,7 +707,200 @@ public class EventiController {
 		minMaxAverageFilter.put("in " + stati.elementAt(i), mMA);
 
 	}
+	
+	/**
+	 * Metodo ausiliario che effettua un controllo sul vettore di stati dell'oggetto
+	 * eB, vedendo se è vuoto 
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloFiltroStatistichePeriodiche() throws EventiException {
+		
+		if(!periodo.isEmpty()) {
+			int controllerSize = 2;
+			if (controllerSize != periodo.size()) {
 
+				key = "Attenzione";
+				value = "è stata inserita solo la data di inizio del periodo personalizzato, inserire anche la data di fine";
+				throw new EventiException();
+
+			}
+			
+		}
+
+	}
+	
+	/**
+	 * Metodo ausiliario, per la validazione delle stringhe che compongono il vettore
+	 * periodo, che accerta che ciascun mese del periodo personalizzato sia compreso tra 
+	 * 01 e 12
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	public static void validatoreMese() throws EventiException {
+		
+		int dimVectorCounter = 2;
+		
+		if (!periodo.isEmpty() && dimVectorCounter == periodo.size()) {
+			
+			for(int k = 0; k< 2; k++) {
+				
+				String data = periodo.elementAt(k);
+				
+				char firstNumber = data.charAt(5);
+				char secondNumber = data.charAt(6);
+				
+				if( (firstNumber != 0) && (secondNumber == '-') ) {
+					controlloScritturaMese();
+				}
+				else {
+					if( !((1<= Integer.parseInt(data.substring(5,7))) && (12>= Integer.parseInt(data.substring(5,7)))) ) {
+						controlloScritturaMese();
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+		
+	/**
+	 * Metodo ausiliario, per la validazione delle stringhe che compongono il vettore
+	 * periodo, che accerta che ciascun giorno del periodo personalizzato sia compreso tra 
+	 * 1 e 31, oppure tra 1 e 30, oppure tra 1 e 28 a seconda del mese relativo 
+	 * al giorno considerato
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	public static void validatoreGiorno() throws EventiException {
+		
+		int dimVectorCounter = 2;
+		
+		if (!periodo.isEmpty() && dimVectorCounter == periodo.size()) {
+			
+			for(int k = 0; k < 2; k++) {
+				
+				String data = periodo.elementAt(k);
+				
+				Vector<Character> d1= new Vector<Character>();
+				
+				for(int i = 0; i < data.length(); i++) {
+					
+					d1.add(i, data.charAt(i));
+				}
+				
+				if(data.length() != 10) {
+					controlloScritturaGiorno();
+				}
+				
+				int giornoInserito = Integer.parseInt(data.substring(8,10));
+				
+				if( !( (1<= Integer.parseInt(data.substring(8,10))) && (31>= Integer.parseInt(data.substring(8,10))) ) ) {
+					controlloScritturaGiorno();
+				}
+				else {
+					
+					int meseIniziale = Integer.parseInt(data.substring(5,7));
+					
+					int[] mesi30giorni = {4, 6, 9, 11};
+					int febbraio = 2;
+					
+					for(int i = 0; i<mesi30giorni.length; i++) {
+						if( (meseIniziale == mesi30giorni[i]) && (giornoInserito == 31) ) {
+							
+							controlloScritturaGiorno();
+						}
+					}
+					
+					if( (meseIniziale == febbraio) && (giornoInserito > 28) ) {
+						controlloScritturaGiorno();
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}	
+	
+	/**
+	 * Metodo ausiliario, per la validazione delle stringhe che compongono il vettore
+	 * periodo, che accerta che ciascuna data del periodo personalizzato venga espressa 
+	 * solo con numeri e mai con lettere
+	 *
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloreLettereInPeriodo() throws EventiException {
+		
+		int dimVectorCounter = 2;
+		
+		if (!periodo.isEmpty() && dimVectorCounter == periodo.size()) {
+			
+			for(int k = 0; k < 2; k++) {
+				
+				String data = periodo.elementAt(k);
+				
+				for(int i = 0; i< data.length(); i++) {
+					
+					if( !( (Character.isDigit(data.charAt(i))) || (data.charAt(i)=='-') ) ) {
+						
+						controlloLettereInPeriodo();
+					}
+					
+				}
+
+			}
+			
+		}
+		
+	}
+	
+	/**
+	 * Metodo ausiliario, per la validazione delle stringhe che compongono il vettore
+	 * periodo, che accerta che ciascuna data del periodo personalizzato venga espressa 
+	 * separando anno, mese e giorno mediante un trattino e che svolge tutti i controlli
+	 * sulle date ante descritti richiamando i metodi validatoreMese(),
+	 * validatoreGiorno() e controlloreLettereInPeriodo()
+	 *
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void validatorePeriodi() throws EventiException {
+		
+		int dimVectorCounter = 2;
+		
+		if (!periodo.isEmpty() && dimVectorCounter == periodo.size()) {
+			
+			for(int k = 0; k < 2; k++) {
+				
+				String data = periodo.elementAt(k);
+				
+				Vector<Character> dataVector = new Vector<Character>();
+				
+				for(int i = 0; i < data.length(); i++) {
+					
+					dataVector.add(i, data.charAt(i));
+				}
+				
+				if( (dataVector.elementAt(4) != '-') || (dataVector.elementAt(7) != '-') ) {
+					controlloScritturaPeriodo();
+				}
+				
+				controlloreLettereInPeriodo();
+				
+				validatoreMese();
+				
+				validatoreGiorno();
+			}
+			
+		}
+
+	}
+	
 	/**
 	 * Metodo ausiliario che effettua un controllo nel caso in cui non ci fossero
 	 * eventi disponibili dopo il filtro per stati

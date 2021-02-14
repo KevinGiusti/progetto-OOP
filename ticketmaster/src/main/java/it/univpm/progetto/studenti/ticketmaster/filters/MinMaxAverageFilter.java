@@ -15,11 +15,18 @@ import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 public class MinMaxAverageFilter {
 
 	/**
-	 * Metodo
+	 * Metodo che consente di determinare il numero totale di
+	 * eventi relativi ad uno specifico stato che si svolgono in uno specifico mese
 	 * 
-	 * @param listaEventi
-	 * @param datePeriodo
-	 * @return
+	 * @param listaEventi listaEventi Vettore di oggetti della classe Eventi necessario contenente
+	 * gli eventi dello stato considerato
+	 * @param datePeriodo Vettore di stringhe contenente data iniziale e data finale
+	 * per il calcolo del periodo personalizzato
+	 * @return numeroEventi array contenente, in ogni posizione, il numero degli eventi contenuti
+	 * in ogni ripetizione del periodo inserito; ad esempio:
+	 * se il periodo e' di 50 giorni, allora l'elemento in posizione 0 dell'array numeroEventi e' il
+	 * numero degli eventi nei primi 50 giorni, l'elemento  in posizione 1 dell'array numeroEventi 
+	 * e' il numero degli eventi nei secondi 50 giorni dalla data iniziale inserita, ecc..
 	 */
 	public int[] minMaxAverageFilterFunction(Vector<Eventi> listaEventi, Vector<String> datePeriodo) {
 
@@ -28,44 +35,20 @@ public class MinMaxAverageFilter {
 		LocalDate dataIniziale = dateConverter(datePeriodo.elementAt(0));
 		
 		LocalDate dataFinale = dateConverter(datePeriodo.elementAt(1));
-		
-		int annoLimite = 0;
 
 		long periodo = ChronoUnit.DAYS.between(dataIniziale, dataFinale);
+
+		Eventi eventoScelto = new Eventi();
+		
+		int[] maxRipPeriodo= new int[1];
+		maxRipPeriodo= maxRipetizioneDelPeriodo(periodo, eventoScelto, listaEventi, dataIniziale);
+		
 		long[] periodiAdder = new long[1];
 		periodiAdder[0] = 0;
 
-		Eventi eventoScelto = new Eventi();
-		int[] massimaRipetizionePossibileDelPeriodo = new int[1];
-		massimaRipetizionePossibileDelPeriodo[0] = 1;
-
-		for (int i = 0; i < listaEventi.size(); i++) {
-
-			eventoScelto = listaEventi.get(i);
-			LocalDate dataEvento = eventoScelto.getData();
-			annoLimite = dataEvento.getYear();
-
-			periodiAdder[0] += periodo;
+		numeroEventi = new int[maxRipPeriodo[0]];
 			
-			if (periodiAdder[0] < 728) {
-				
-				LocalDate dataAggiornata = dataIniziale.plusDays(periodiAdder[0]);
-				LocalDate dataLimite = LocalDate.of(annoLimite, Month.DECEMBER, 31);
-
-					if (dataAggiornata.isBefore(dataLimite)) {
-						massimaRipetizionePossibileDelPeriodo[0] += 1;
-					} else
-						massimaRipetizionePossibileDelPeriodo[0] += 0;
-				
-			}
-			
-		}
-
-		periodiAdder[0] = 0;
-
-		numeroEventi = new int[massimaRipetizionePossibileDelPeriodo[0]];
-			
-		for (int j = 0; j < massimaRipetizionePossibileDelPeriodo[0]; j++) {
+		for (int j = 0; j < maxRipPeriodo[0]; j++) {
 
 			LocalDate dataAggiornataIniz = dataIniziale.plusDays(periodiAdder[0]);
 			LocalDate dataAggiornataFin = dataFinale.plusDays(periodiAdder[0]);
@@ -82,7 +65,8 @@ public class MinMaxAverageFilter {
 					}
 				
 			}
-
+			
+			
 			periodiAdder[0] += periodo;
 
 			
@@ -106,5 +90,57 @@ public class MinMaxAverageFilter {
 		return locD;
 	
 	}
+	
+	/**
+	 * Metodo che calcola il numero massimo di ripetizioni possibili del periodo personalizzato
+	 * inserito dall'utente
+	 * 
+	 * @param periodoLength attributo che indica il periodo di tempo personalizzato in giorni
+	 * @param eventoScelto oggetto della classe Eventi che considera il singolo evento scelto
+	 * @param listaEventi listaEventi Vettore di oggetti della classe Eventi necessario contenente
+	 * gli eventi dello stato considerato
+	 * @param dataIniziale oggetto della classe LocalDate che indica la data iniziale del periodo personalizzato
+	 * @return massimaRipetizionePossibileDelPeriodo array di interi di dimesione 1 che indica il numero di 
+	 * volte che il periodo scelto può essere ripetuto, a partire dalla data di inizio personalizzata, fino 
+	 * alla fine dell'anno corrente; ad esempio: 
+	 * se il periodo è di 50 giorni e la data iniziale è 2021 10 15, allora massimaRipetizionePossibileDelPeriodo
+	 * equivale a 2, poiche' (2021 10 15)+50= 2021 12 4 e, ancora, (2021 12 4)+50= 2022 01 23
+	 * poiche' siamo entrati nel nuovo anno, non possiamo più sommare il periodo di 50 giorni, dunque 
+	 * massimaRipetizionePossibileDelPeriodo = 2
+	 */
+	public int[] maxRipetizioneDelPeriodo(long periodoLength, Eventi eventoScelto, Vector<Eventi> listaEventi, LocalDate dataIniziale) {
+		
+		int[] massimaRipetizionePossibileDelPeriodo = new int[1];
+		massimaRipetizionePossibileDelPeriodo[0] = 1;
+		
+		int annoLimite = 0;
+		
+		long[] periodiAdder = new long[1];
+		periodiAdder[0] = 0;
+		
 
+		for (int i = 0; i < listaEventi.size(); i++) {
+
+			eventoScelto = listaEventi.get(i);
+			LocalDate dataEvento = eventoScelto.getData();
+			annoLimite = dataEvento.getYear();
+
+			periodiAdder[0] += periodoLength;
+			
+			if (periodiAdder[0] < 728) {
+				
+				LocalDate dataAggiornata = dataIniziale.plusDays(periodiAdder[0]);
+				LocalDate dataLimite = LocalDate.of(annoLimite, Month.DECEMBER, 31);
+
+					if (dataAggiornata.isBefore(dataLimite)) {
+						massimaRipetizionePossibileDelPeriodo[0] += 1;
+					} else
+						massimaRipetizionePossibileDelPeriodo[0] += 0;
+				
+			}
+			
+		}
+		
+		return massimaRipetizionePossibileDelPeriodo;
+	}
 }
