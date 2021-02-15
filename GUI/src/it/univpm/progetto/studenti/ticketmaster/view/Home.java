@@ -2,23 +2,17 @@ package it.univpm.progetto.studenti.ticketmaster.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 public class Home {
 	
@@ -85,6 +79,8 @@ public class Home {
 		    	entra.setFont(new Font("Press Gothic", Font.PLAIN, 30));
 		    }
 		      public void mouseClicked(MouseEvent me) {
+		    	  home.setVisible(false);
+		    	  new Filtraggio();
 		      }
 		    });
 		home.add(entra);
@@ -114,6 +110,10 @@ public class Home {
 		    });
 		home.add(exit);
 		
+		home.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+				cursore.getImage(),
+				new Point(0,0),"Cursore biglietto"));
+	
 	}
 	
 }
