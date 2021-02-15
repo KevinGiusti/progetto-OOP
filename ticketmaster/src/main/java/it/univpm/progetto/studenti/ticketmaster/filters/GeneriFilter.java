@@ -7,7 +7,7 @@ import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 /**
  * Classe che effettua un filtro sui generi
  * 
- * @author RoccoAnzivino
+ * @author Kejvin
  */
 public class GeneriFilter {
 

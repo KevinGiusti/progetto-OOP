@@ -10,6 +10,7 @@ import java.util.Vector;
  * Classe che scannerizza in lettura il file Generi.csv contenente i generi
  * 
  * @author RoccoAnzivino
+ * @author Kejvin
  */
 public class GeneriScanner {
 

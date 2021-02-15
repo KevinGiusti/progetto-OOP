@@ -653,7 +653,9 @@ public class EventiController {
 			evFiltratiPerStato = StatiFilter.filterByState(stati.elementAt(i), evTemp);
 
 			eventiFiltratiPerStati.addAll(evFiltratiPerStato);
-
+			
+			
+			
 			contatoreEventiPerStati.put("in " + stati.elementAt(i), evFiltratiPerStato.size());
 
 			DatesStatistics dS = new DatesStatistics();
@@ -666,7 +668,7 @@ public class EventiController {
 		}
 
 	}
-
+	
 	/**
 	 * Metodo ausiliario che effettua le statistiche minimo, massimo e media in un
 	 * periodo di default di 30 giorni
