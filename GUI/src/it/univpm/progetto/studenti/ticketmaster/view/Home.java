@@ -20,17 +20,18 @@ public class Home {
 		
 		JFrame home = new JFrame();
 		
-		JButton entra = new JButton("Entra");
-		JButton exit = new JButton("Exit");
-		
 		ImageIcon icona = new ImageIcon("images/Logo The Last Of Events - Icon.png");
-		ImageIcon logo = new ImageIcon("images/Logo/Logo The Last Of Events.png");
 		ImageIcon titolo = new ImageIcon("images/THE LAST OF EVENTS.png");
+		ImageIcon logo = new ImageIcon("images/Logo/Logo The Last Of Events.png");
 		ImageIcon cursore = new ImageIcon("images/Cursore.png");
 		
 		JLabel iconaLbl = new JLabel(icona);
-		JLabel logoLbl = new JLabel(logo);
 		JLabel titoloLbl = new JLabel(titolo);
+		JLabel logoLbl = new JLabel(logo);
+		
+		JButton entra = new JButton("Entra");
+		JButton exit = new JButton("Exit");
+		
 		
 		home.setSize(1280, 720);
 		home.setTitle("The Last Of Events");
@@ -42,6 +43,7 @@ public class Home {
 		home.setIconImage(icona.getImage());
 		home.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		home.setVisible(true);
+
 		
 		iconaLbl.setBounds(5, 5, 20, 20);
 		home.add(iconaLbl);
@@ -51,6 +53,7 @@ public class Home {
 		
 		logoLbl.setBounds(490, 220, 300, 300);
 		home.add(logoLbl);
+		
 		
 		entra.setBounds(590, 570, 100, 40);
 		entra.setFocusable(false);
@@ -109,6 +112,7 @@ public class Home {
 		      }
 		    });
 		home.add(exit);
+		
 		
 		home.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
 				cursore.getImage(),

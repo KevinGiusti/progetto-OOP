@@ -3,6 +3,8 @@ package it.univpm.progetto.studenti.ticketmaster.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,15 +20,10 @@ public class Filtraggio {
 
 		JFrame filtraggio = new JFrame();
 
-		JButton plus = new JButton("+");
-		JButton cerca = new JButton("Cerca");
-		JButton svuota = new JButton("Svuota");
-		JButton homeReturn = new JButton("Home");
-		JButton exit = new JButton("Exit");
-
 		ImageIcon icona = new ImageIcon("images/Logo The Last Of Events - Icon.png");
 		ImageIcon titoloSmall = new ImageIcon("images/THE LAST OF EVENTS - small.png");
-
+		ImageIcon cursore = new ImageIcon("images/Cursore.png");
+		
 		JLabel slashData;
 		JLabel separatoreBig;
 		JLabel separatoreDate = new JLabel();
@@ -38,6 +35,12 @@ public class Filtraggio {
 		JLabel periodo = new JLabel("PERIODO");
 		JLabel dataInit = new JLabel("Data iniziale:");
 		JLabel dataFin = new JLabel("Data finale:");
+		
+		JButton plus = new JButton("+");
+		JButton cerca = new JButton("Cerca");
+		JButton svuota = new JButton("Svuota");
+		JButton homeReturn = new JButton("Home");
+		JButton exit = new JButton("Exit");
 
 		
 		filtraggio.setSize(1280, 720);
@@ -260,6 +263,11 @@ public class Filtraggio {
 		      }
 		    });
 		filtraggio.add(exit);
+		
+		
+		filtraggio.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+				cursore.getImage(),
+				new Point(0,0),"Cursore biglietto"));
 		
 	}
 
