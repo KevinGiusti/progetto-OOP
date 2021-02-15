@@ -884,7 +884,10 @@ public class EventiController {
 				String data = periodo.elementAt(k);
 				
 				if(data.length() != 10) {
-					controlloScritturaMese();
+					controlloScritturaPeriodo();
+//					controlloScritturaMese();
+//					validatoreGiorno();
+//					controlloreLettereInPeriodo();
 				}
 				
 				Vector<Character> dataVector = new Vector<Character>();
