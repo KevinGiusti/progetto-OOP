@@ -1,10 +1,12 @@
-package it.univpm.progetto.studenti.ticketmaster.filters;
+package it.univpm.progetto.studenti.ticketmaster.minmaxav_junit_test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import org.junit.jupiter.api.Test;
+
+import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 
 class dateConverterTest {
 	
