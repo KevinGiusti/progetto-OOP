@@ -1,5 +1,6 @@
 package it.univpm.progetto.studenti.ticketmaster.controller;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Vector;
@@ -512,6 +513,20 @@ public class EventiController {
 	}
 	
 	/**
+	 * Metodo ausiliario che effettua un controllo sulle stringhe del vettore periodo
+	 * per accertarsi che le date vengano inserite in ordine cronologico 
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloOrdineDate() throws EventiException {
+
+			key = "Errore";
+			value = "la prima data deve essere minore della seconda data inserita";
+			throw new EventiException();
+
+	}
+	
+	/**
 	 * Metodo ausiliario che effettua un controllo sul giorno inserito nel
 	 * periodo personalizzato, relativo alle stringhe del vettore periodo,
 	 * per accertarsi che vengano inseriti valori accettabili per rappresentare
@@ -721,7 +736,7 @@ public class EventiController {
 			if (controllerSize != periodo.size()) {
 
 				key = "Attenzione";
-				value = "è stata inserita solo la data di inizio del periodo personalizzato, inserire anche la data di fine";
+				value = "è possibile inserire solo due date, ovvero la data di inizio e la data di fine";
 				throw new EventiException();
 
 			}
@@ -864,6 +879,30 @@ public class EventiController {
 	}
 	
 	/**
+	 * Metodo ausiliario, relativo alle stringhe che compongono il vettore
+	 * periodo, che accerta che le date inserire siano disposte in ordine cronologico
+	 *
+	 * 
+	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 */
+	private static void controlloreOrdineDate() throws EventiException {
+		
+		int dimVectorCounter = 2;
+		
+		if (!periodo.isEmpty() && dimVectorCounter == periodo.size()) {
+			
+			LocalDate data1 = MinMaxAverageFilter.dateConverter(periodo.elementAt(0));
+			LocalDate data2 = MinMaxAverageFilter.dateConverter(periodo.elementAt(1));
+			
+			if(data1.isAfter(data2)) {
+				controlloOrdineDate();
+			}
+			
+		}
+
+	}
+	
+	/**
 	 * Metodo ausiliario, per la validazione delle stringhe che compongono il vettore
 	 * periodo, che accerta che ciascuna data del periodo personalizzato venga espressa 
 	 * separando anno, mese e giorno mediante un trattino e che svolge tutti i controlli
@@ -885,9 +924,7 @@ public class EventiController {
 				
 				if(data.length() != 10) {
 					controlloScritturaPeriodo();
-//					controlloScritturaMese();
-//					validatoreGiorno();
-//					controlloreLettereInPeriodo();
+
 				}
 				
 				Vector<Character> dataVector = new Vector<Character>();
@@ -906,6 +943,9 @@ public class EventiController {
 				validatoreMese();
 				
 				validatoreGiorno();
+				
+				controlloreOrdineDate();
+				
 			}
 			
 		}
