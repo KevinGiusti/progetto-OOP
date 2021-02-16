@@ -32,8 +32,7 @@ public class Home {
 		JButton entra = new JButton("Entra");
 		JButton exit = new JButton("Exit");
 		
-		
-		home.setSize(1280, 720);
+		home.setSize(900, 650);
 		home.setTitle("The Last Of Events");
 		home.setLayout(null);
 		home.setLocationRelativeTo(null);
@@ -48,14 +47,14 @@ public class Home {
 		iconaLbl.setBounds(5, 5, 20, 20);
 		home.add(iconaLbl);
 		
-		titoloLbl.setBounds(140, 70, 1000, 100);
+		titoloLbl.setBounds(-50, 60, 1000, 100);
 		home.add(titoloLbl);
 		
-		logoLbl.setBounds(490, 220, 300, 300);
+		logoLbl.setBounds(295, 170, 300, 300);
 		home.add(logoLbl);
 		
 		
-		entra.setBounds(590, 570, 100, 40);
+		entra.setBounds(395, 510, 100, 40);
 		entra.setFocusable(false);
 		entra.setBackground(Color.BLACK);
 		entra.setForeground(Color.WHITE);
@@ -73,12 +72,12 @@ public class Home {
 		    }
 		    public void mousePressed(MouseEvent mEP) {
 		    	entra.setContentAreaFilled(false);
-		    	entra.setBounds(593, 573, 94, 34);
+		    	entra.setBounds(398, 513, 94, 34);
 		    	entra.setFont(new Font("Press Gothic", Font.PLAIN, 24));
 		    }
 		    public void mouseReleased(MouseEvent mEP) {
 		    	entra.setContentAreaFilled(true);
-		    	entra.setBounds(590, 570, 100, 40);
+		    	entra.setBounds(395, 510, 100, 40);
 		    	entra.setFont(new Font("Press Gothic", Font.PLAIN, 30));
 		    }
 		      public void mouseClicked(MouseEvent me) {
@@ -88,7 +87,7 @@ public class Home {
 		    });
 		home.add(entra);
 		
-		exit.setBounds(1150, 670, 100, 30);
+		exit.setBounds(770, 600, 100, 30);
 		exit.setFocusable(false);
 		exit.setContentAreaFilled(false);
 		exit.setBorder(null);

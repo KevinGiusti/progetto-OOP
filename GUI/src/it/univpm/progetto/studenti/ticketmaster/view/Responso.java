@@ -59,7 +59,7 @@ public class Responso {
 		responso.add(titoloSmallLbl);
 		
 		
-		risultato.setBounds(50, 50, 1150, 550);
+		risultato.setBounds(60, 50, 1150, 550);
 		risultato.setBackground(new Color(50, 50, 50));
 		responso.add(risultato);
 		
