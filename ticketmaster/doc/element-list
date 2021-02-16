@@ -1,1 +1,12 @@
+it.univpm.progetto.studenti.ticketmaster
+it.univpm.progetto.studenti.ticketmaster.api
 it.univpm.progetto.studenti.ticketmaster.controller
+it.univpm.progetto.studenti.ticketmaster.datesstatistics_junit_test
+it.univpm.progetto.studenti.ticketmaster.exception
+it.univpm.progetto.studenti.ticketmaster.filters
+it.univpm.progetto.studenti.ticketmaster.minmaxav_junit_test
+it.univpm.progetto.studenti.ticketmaster.model
+it.univpm.progetto.studenti.ticketmaster.parser
+it.univpm.progetto.studenti.ticketmaster.scanner
+it.univpm.progetto.studenti.ticketmaster.stats
+it.univpm.progetto.univpm.ticketmaster.minmaxaverage_junit_test
