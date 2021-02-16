@@ -6,8 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import org.json.simple.JSONObject;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi;
@@ -275,6 +277,116 @@ public class EventiController {
 
 	}
 
+	
+	/**
+	 * Metodo associato alla rotta get /eventi, che è in grado di generare
+	 * filtri e statistiche in base ai parametri forniti dall'utente
+	 * 
+	 * @param statiGet Vettore contenente le informazioni riguardo gli stati
+	 * @param paesiGet Vettore contenente le informazioni riguardo i paesi
+	 * @param generiGet Vettore contenente le informazioni riguardo i generi
+	 * @param periodoGet Vettore contenente le informazioni riguardo il periodo
+	 * @return responso
+	 */
+	@SuppressWarnings("unchecked")
+	@GetMapping("/eventi")
+	public JSONObject eventi(@RequestParam(value = "stati") Vector<String> statiGet,
+							 @RequestParam(value = "paesi") Vector<String> paesiGet,
+							 @RequestParam(value = "generi") Vector<String> generiGet,
+							 @RequestParam(value = "periodo") Vector<String> periodoGet) {
+
+		Vector<String> statiPaesiGet = new Vector<String>();
+		
+		for(int i = 0; i < statiGet.size(); i++) {
+			String temp = statiGet.elementAt(i) + ", " + paesiGet.elementAt(i);
+			statiPaesiGet.add(temp);
+		}
+		
+		EventiBody eB = new EventiBody(statiPaesiGet, generiGet, periodoGet);
+		
+		System.out.println(statiGet);
+		System.out.println(generiGet);
+		System.out.println(periodoGet);
+		
+		System.out.println(statiGet.elementAt(0));
+		
+		responso = new JSONObject();
+		generi = eB.getGeneri();
+		periodo = eB.getPeriodo();
+		statiScanner = StatiScanner.getStati();
+		generiScanner = GeneriScanner.getGeneri();
+		contatoreEventiPerStati = new LinkedHashMap<String, Integer>();
+		contatoreEventiPerGeneri = new LinkedHashMap<String, Integer>();
+		stati = new Vector<String>();
+		paesi = new Vector<String>();
+		australia = new Vector<String>();
+		newZealand = new Vector<String>();
+		chiamateEv = new Vector<Vector<Eventi>>();
+		eventiFiltratiPerStati = new Vector<Eventi>();
+		minMaxAverage = new LinkedHashMap<String, MinMaxAverage>();
+		minMaxAverageFilter = new LinkedHashMap<String, MinMaxAverage>();
+		eventiFiltratiPerGeneri = new Vector<Eventi>();
+		
+		try {
+
+			controlloStatiEventiBody(eB);
+
+			popolatoreStati();
+
+			controlloSpazioECaseSensitivePerStati();
+
+			controlloSpazioESlashECaseSensitivePerGeneri();
+			
+			validatorePeriodi();
+						
+			popolatorePaesi();
+
+			popolatoreAustralia();
+			
+			popolatoreNewZealand();
+			
+			algoritmoChiamataEventi();
+			
+			filtroStati();
+			
+			controlloFiltroStatistichePeriodiche();
+			
+			controlloFiltroStati();
+
+			if (generi.isEmpty()) {
+
+				controlloGeneriEventiBody();
+
+				return responso;
+
+			}
+
+			filtroGeneri();
+			
+			controlloFiltroGeneri();
+
+			responso.put("numero totale eventi", contatoreEventiPerStati);
+			
+			responso.put("numero eventi per il genere", contatoreEventiPerGeneri);
+			
+			if (periodo.isEmpty())
+				responso.put("statistiche mensili di eventi", minMaxAverage);
+			else {
+				responso.put("statistiche periodiche di eventi", minMaxAverageFilter);
+			}
+				
+			
+			responso.put("eventi", eventiFiltratiPerGeneri);
+
+		} catch (EventiException e) {
+			responso = e.generaJSON(key, value);
+		}
+
+		return responso;
+
+	}
+	
+	
 	/**
 	 * Metodo ausiliario che effettua un controllo sul vettore di stati dell'oggetto
 	 * eB, vedendo se è vuoto

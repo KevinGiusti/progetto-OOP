@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 
+/**
+ * Classe che effettua un test sul funzionamento del metodo dateConverter
+ * 
+ * @author KevinGiusti
+ */
 class dateConverterTest {
 	
 	/**
@@ -21,13 +26,13 @@ class dateConverterTest {
 	@Test
 	void testDateConverter() {
 		
-		MinMaxAverageFilter test = new MinMaxAverageFilter();
+//		MinMaxAverageFilter test = new MinMaxAverageFilter();
 		
 		String dataInizialePeriodoPersonalizzato = "2021-01-01";
 		
 		LocalDate localDatePeriodoPers = LocalDate.of(2021,01,01);
 		
-		LocalDate output = test.dateConverter(dataInizialePeriodoPersonalizzato);
+		LocalDate output = MinMaxAverageFilter.dateConverter(dataInizialePeriodoPersonalizzato);
 		
 		assertEquals(localDatePeriodoPers, output);
 		

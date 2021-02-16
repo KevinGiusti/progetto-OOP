@@ -6,10 +6,14 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Test;
 
-import it.univpm.progetto.studenti.ticketmaster.exception.EventiException;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics;
 
+/**
+ * Classe che effettua un test sul funzionamento del metodo numeroEventi
+ * 
+ * @author KevinGiusti
+ */
 class DatesStatisticsTest {
 
 	/**
@@ -19,7 +23,7 @@ class DatesStatisticsTest {
 	 * ogni elemento dell'array di interi, che può essere inteso come un mese, 
 	 * indichi il numero di eventi svolti in tale mese.
 	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics
-	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics#numeroEventi(Object)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics#numeroEventi
 	 */
 	@Test
 	void datesStatisticsTest() {

@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 
 import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 
+/**
+ * Classe che effettua un test sul funzionamento del metodo maxRipetizioneDelPeriodo
+ * 
+ * @author KevinGiusti
+ */
 class MaxRipetizioneDelPeriodoTest {
 
 	/**

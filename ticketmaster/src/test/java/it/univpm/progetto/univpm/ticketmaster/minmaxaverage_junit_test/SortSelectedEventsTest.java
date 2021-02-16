@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage;
 
+/**
+ * Classe che effettua un test sul funzionamento del metodo sortSelectedEvents
+ * 
+ * @author KevinGiusti
+ */
 class SortSelectedEventsTest {
 
 	/**

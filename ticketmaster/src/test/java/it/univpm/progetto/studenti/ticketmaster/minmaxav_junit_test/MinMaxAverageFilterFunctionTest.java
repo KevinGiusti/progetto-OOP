@@ -2,7 +2,6 @@ package it.univpm.progetto.studenti.ticketmaster.minmaxav_junit_test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Vector;
 
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,11 @@ import org.junit.jupiter.api.Test;
 import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
+/**
+ * Classe che effettua un test sul funzionamento del metodo minMaxAverageFilterFunction
+ * 
+ * @author KevinGiusti
+ */
 class MinMaxAverageFilterFunctionTest {
 
 	/**
@@ -19,7 +23,7 @@ class MinMaxAverageFilterFunctionTest {
 	 * ogni elemento dell'array di interi, che può essere inteso come una ripetizione del periodo, 
 	 * indichi il numero di eventi svolti in tale ripetizione del periodo.
 	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter
-	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction(Object, Vector)
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction
 	 */
 	@Test
 	void testMinMaxAerageFilterFunction() {

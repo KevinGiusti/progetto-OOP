@@ -72,7 +72,6 @@ public class MinMaxAverage {
 	 * svoltisi un un determinato mese in uno specifico stato
 	 * 
 	 * @param numEventi Array ordinato in modo crescente
-	 * @return minimo Il minimo cercato dalla statistica
 	 */
 	public void minimoNumeroEventiMese(int[] numEventi) {
 		this.minimo = numEventi[0];
@@ -83,7 +82,6 @@ public class MinMaxAverage {
 	 * svoltisi un un determinato mese in uno specifico stato
 	 * 
 	 * @param numEventi Array ordinato in modo crescente
-	 * @return massimo Il massimo cercato dalla statistica
 	 */
 	public void massimoNumeroEventiMese(int[] numEventi) {
 		int maxLength = numEventi.length-1;
@@ -95,7 +93,6 @@ public class MinMaxAverage {
 	 * svoltisi un un determinato mese in uno specifico stato
 	 * 
 	 * @param numEventi Array ordinato in modo crescente
-	 * @return media La media cercata dalla statistica
 	 */
 	public void mediaNumeroEventiMese(int[] numEventi) {
 		
