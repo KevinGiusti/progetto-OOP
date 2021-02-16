@@ -11,7 +11,16 @@ import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 
 class MinMaxAverageFilterFunctionTest {
-	
+
+	/**
+	 * Metodo per testing del metodo minMaxAverageFilterFunction che controlla
+	 * se minMaxAverageFilterFunction relativo alla classe MinMaxAverageFilter
+	 * assegna, in maniera corretta, ogni evento del vettore listaEventi al relativo periodo, in modo che
+	 * ogni elemento dell'array di interi, che può essere inteso come una ripetizione del periodo, 
+	 * indichi il numero di eventi svolti in tale ripetizione del periodo.
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction(Object, Vector)
+	 */
 	@Test
 	void testMinMaxAerageFilterFunction() {
 	

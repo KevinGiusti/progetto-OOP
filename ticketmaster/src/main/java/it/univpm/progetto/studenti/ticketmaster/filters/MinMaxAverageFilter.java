@@ -27,6 +27,10 @@ public class MinMaxAverageFilter {
 	 * se il periodo e' di 50 giorni, allora l'elemento in posizione 0 dell'array numeroEventi e' il
 	 * numero degli eventi nei primi 50 giorni, l'elemento  in posizione 1 dell'array numeroEventi 
 	 * e' il numero degli eventi nei secondi 50 giorni dalla data iniziale inserita, ecc..
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#dateConverter(String)
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#maxRipetizioneDelPeriodo(long, LocalDate, LocalDate)
+	 * 
 	 */
 	public int[] minMaxAverageFilterFunction(Vector<Eventi> listaEventi, Vector<String> datePeriodo) {
 

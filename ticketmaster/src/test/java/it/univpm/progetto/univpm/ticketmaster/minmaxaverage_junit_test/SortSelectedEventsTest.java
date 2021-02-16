@@ -7,6 +7,12 @@ import it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage;
 
 class SortSelectedEventsTest {
 
+	/**
+	 * Metodo per testing del metodo sortSelectedEvents che controlla
+	 * se il sorting di un array di interi venga svolto nel modo corretto
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents(int[])
+	 */
 	@Test
 	void sortSelectedEventsTest() {
 		

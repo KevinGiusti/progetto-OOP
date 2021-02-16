@@ -24,6 +24,7 @@ public class DatesStatistics {
 	 * @return monthsEvents Array di interi contenente, in ciascuna posizione, 
 	 * il numero degli eventi svolti nello stato considerato relativamente ad uno specifico mese
 	 * ad esempio, gennaio è in posizione 0, febbraio in posizione 1, ecc...
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 */
 	public int[] numeroEventi(Vector<Eventi> listaEventi) {
 		

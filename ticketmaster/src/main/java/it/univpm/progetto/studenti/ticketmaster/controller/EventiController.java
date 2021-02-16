@@ -48,48 +48,57 @@ public class EventiController {
 
 	/**
 	 * Variabile che immagazzina il vettore stati dell'oggetto EventiBody
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.EventiBody
 	 */
 	private static Vector<String> statiPaesi;
 
 	/**
 	 * Variabile che immagazzina il vettore generi dell'oggetto EventiBody
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 */
 	private static Vector<String> generi;
 
 	/**
 	 * Variabile che immagazzina il vettore periodo dell'oggetto EventiBody
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 */
 	private static Vector<String> periodo;
 
 	/**
 	 * Variabile che immagazzina il vettore statiVect dell'oggetto StatiScanner
+	 * @see it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner
 	 */
 	private static Vector<String> statiScanner;
 
 	/**
 	 * Variabile che immagazzina il vettore generiVect dell'oggetto GeneriScanner
+	 * @see it.univpm.progetto.studenti.ticketmaster.scanner.GeneriScanner
 	 */
 	private static Vector<String> generiScanner;
 
 	/**
 	 * Variabile che contiene le coppie di chiave/valore che descrivono
 	 * il numero totale di eventi per ogni stato inserito nel body
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.EventiBody
 	 */
 	private static LinkedHashMap<String, Integer> contatoreEventiPerStati;
 
 	/**
 	 * Variabile che contiene le coppie di chiave/valore che descrivono
 	 * il numero totale di eventi per ogni genere inserito nel body
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.EventiBody
 	 */
 	private static LinkedHashMap<String, Integer> contatoreEventiPerGeneri;
 
 	/**
 	 * Variabile che contiene l'informazione relativa allo stato, presa dal vettore statiPaesi
+	 * @see #statiPaesi
 	 */
 	private static Vector<String> stati;
 
 	/**
 	 * Variabile che contiene l'informazione relativa ai paesi, presa dal vettore statiPaesi
+	 * @see #statiPaesi
 	 */
 	private static Vector<String> paesi;
 
@@ -105,17 +114,23 @@ public class EventiController {
 
 	/**
 	 * Variabile che contiene i vettori di eventi relativi a ogni chiamata per ogni paese (max 2 nel nostro caso)
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 */
 	private static Vector<Vector<Eventi>> chiamateEv;
 
 	/**
 	 * Variabile che contiene gli eventi che sono stati filtrati tramite gli stati inseriti nel body dall'utente
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 */
 	private static Vector<Eventi> eventiFiltratiPerStati;
 
 	/**
 	 * Variabile che contiene le coppie chiave/valore che descrivono le informazioni
 	 * relative alle statistiche minimo, massimo e media mensili
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#minimoNumeroEventiMese(int[])
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#massimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#mediaNumeroEventiMese(int[])
 	 */
 	private static LinkedHashMap<String, MinMaxAverage> minMaxAverage;
 
@@ -123,35 +138,53 @@ public class EventiController {
 	 * Variabile che contiene le coppie chiave/valore che descrivono le informazioni
 	 * relative alle statistiche minimo, massimo e media filtrate
 	 * per un periodo personalizzato inserito dall'utente nel body
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#minimoNumeroEventiMese(int[])
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#massimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#mediaNumeroEventiMese(int[])
 	 */
 	private static LinkedHashMap<String, MinMaxAverage> minMaxAverageFilter;
 
 	/**
 	 * Variabile che contiene gli eventi per ogni stato inserito nel body dall'utente,
 	 * da cui poi viene generato il contatore contatoreEventiPerStati
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.EventiBody
 	 */
 	private static Vector<Eventi> evFiltratiPerStato;
 
 	/**
 	 * Oggetto della classe MinMaxAverage, il cui stato descrive le statistiche mensili minimo, massimo e media 
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#minimoNumeroEventiMese(int[])
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#massimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#mediaNumeroEventiMese(int[])
 	 */
 	private static MinMaxAverage mMA;
 
 	/**
 	 * Array di numeri interi che contiene le informazioni preliminari
 	 * dalle quali attingono le statistiche minimo, massimo e media
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#minimoNumeroEventiMese(int[])
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#massimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#mediaNumeroEventiMese(int[])
 	 */
 	private static int[] numberArray;
 	
 	/**
 	 * Variabile che contiene gli eventi che sono stati filtrati tramite i generi
 	 * inseriti nel body dall'utente a partire dagli eventi filtrati per stati
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 */
 	private static Vector<Eventi> eventiFiltratiPerGeneri;
 	
 	/**
 	 * Variabile che contiene gli eventi per ogni genere inserito nel body dall'utente,
 	 * da cui poi viene generato il contatore contatoreEventiPerGeneri
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 */
 	private static Vector<Eventi> evFiltratiPerGenere;
 	
@@ -248,6 +281,10 @@ public class EventiController {
 	 * 
 	 * @param eB Oggetto della classe EventiBody
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.EventiBody
+	 * @see #statiPaesi
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloStatiEventiBody(EventiBody eB) throws EventiException {
 
@@ -265,6 +302,9 @@ public class EventiController {
 	 * Metodo ausiliario che popola il vettore stati
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #statiPaesi
+	 * @see #value
+	 * @see #stati
 	 */
 	private static void popolatoreStati() throws EventiException {
 
@@ -286,6 +326,8 @@ public class EventiController {
 	 * 
 	 * @param s Stringa del vettore stati da controllare
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloVirgolaPerStati(String s) throws EventiException {
 
@@ -304,6 +346,7 @@ public class EventiController {
 	 * Sensitive delle stringhe del vettore stati
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #stati
 	 */
 	private static void controlloSpazioECaseSensitivePerStati() throws EventiException {
 
@@ -348,6 +391,11 @@ public class EventiController {
 	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del
 	 *          vettore stati
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #statiScanner
+	 * @see it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner
+	 * @see it.univpm.progetto.studenti.ticketmaster.exception.EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void generatoreSuggerimentiPerStati(String s, int i) throws EventiException {
 
@@ -383,6 +431,7 @@ public class EventiController {
 	 * e sul Case Sensitive delle stringhe del vettore generi
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #generi
 	 */
 	private static void controlloSpazioESlashECaseSensitivePerGeneri() throws EventiException {
 
@@ -428,6 +477,10 @@ public class EventiController {
 	 * @param i Iterazione del ciclo for utilizzato per scorrere gli elementi del
 	 *          vettore stati
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see it.univpm.progetto.studenti.ticketmaster.scanner.GeneriScanner
+	 * @see #generi
+	 * @see #key
+	 * @see #value
 	 */
 	private static void generatoreSuggerimentiPerGeneri(String g, int i) throws EventiException {
 
@@ -462,6 +515,8 @@ public class EventiController {
 	 * Metodo ausiliario che popola il vettore paesi
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #statiPaesi
+	 * @see #paesi
 	 */
 	private static void popolatorePaesi() throws EventiException {
 
@@ -483,6 +538,9 @@ public class EventiController {
 	 * @param i Iteratore del ciclo for che scorre le stringhe del vettore
 	 *          statiPaesi
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #paesi
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloVirgolaPerPaesi(int i) throws EventiException {
 
@@ -503,6 +561,8 @@ public class EventiController {
 	 * un mese
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloScritturaMese() throws EventiException {
 
@@ -517,6 +577,8 @@ public class EventiController {
 	 * per accertarsi che le date vengano inserite in ordine cronologico 
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloOrdineDate() throws EventiException {
 
@@ -533,6 +595,8 @@ public class EventiController {
 	 * un giorno
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloScritturaGiorno() throws EventiException {
 
@@ -548,6 +612,8 @@ public class EventiController {
 	 * anno, giorno e mese e non lettere
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloLettereInPeriodo() throws EventiException {
 
@@ -563,6 +629,8 @@ public class EventiController {
 	 * vettore periodo
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloScritturaPeriodo() throws EventiException {
 
@@ -574,6 +642,8 @@ public class EventiController {
 	
 	/**
 	 * Metodo ausiliario che popola il vettore australia
+	 * @see #australia
+	 * @see it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner
 	 */
 	private static void popolatoreAustralia() {
 
@@ -585,6 +655,8 @@ public class EventiController {
 
 	/**
 	 * Metodo ausiliario che popola il vettore newZealand
+	 * @see #newZealand
+	 * @see it.univpm.progetto.studenti.ticketmaster.scanner.StatiScanner
 	 */
 	private static void popolatoreNewZealand() {
 
@@ -600,6 +672,15 @@ public class EventiController {
 	 * chiamata nelle successive ripetizioni per paesi uguali
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #paesi
+	 * @see #stati
+	 * @see #australia
+	 * @see #newZealand
+	 * @see #chiamateEv
+	 * @see it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi
+	 * @see it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi#chiamata(String)
+	 * @see #key
+	 * @see #value
 	 */
 	private static void algoritmoChiamataEventi() throws EventiException {
 
@@ -644,6 +725,20 @@ public class EventiController {
 
 	/**
 	 * Metodo ausiliario che effettua un filtro per stati sul vettore chiamateEv
+	 * @see #chiamateEv
+	 * @see #evFiltratiPerStato
+	 * @see #eventiFiltratiPerStati
+	 * @see #contatoreEventiPerStati
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.StatiFilter#filterByState(String, Vector)
+	 * @see #stati
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics
+	 * @see #statisticheMensili
+	 * @see #periodo
+	 * @see #filtroStatistichePeriodiche
+	 * @see #mMA
+	 * @see #numberArray
 	 */
 	private static void filtroStati() {
 
@@ -676,6 +771,17 @@ public class EventiController {
 	 * @param dS Oggetto della classe DatesStatistics
 	 * @param i  Iteratore del ciclo for che scorre gli oggetti del vettore
 	 *           chiamateEv
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics#numeroEventi(Vector)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#minimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#massimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#mediaNumeroEventiMese(int[] numEventi)
+	 * @see #mMA
+	 * @see numberArray
+	 * @see #minMaxAverage
+	 * @see #stati
 	 */
 	private static void statisticheMensili(DatesStatistics dS, int i) {
 
@@ -706,6 +812,16 @@ public class EventiController {
 	 * 
 	 * @param i Iteratore del ciclo for che scorre gli oggetti del vettore
 	 *           chiamateEv
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
+	 * @see #mMA
+	 * @see #numberArray
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction(Vector, Vector)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#minimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#massimoNumeroEventiMese(int[] numEventi)
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#mediaNumeroEventiMese(int[] numEventi)
+	 * @see #minMaxAverageFilter
+	 * @see #stati
 	 */
 	private static void filtroStatistichePeriodiche(MinMaxAverage mMA, int[] numberArray, int i) {
 
@@ -730,6 +846,9 @@ public class EventiController {
 	 * eB, vedendo se è vuoto 
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #periodo
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloFiltroStatistichePeriodiche() throws EventiException {
 		
@@ -753,6 +872,8 @@ public class EventiController {
 	 * 01 e 12
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #periodo
+	 * @see #controlloScritturaMese
 	 */
 	public static void validatoreMese() throws EventiException {
 		
@@ -794,6 +915,8 @@ public class EventiController {
 	 * al giorno considerato
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #periodo
+	 * @see #controlloScritturaGiorno
 	 */
 	public static void validatoreGiorno() throws EventiException {
 		
@@ -854,6 +977,8 @@ public class EventiController {
 	 *
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #periodo
+	 * @see #controlloLettereInPeriodo
 	 */
 	private static void controlloreLettereInPeriodo() throws EventiException {
 		
@@ -886,6 +1011,10 @@ public class EventiController {
 	 *
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #periodo
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#dateConverter(String)
+	 * @see #controlloOrdineDate
 	 */
 	private static void controlloreOrdineDate() throws EventiException {
 		
@@ -913,6 +1042,8 @@ public class EventiController {
 	 *
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #periodo
+	 * @see #controlloScritturaPeriodo
 	 */
 	private static void validatorePeriodi() throws EventiException {
 		
@@ -959,6 +1090,8 @@ public class EventiController {
 	 * eventi disponibili dopo il filtro per stati
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloFiltroStati() throws EventiException {
 
@@ -975,6 +1108,15 @@ public class EventiController {
 	/**
 	 * Metodo ausiliario che effettua un controllo sul vettore di generi
 	 * dell'oggetto eB, vedendo se è vuoto e ritornando un responso alternativo
+	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
+	 * @see #eventiFiltratiPerStati
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter#filterByGenre(String, Vector)
+	 * @see #contatoreEventiPerGeneri
+	 * @see #responso
+	 * @see #contatoreEventiPerStati
+	 * @see #minMaxAverage
+	 * @see #minMaxAverageFilter
 	 */
 	@SuppressWarnings("unchecked")
 	private static void controlloGeneriEventiBody() {
@@ -1006,6 +1148,12 @@ public class EventiController {
 
 	/**
 	 * Metodo ausiliario che effettua un filtro per generi sul vettore eventiFiltratiPerStati 
+	 * @see #generi
+	 * @see #evFiltratiPerGenere
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.GeneriFilter#filterByGenre(String, Vector)
+	 * @see #eventiFiltratiPerGeneri
+	 * @see #contatoreEventiPerGeneri
 	 */
 	private static void filtroGeneri() {
 		
@@ -1027,6 +1175,8 @@ public class EventiController {
 	 * eventi disponibili dopo il filtro per generi
 	 * 
 	 * @throws EventiException Questo metodo lancia l'eccezione EventiException
+	 * @see #key
+	 * @see #value
 	 */
 	private static void controlloFiltroGeneri() throws EventiException {
 		

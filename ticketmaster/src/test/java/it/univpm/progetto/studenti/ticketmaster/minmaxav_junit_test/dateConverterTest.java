@@ -10,6 +10,14 @@ import it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter;
 
 class dateConverterTest {
 	
+	/**
+	 * Metodo per testing del metodo dateConverter(), relativo al controllo della stringa
+	 * inserita nel convertitore , che, fornita una stringa rappresentante una data ed un oggetto
+	 * LocalDate che rappresenta la medesima data, controlla se il risultato della conversione
+	 * sia pari all'oggetto LocalDate
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#dateConverter(String)
+	 */
 	@Test
 	void testDateConverter() {
 		
@@ -25,6 +33,11 @@ class dateConverterTest {
 		
 	}
 
+	/**
+	 * Metodo per testing del metodo dateConverter(), relativo al controllo della stringa
+	 * inserita nel convertitore , che, fornita una stringa rappresentante una data errata, generi
+	 * un'eccezione di tipo DateTimeParseException
+	 */
 	@Test
 	void testDateConverterException() {
 		

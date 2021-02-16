@@ -6,11 +6,21 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Test;
 
+import it.univpm.progetto.studenti.ticketmaster.exception.EventiException;
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics;
 
 class DatesStatisticsTest {
 
+	/**
+	 * Metodo per testing del metodo numeroEventi() che controlla se l'array di interi preso come parametro
+	 * dalla funzione numeroEventi della classe DatesStatistics assegna, in maniera
+	 * corretta, ogni evento del vettore listaEventi al relativo mese, in modo che
+	 * ogni elemento dell'array di interi, che può essere inteso come un mese, 
+	 * indichi il numero di eventi svolti in tale mese.
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics#numeroEventi(Object)
+	 */
 	@Test
 	void datesStatisticsTest() {
 		
@@ -39,6 +49,12 @@ class DatesStatisticsTest {
 	
 	}
 	
+	/**
+	 * Metodo per testing del che controlla se il vettore
+	 * contenente gli eventi non sia sia vuoto in modo da poter eseguire correttamete
+	 * il metodo numeroEventi()
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.DatesStatistics
+	 */
 	@Test
 	void datesStatisticsTestNotNull() {
 		
