@@ -55,6 +55,7 @@ public class MinMaxAverageFilter {
 		for (int j = 0; j < maxRipPeriodo[0]; j++) {
 
 			LocalDate dataAggiornataIniz = dataIniziale.plusDays(periodiAdder[0]);
+			System.out.println("aa "+periodiAdder[0]);
 			LocalDate dataAggiornataFin = dataFinale.plusDays(periodiAdder[0]);
 
 			for (int i = 0; i < listaEventi.size(); i++) {
@@ -62,7 +63,8 @@ public class MinMaxAverageFilter {
 				eventoScelto = listaEventi.get(i);
 				LocalDate dataEvento = eventoScelto.getData();
 					
-				if ((dataEvento.isAfter(dataAggiornataIniz)) && (dataEvento.isBefore(dataAggiornataFin))) {
+//				if ((dataEvento.isAfter(dataAggiornataIniz)) && (dataEvento.isBefore(dataAggiornataFin))) {
+				if ( ( (dataEvento.isAfter(dataAggiornataIniz)) ||  (dataEvento.equals(dataAggiornataIniz)) ) && ( (dataEvento.isBefore(dataAggiornataFin)) || (dataEvento.equals(dataAggiornataFin))) ) {
 						numeroEventi[j] += 1;
 					} else {
 						numeroEventi[j] += 0;

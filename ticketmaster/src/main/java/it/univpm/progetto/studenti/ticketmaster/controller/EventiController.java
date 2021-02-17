@@ -1137,7 +1137,7 @@ public class EventiController {
 			LocalDate data1 = MinMaxAverageFilter.dateConverter(periodo.elementAt(0));
 			LocalDate data2 = MinMaxAverageFilter.dateConverter(periodo.elementAt(1));
 			
-			if(data1.isAfter(data2)) {
+			if( (data1.isAfter(data2)) || (data1.equals(data2)) ) {
 				controlloOrdineDate();
 			}
 			
