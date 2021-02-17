@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
+import it.univpm.progetto.studenti.ticketmaster.parser.StatiParser;
+
 public class ChiamataStati {
 
 	public static Vector<String> chiamata() {
@@ -24,9 +26,7 @@ public class ChiamataStati {
 
 			String json = input.readLine();
 
-			StatiParser sP = new StatiParser();
-
-			stati = sP.parse(json);
+			stati = StatiParser.stati(json);
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

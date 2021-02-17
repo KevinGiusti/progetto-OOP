@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
+import it.univpm.progetto.studenti.ticketmaster.parser.GeneriParser;
+
 public class ChiamataGeneri {
 
 	public static Vector<String> chiamata() {
@@ -24,9 +26,7 @@ public class ChiamataGeneri {
 
 			String json = input.readLine();
 
-			GeneriParser gP = new GeneriParser();
-
-			generi = gP.parse(json);
+			generi = GeneriParser.generi(json);
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
