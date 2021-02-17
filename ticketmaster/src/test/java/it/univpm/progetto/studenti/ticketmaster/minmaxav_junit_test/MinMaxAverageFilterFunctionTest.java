@@ -53,14 +53,14 @@ public class MinMaxAverageFilterFunctionTest {
 	 * al fine di eseguire il test
 	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter
-	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction()
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction(Vector, Vector)
 	 */
 	private Vector<Eventi> listaEventi;
 	
 	/**
 	 * array di interi che rappresenta il corretto risultato ottenuto 
 	 * dall'esecuzione del metodo 'minMaxAverageFilterFunction'
-	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction()
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction(Vector, Vector)
 	 */
 	private int[]  numeroEventi = {0, 0, 1, 0, 0, 1, 0}; 
 	
@@ -69,7 +69,7 @@ public class MinMaxAverageFilterFunctionTest {
 	 * al fine di eseguire il test
 	 * @see it.univpm.progetto.studenti.ticketmaster.model.Eventi
 	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter
-	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction()
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction(Vector, Vector)
 	 */
 	private Vector<String> periodTime;
 	
@@ -77,7 +77,7 @@ public class MinMaxAverageFilterFunctionTest {
 	 * array di interi che il risultato ottenuto dall'esecuzione del metodo 'minMaxAverageFilterFunction'
 	 * da confrontare con numeroEventi
 	 * @see #numeroEventi
-	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction()
+	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#minMaxAverageFilterFunction(Vector, Vector)
 	 */
 	private int[] output;
 	

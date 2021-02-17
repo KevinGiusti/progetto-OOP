@@ -72,17 +72,17 @@ public class dateConverterTest {
 	 * @see it.univpm.progetto.studenti.ticketmaster.filters.MinMaxAverageFilter#dateConverter(String)
 	 */
 	@Test
-	void testDateConverter() {
+	public void testDateConverter() {
 		Assertions.assertEquals(localDatePeriodoPers, output);
 	}
 
-//	/**
-//	 * Metodo per testing del metodo dateConverter(), relativo al controllo della stringa
-//	 * inserita nel convertitore , che, fornita una stringa rappresentante una data errata, generi
-//	 * un'eccezione di tipo DateTimeParseException
-//	 */
+	/**
+	 * Metodo per testing del metodo dateConverter(), relativo al controllo della stringa
+	 * inserita nel convertitore , che, fornita una stringa rappresentante una data errata, generi
+	 * un'eccezione di tipo DateTimeParseException
+	 */
 	@Test
-	void testDateConverterException() {
+	public void testDateConverterException() {
 		Assertions.assertThrows(DateTimeParseException.class, ()->MinMaxAverageFilter.dateConverter(dataErrata));
 	}
 

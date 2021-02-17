@@ -23,14 +23,14 @@ public class SortSelectedEventsTest {
 	/**
 	 * array di interi da passare come parametro al metodo 'sortSelectedEvents'
 	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage
-	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents()
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents(int[] numEventi)
 	 */
 	private int[] numEventi = {0, 3, 2, 1, 4, 5, 9, 7, 8, 6, 2, 0};
 	
 	/**
 	 * array di interi che rappresenta il risultato corretto ottenuto invocando
 	 * il metodo 'sortSelectedEvents' sull'array di interi 'numEventi'
-	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents()
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents(int[] numEventi)
 	 * @see #numEventi
 	 */
 	private int[] alreadySorted = {0, 0, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -39,7 +39,7 @@ public class SortSelectedEventsTest {
 	 * array di interi che rappresenta il risultato ottenuto invocando
 	 * il metodo 'sortSelectedEvents' sull'array di interi 'numEventi', da confrontare
 	 * con 'alreadySorted'
-	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents()
+	 * @see it.univpm.progetto.studenti.ticketmaster.stats.MinMaxAverage#sortSelectedEvents(int[] numEventi)
 	 * @see #numEventi
 	 * @see #alreadySorted
 	 */
