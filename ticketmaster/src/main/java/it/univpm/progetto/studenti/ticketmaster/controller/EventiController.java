@@ -301,14 +301,7 @@ public class EventiController {
 			String temp = statiGet.elementAt(i) + ", " + paesiGet.elementAt(i);
 			statiPaesiGet.add(temp);
 		}
-		
 		EventiBody eB = new EventiBody(statiPaesiGet, generiGet, periodoGet);
-		
-		System.out.println(statiGet);
-		System.out.println(generiGet);
-		System.out.println(periodoGet);
-		
-		System.out.println(statiGet.elementAt(0));
 		
 		responso = new JSONObject();
 		generi = eB.getGeneri();

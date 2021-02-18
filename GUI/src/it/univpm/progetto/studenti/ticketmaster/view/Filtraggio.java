@@ -979,21 +979,19 @@ public class Filtraggio {
 				
 				String dataInit = "";
 				dataInit += annoInitBox.getSelectedItem();
-				dataInit += meseInitBox.getSelectedItem();
-				dataInit += giornoInitBox.getSelectedItem();
+				dataInit += "-" + meseInitBox.getSelectedItem();
+				dataInit += "-" + giornoInitBox.getSelectedItem();
 				
 				String dataFin = "";
 				dataFin += annoFinBox.getSelectedItem();
-				dataFin += meseFinBox.getSelectedItem();
-				dataFin += giornoFinBox.getSelectedItem();
+				dataFin += "-" + meseFinBox.getSelectedItem();
+				dataFin += "-" + giornoFinBox.getSelectedItem();
 
 				periodoGet.add(dataInit);
 				periodoGet.add(dataFin);
 				
-				ChiamataEventi.chiamata(statiGet, paesiGet, generiGet, periodoGet);
-				
 				filtraggio.setVisible(false);
-				new Responso();
+				new Responso(ChiamataEventi.chiamata(statiGet, paesiGet, generiGet, periodoGet));
 			}
 		});
 		filtraggio.add(cerca);

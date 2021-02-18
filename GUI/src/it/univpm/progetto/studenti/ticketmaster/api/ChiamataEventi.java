@@ -9,13 +9,14 @@ import java.net.URL;
 import java.util.Vector;
 
 import it.univpm.progetto.studenti.ticketmaster.parser.EventiParser;
-import it.univpm.progetto.studenti.ticketmaster.parser.StatiParser;
 
 public class ChiamataEventi {
 
-	public static /*String*/ void chiamata(Vector<String> stati, Vector<String> paesi, Vector<String> generi,
+	public static String chiamata(Vector<String> stati, Vector<String> paesi, Vector<String> generi,
 			Vector<String> periodo) {
 
+		String responso = new String();
+		
 		String parametriStati = "";
 		String parametriPaesi = "";
 		String parametriGeneri = "";
@@ -45,41 +46,43 @@ public class ChiamataEventi {
 				parametriGeneri += genere;
 		}
 		
-		System.out.println(parametriStati);
-		System.out.println(parametriPaesi);
-		System.out.println(parametriGeneri);
-//		
-//		for (int i = 0; i < stati.size(); i++) {
-//			String stato = stati.elementAt(i);
-//			if (!stato.equals(stati.lastElement()))
-//				parametriStati += stati.elementAt(i) + ", ";
-//			else
-//				parametriStati += stati.elementAt(i);
-//		}
-//
-//		String responso = new String();
-//
-//		try {
-//
-//			URL url = new URL("http://localhost:8080/eventi?");
-//
-//			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//
-//			BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//
-//			String json = input.readLine();
-//
-//			EventiParser eP = new EventiParser();
-//
-//			responso = eP.toString(json);
-//
-//		} catch (MalformedURLException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return responso;
+		parametriPeriodo += periodo.elementAt(0) + ", " + periodo.elementAt(1);
+		
+		String urlChiamata = "http://localhost:8080/eventi?stati=" + parametriStati + "&paesi=" + parametriPaesi + 
+				"&generi=" + parametriGeneri + "&periodo=" + parametriPeriodo;
+		
+		for(char c : urlChiamata.toCharArray()) {
+			
+			if(c == ' ') {
+				urlChiamata = urlChiamata.substring(0, urlChiamata.indexOf(c)) + "%20" +
+				urlChiamata.substring(urlChiamata.indexOf(c) + 1, urlChiamata.length());
+			}
+			
+		}
+
+		System.out.println(urlChiamata);
+		
+		try {
+
+			URL url = new URL(urlChiamata);
+
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+			BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+			String json = input.readLine();
+
+			EventiParser eP = new EventiParser();
+
+			responso = eP.toString(json);
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return responso;
 
 	}
 

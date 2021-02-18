@@ -13,11 +13,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class Responso {
 	
-	public Responso() {
+	public Responso(String responsoText) {
 		
 		JFrame responso = new JFrame();
 		
@@ -30,6 +31,7 @@ public class Responso {
 		JLabel titoloSmallLbl = new JLabel(titoloSmall);
 		
 		JTextArea risultato = new JTextArea();
+		JScrollPane scrollRisultato = new JScrollPane(risultato);
 		
 		JButton nuovaRicerca = new JButton("Nuova ricerca");
 		JButton homeReturn = new JButton("Home");
@@ -59,9 +61,14 @@ public class Responso {
 		responso.add(titoloSmallLbl);
 		
 		
-		risultato.setBounds(60, 50, 1150, 550);
+		
 		risultato.setBackground(new Color(50, 50, 50));
-		responso.add(risultato);
+		risultato.setText(responsoText);
+		risultato.setForeground(Color.WHITE);
+		risultato.setFont(new Font("Arial", Font.PLAIN, 20));
+		risultato.setMargin(new Insets(0, 50, 0, 0));
+		scrollRisultato.setBounds(60, 50, 1150, 550);
+		responso.add(scrollRisultato);
 		
 		
 		

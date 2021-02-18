@@ -11,9 +11,9 @@ import org.json.simple.parser.ParseException;
 public class EventiParser {
 	
 	private Vector<String> stati = new Vector<String>();
-	private Vector<Integer> numEventi = new Vector<Integer>();
+	private Vector<Long> numEventi = new Vector<Long>();
 	private Vector<String> generi = new Vector<String>();
-	private Vector<Integer> numGeneri = new Vector<Integer>();
+	private Vector<Long> numGeneri = new Vector<Long>();
 	private Vector<Long> minimi = new Vector<Long>();
 	private Vector<Long> massimi = new Vector<Long>();
 	private Vector<Double> medie = new Vector<Double>();
@@ -37,30 +37,21 @@ public class EventiParser {
 			
 			JSONObject numTotEv = (JSONObject) jO.get("numero totale eventi");
 			
-			for (int i = 0; i < numTotEv.size(); i++) {
-				
 				@SuppressWarnings("unchecked")
-				Set<String> keys = numTotEv.keySet();
-				for(String s : keys) {
+				Set<String> keysNumEv = numTotEv.keySet();
+				for(String s : keysNumEv) {
 					stati.add(s);
-					numEventi.add((Integer) numTotEv.get(s));
+					numEventi.add((Long) numTotEv.get(s));
 				}
 				
-			}
-			
 			JSONObject numEvPerGen = (JSONObject) jO.get("numero eventi per il genere");
 			
-			for (int i = 0; i < numEvPerGen.size(); i++) {
-				
-				
 				@SuppressWarnings("unchecked")
-				Set<String> keys = numEvPerGen.keySet();
-				for(String g : keys) {
+				Set<String> keysNumGen = numEvPerGen.keySet();
+				for(String g : keysNumGen) {
 					generi.add(g);
-					numGeneri.add((Integer) numTotEv.get(g));
+					numGeneri.add((Long) numEvPerGen.get(g));
 				}
-			
-			}
 			
 			JSONObject statPerEv = (JSONObject) jO.get("statistiche periodiche di eventi");
 			
@@ -108,34 +99,34 @@ public class EventiParser {
 			numTotEv += "\n   -" + stati.elementAt(i) + ": " + numEventi.elementAt(i);
 		}
 		
-		String numTotGen = "Numero eventi per il genere:\n";
+		String numTotGen = "\nNumero eventi per il genere:\n";
 		
 		for(int i = 0; i < generi.size(); i++) {
 			numTotGen += "\n   -" + generi.elementAt(i) + ": " + numGeneri.elementAt(i);
 		}
 		
-		String stats = "Statistiche periodiche per gli eventi:\n";
+		String stats = "\nStatistiche periodiche per gli eventi:\n";
 		
 		for(int i = 0; i < stati.size(); i++) {
 			stats += "\n   -" + stati.elementAt(i) +
 					 ":\n      •" + "Minimo: " + minimi.elementAt(i) +
-					 ":\n      •" + "Massimo: " + massimi.elementAt(i) +
-					 ":\n      •" + "Media: " + medie.elementAt(i);
+					 "\n      •" + "Massimo: " + massimi.elementAt(i) +
+					 "\n      •" + "Media: " + medie.elementAt(i);
 		}
 		
-		String eventi = "Eventi:\n";
+		String eventi = "\nEventi:\n";
 				
 		for(int i = 0; i < nomi.size(); i++) {
-			eventi += "\n   -1° Evento:\n" +
-					  ":\n      •" + "Nome: " + nomi.elementAt(i) +
-					  ":\n      •" + "URL: " + urls.elementAt(i) +
-					  ":\n      •" + "Citta': " + citta.elementAt(i) +
-					  ":\n      •" + "Stato: " + statiEv.elementAt(i) +
-					  ":\n      •" + "Paese: " + paesi.elementAt(i) +
-					  ":\n      •" + "Data: " + date.elementAt(i) +
-					  ":\n      •" + "Ora: " + ore.elementAt(i) +
-					  ":\n      •" + "Genere: " + generiEv.elementAt(i) +
-					  ":\n      •" + "Sotto genere: " + sottoGeneri.elementAt(i);
+			eventi += "\n   -" + (i + 1) + "° Evento:\n" +
+					  "\n      •" + "Nome: " + nomi.elementAt(i) +
+					  "\n      •" + "URL: " + urls.elementAt(i) +
+					  "\n      •" + "Citta': " + citta.elementAt(i) +
+					  "\n      •" + "Stato: " + statiEv.elementAt(i) +
+					  "\n      •" + "Paese: " + paesi.elementAt(i) +
+					  "\n      •" + "Data: " + date.elementAt(i) +
+					  "\n      •" + "Ora: " + ore.elementAt(i) +
+					  "\n      •" + "Genere: " + generiEv.elementAt(i) +
+					  "\n      •" + "Sotto genere: " + sottoGeneri.elementAt(i) + "\n";
 		}
 		
 		finale += numTotEv + "\n\n" + numTotGen + "\n\n" + stats + "\n\n" + eventi;
