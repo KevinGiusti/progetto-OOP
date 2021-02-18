@@ -6,18 +6,24 @@
 - [Introduzione](#introduzione)
 - [Installazione](#installazione)
 - [Struttura API Ticketmaster](#struttura-api-ticketmaster)
-- [Configurazione](#configurazione)
+- [Considerazioni Generali](#considerazioni-generali)
+- [Considerazioni Necessarie](#considerazioni-necessarie)
 - [UML](#uml)
-  - [Use Case Diagram](#use-Case-diagram)
+  - [Use Case Diagram](#use-case-diagram)
   - [Class Diagram](#class-diagram)
-  - [Sequence Diagram](#sequence-diagram)
-  - [Sequence Diagram Rotta “/eventi”](#sequence-diagram-rotta-eventi)
+  - [Sequence Diagrams](#sequence-diagrams)
 - [Rotte](#rotte)
   - [Filtri e Stats Richiesti](#filtri-e-stats-richiesti)
   - [Body della rotta e risposta JSON](#body-della-rotta-e-risposta-json)
   - [Chiavi e Valori](#chiavi-e-valori)
+- [Rotte GUI](#rotte-gui)
+  - [Rotta /stati e risposta JSON](#rotta-stati-e-risposta-json)
+  - [Rotta /generi e risposta JSON](#rotta-generi-e-risposta-json)
+  - [Rotta per selezionare tutti gli Stati e risposta JSON](#rotta-per-selezionare-tutti-gli-stati-e-risposta-json)
+-[Configurazione GUI](#configurazione-gui)
 - [JUnit Test](#junit-test)
 - [Documentazione JavaDoc](#documentazione-javadoc)
+- [GUI: Premesse](#gui-premesse)
 - [Software Utilizzati](#software-utilizzati)
 - [Autori](#autori)
  
@@ -62,8 +68,38 @@ che può essere sintetizzata mediante il seguente grafico:
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/readme%20images%231/0.0.5-%23mappa%20uml%20classi.jpg)
 
-## Configurazione
-Non lo so, robe che mi deve dire Rocco circa la key che altrimenti l'Univpm vive di stracci e fagioli
+## Considerazioni Generali
+
+In primo luogo, è necessario osservare che la Filter-App 'The Last of Events' propone due tipi diversi di interazione tra utente ed applicativo;
+Infatti, il servizio proposto dal software, in esecuzione sul server locale alla porta `8080`, è accessibile sia mediante un tool di testing delle Application Programming Interface, comunemente note come `API`, come, ad esempio, Postman, e sia mediante una Graphic User Interface, ovvero tramite `GUI`, che rende User Friendly la componente `Front-End` dell'applicazione e che gestisce, tramite Spring ed Eclipse, la parte di `Back-End`.
+
+Inoltre, è altresì importante considerare che, poichè l'intero programma è stato pensato, scritto, ideato e sviluppato su `Windows 10` per `Windows 10`, è preferibile che l'applicativo stesso venga eseguito su tale Sistema Operativo; tuttavia, nonostante questa propensione, sarà comunque possibile accedere all'applicazione mediante `SO` quali `Linux` e `Mac OS` semplicemente avviando la `GUI` direttamente da `Eclipse` piuttosto che da file eseguibile;
+
+In particolare, la predilezione del Sistema Operativo `Windows 10` rispetto agli altri possibili `SO` è dovuta non solo alla possibilità di avviare direttamente il file eseguibile `The Last Of Events.jar` della parte `Front-End` dell'intero Software, ma è dovuta anche ad un miglior rendimento grafico della `GUI` poichè, su piattaforme quali `Linux` e `Mac OS`, alcuni caratteri speciali non sono leggibili a causa delle `ASCII-table` ed i contorni degli elementi dell'interfaccia User-Friendly sono meno definiti rispetto alla finestra generata su `Windows 10`.
+
+Dal punto di vista tecnico, l'impossibilità di eseguire direttamente il file di lancio della parte `Front-End` del software 'The Last of Events' su piattaforme quali `Linux` e `Mac OS` è dovuta a motivi di sicurezza, relativi all'origine dell'App, imposti dai suddetti Sistemi Operativi; tuttavia, tale impedimento è facilmente superabile dal momento che, per utilizzare la `GUI`, sarà sufficiente avviare il programma dalla classe `main` sita internamente al codice del programma.
+
+Per concludere, nel caso si dovesse preferire l'esecuzione di 'The Last of Events' mediante `GUI` su piattaforma `Windows 10` , affinchè le finestre dell'App vengano visualizzate nel modo corretto  su schermi con elevati `DPI` (Dot Per Inches), è necessario ridimensionare lo schermo al valore `100%` attraverso i seguenti passaggi:
+`Impostazioni > Schermo > Ridimensionamento e Layout > Modifica la dimensione di testo, app e altri elementi`, ed è altresì consigliata l'installazione del`font` `Press Gothic.otf`, reperibile accedendo al percorso `progetto-OOP > GUI > resources > 'Press Gothic.otf'`
+
+**Nota:** l'installazione del `font` viene eseguita, senza impedimenti di alcun genere, su ogni `SO`.
+
+
+## Considerazioni Necessarie
+
+**IMPORTANTE:**
+
+Per motivi legati all'impossibilità, da parte degli sviluppatori, di divulgare una chiave ottenuta mediante previa registrazione, prima di poter impiegare l'Applicativo 'The Last of Events', indipendentemente dal fatto che si favorisca l'approccio tramite `Postman` o tramite `GUI`, è necessario accedere alla cartella `resources`, reperibile attraverso il percorso `progetto-OOP > ticketmaster > resources`, e modificare il file `APIKey.txt`, inizialmente vuoto per ogni utente che esegue l'operazione di `clone` del progetto, inserendo la propria `key` gratuita ottenuta mediante registrazione presso il sito [TM Developers](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/);
+
+Una volta completata tale operazione, è sufficiente avviare l'`IDE Eclipse` ed eseguire il comando di `Refresh` selezionando la cartella principale del progetto, nota come `ticketmaster`, attraverso il tasto destro del mouse o touchpad.
+In questo modo, una volta avviato il software, la `key` inserita dall'utente verrà letta mediante uno scanner e, se risulterà accettabile, l'applicazione sarà completamente fruibile.
+
+**Osservazioni Finali**
+
+Nel caso si utilizzi il Sistema Operativo `Windows 10`, il file eseguibile della `GUI`, noto come `The Last Of Events.jar`, reperibile nel percorso `progetto-OOP > GUI`, permette di evitare di importare in `Eclipse` la cartella `GUI`; infatti, selezionando tale file, è possibile avviare la parte `Front-End` dell'App semplicemente lanciando l'eseguibile che, tuttavia, per funzionare correttamente, dovrà sempre essere interconnesso alla parte `Back-End` del software rappresentata mediante applicazione `Spring` in esecuzione nell'`IDE Eclipse`. 
+
+Infine, quando si impiega la Graphic User Interface per l'esecuzione di 'The Last of Events', è possibile che, nella prima finestra dell'applicativo, ovvero nella schermata Home, non compaiano i campi selezionabili o il logo dell'App; per risolvere questo tipo di inconveniente, è sufficiente scorrere, con il cursore del mouse, lungo l'intera pagina in modo che tutti i pulsanti, venendo selezionati, possano attivarsi nuovamente;
+Alternativamente, è possibile riavviare il programma oppure selezionare la schermata successiva, tramite il pulsante `entra`, per poi tornare nuovamente nella `Home`.
 
 ## UML
 ### Use Case Diagram
@@ -91,14 +127,20 @@ Mese | statistica che mostra il numero minimo, massimo e la media degli eventi, 
 Periodo personalizzato | statistica che mostra il numero minimo, massimo e la media degli eventi, che soddisfano i criteri di ricerca precedenti, in ciascuna delle ripetizioni del periodo personalizzato; l'ultima ripetizione del periodo scelto è quella che non supera il 364-esimo giorno dell'anno della data iniziale inserita dall'utente
 
 ### Class Diagram
---------------------------------------------------------------------------inserisci il diagramma uml delle classi in HD
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/UML_finali/ClassDiagram/Main.jpg)
 
 percorso e packages dell'applicativo:
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/ProjectClassDiagram/ProjectClassDiagram_jpeg/Package%20jpg/Package%20Structure0001.jpg)
 
-### Sequence Diagram
---------------------------------------------------------------------------inserisci il diagramma uml delle sequenze
+### Sequence Diagrams
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/UML_finali/Usare%20questi%20per%20sequanza%20readme/Chiamata.png)
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/UML_finali/Usare%20questi%20per%20sequanza%20readme/controlloGeneri.png)
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/UML_finali/Usare%20questi%20per%20sequanza%20readme/filtroGeneri%20.png)
 
 ### Sequence Diagram Rotta “/eventi”
 --------------------------------------------------------------------------inserisci il diagramma uml delle sequenze
@@ -120,7 +162,7 @@ Metodo | Rotta | Descrizione
 `POST` | `/eventi` | restituisce un JSONArray contenente le informazioni relative ad eventi, che possono essere filtrati per uno o più stati e/o per uno o più generi, e statistiche relative a numero totale di eventi per ogni stato, numero totale di eventi raggruppati per genere e massimo, minimo e media eventi mensili o in un periodo personalizzato
 
 ### Body della rotta e risposta JSON
-Dal punto di vista tecnico, i parametri, inseriti per effettuare una ricerca relativa agli eventi, devono essere passati all'applicazione Spring, che è in esecuzione sul server locale,  tramite il **body** della rotta `localhost8080/eventi` che , a sua volta, deve essere configurato sottoforma di **file JSON** (JavaScript Object Notation), in formato `raw`, contenente   tutte le coppie "key":"value" necessarie per il filtraggio delle informazioni.
+Dal punto di vista tecnico, i parametri, inseriti per effettuare una ricerca relativa agli eventi, devono essere passati all'applicazione Spring, che è in esecuzione sul server locale,  tramite il **Body** della rotta `localhost8080/eventi` che , a sua volta, deve essere configurato sottoforma di **file JSON** (JavaScript Object Notation), in formato `raw`, contenente   tutte le coppie "key":"value" necessarie per il filtraggio delle informazioni.
 Di seguito, è riportato un esempio grafico di quanto appena descritto:
 ```json
 {
@@ -224,6 +266,253 @@ Key | Bad-value | Eccezione | Risposta dell'applicazione
 `"periodo"` | `:["2021-01-75","2021-03-01"]` | EventiException | `"Errore": "Il formato consentito per il giorno nel vettore 'periodo' è il seguente: da 01 a 31 a seconda del mese"`
 `"periodo"` | `:["Shrek","2021-03-01"]` | EventiException() | `"Errore": "Il formato consentito nel vettore 'periodo' è il seguente: 'yyyy-mm-dd'"`
 
+## Rotte GUI
+A seguito dell'inserimento, da parte dell'utente, mediante la Graphic User Interface, dei parametri tesi alla definizione di un filtro su Stati e generi volto ad ottenere dei risultati di ricerca specifici, affinchè l'applicativo possa produrre un output su schermo è necessario che vengano effettuate delle chiamate di tipo `GET` alle seguenti Rotte:
+
+### Rotta /stati e risposta JSON
+Chiamando, mediante il metodo `GET`, la rotta `http://localhost:8080/stati` otteniamo, in risposta dal software 'The Last Of Tickets', il seguente file JSON:
+```json
+[
+    "New South Wales",
+    "Queensland",
+    "South Australia",
+    "Tasmania",
+    "Victoria",
+    "Western Australia",
+    "New Zealand"
+]
+```
+Ovvero, otteniamo un `JSONArray` in cui, ciascun elemento, è uno dei possibili Stati di Australia e Nuova Zelanda, selezionabili dall'utente, per il filtraggio degli eventi e per il calcolo delle statistiche; in sintesi, tale richiesta non prende parametri ma ritorna un `JSONArray` contenente i valori presi, in sola lettura e mediante uno  scanner, del file Stati.csv
+
+Inoltre, nel `Body` della richiesta `HTTP` non dovrà essere specificato alcun parametro poichè, a differeza del metodo `POST`, impiegato per l'invio dei dati ad un'`API`, una chiamata di tipo `HTTP GET` viene impiegata solo ed esclusivamente per recuperare i dati da un'`API`.
+
+### Rotta /generi e risposta JSON
+Chiamando, mediante il metodo `GET`, la rotta `http://localhost:8080/generi` otteniamo, in risposta dal software 'The Last Of Tickets', il seguente file JSON:
+```json
+[
+    "Accounting/General",
+    "Action/Adventure",
+    "Actor",
+    "Added Value Vouchers",
+    "Alternative",
+    "Amusement Park",
+    "Animation",
+    "Aquarium",
+    "Aquatic Park",
+    "Aquatics",
+    "Arthouse",
+    "Artist",
+    "Athlete",
+    "Athletic Races",
+    "Audio Tour",
+    "Audio/Visual",
+    "Award Show",
+    "Badminton",
+    "Ballads/Romantic",
+    "Band",
+    "Bandy",
+    "Baseball",
+    "Basketball",
+    "Biathlon",
+    "Blues",
+    "Body Building",
+    "Boxing",
+```
+ecc...
+```json
+    "eSports",
+    "iTunes Download"
+]
+```
+Ovvero, otteniamo un `JSONArray` in cui, ciascun elemento, è uno dei possibili generi, selezionabili dall'utente, per il filtraggio degli eventi e per il calcolo delle statistiche relative a ciascuno Stato; in sintesi, tale richiesta non prende parametri ma ritorna un `JSONArray` contenente i valori presi, in sola lettura e mediante uno  scanner, del file Gtati.csv
+
+### Rotta per selezionare tutti gli Stati e risposta JSON
+
+Chiamando, mediante il metodo `GET`, la rotta 
+
+`http://localhost:8080/eventi?stati=New%20South%20Wales,%20Queensland,%20South%20Australia,%20Tasmania,%20Victoria,%20Western%20Australia,%20New%20Zealand&paesi=%20AU,%20%20AU ,%20%20AU,%20%20AU,%20%20AU,%20%20AU,%20%20NZ&generi=&periodo=2021-01-01,%202021-03-01` 
+
+otteniamo, in risposta dal software 'The Last Of Tickets', il seguente file JSON:
+```json
+ "numero totale eventi": {
+        "in New South Wales": 16,
+        "in Queensland": 1,
+        "in South Australia": 0,
+        "in Tasmania": 0,
+        "in Victoria": 2,
+        "in Western Australia": 1,
+        "in New Zealand": 18
+    },
+    "statistiche periodiche di eventi": {
+        "in New South Wales": {
+            "minimo": 0,
+            "massimo": 14,
+            "media": 2.29
+        },
+        "in Queensland": {
+            "minimo": 0,
+            "massimo": 1,
+            "media": 0.14
+        },
+        "in South Australia": {
+            "minimo": 0,
+            "massimo": 0,
+            "media": 0.0
+        },
+        "in Tasmania": {
+            "minimo": 0,
+            "massimo": 0,
+            "media": 0.0
+        },
+        "in Victoria": {
+            "minimo": 0,
+            "massimo": 2,
+            "media": 0.29
+        },
+        "in Western Australia": {
+            "minimo": 0,
+            "massimo": 1,
+            "media": 0.14
+        },
+        "in New Zealand": {
+            "minimo": 0,
+            "massimo": 12,
+            "media": 2.0
+        }
+    },
+    "numero eventi per il genere": {
+        "Pop": 7,
+        "Rugby": 1,
+        "Miscellaneous": 3,
+        "Rock": 4,
+        "Fairs & Festivals": 14,
+        "Miscellaneous Theatre": 2,
+        "Comedy": 2,
+        "Classical": 2,
+        "Community/Civic": 2,
+        "Other": 1
+    },
+    "eventi": [
+        {
+            "nome": "Backstreet Boys",
+            "url": "http://resale.ticketmaster.com.au/Resale/Tickets/2797639",
+            "citta": "New South Wales",
+            "stato": "New South Wales",
+            "paese": "Australia",
+            "data": "2021-05-07",
+            "ora": "19:30:00",
+            "genere": "Pop",
+            "sottoGenere": "Pop Rock"
+        },
+        {
+            "nome": "Backstreet Boys",
+            "url": "http://resale.ticketmaster.com.au/Resale/Tickets/2805222",
+            "citta": "New South Wales",
+            "stato": "New South Wales",
+            "paese": "Australia",
+            "data": "2021-05-08",
+            "ora": "19:30:00",
+            "genere": "Pop",
+            "sottoGenere": "Pop Rock"
+        },
+        {
+            "nome": "Sydney Royal Easter Show - Reserved Seat",
+            "url": "https://www.ticketmaster.com.au/sydney-royal-easter-show-reserved-seat-sydney-olympic-park-new-south-wales-04-01-2021/event/2500599EDBC019C0",
+            "citta": "Sydney Olympic Park",
+            "stato": "New South Wales",
+            "paese": "Australia",
+            "data": "2021-04-01",
+            "ora": "09:00:00",
+            "genere": "Fairs & Festivals",
+            "sottoGenere": "Undefined"
+        },
+```
+ecc...
+```json
+    ]
+}
+```
+
+Ovvero, otteniamo un `JSONObject` contenente un `JSONArray` in cui ciascun elemento rappresenta un evento, con relativa descrizione, associato ad un determinato Stato tra tutti i possibili Stati appartenenti ai Paesi Australia e Nuova Zelanda; inoltre, accanto al risultato del filtraggio, è possibile visualizzare tutte le statistiche relative ad ogni Stato considerato.
+
+In particolare, è possibile osservare che, nella chiamata di tipo `HTTP GET` appena eseguita, vengono specificati tutti i parametri che che si intende ricevere in risposta dall'`API`
+
+## Configurazione GUI
+La graphic User Interface dell'applicativo 'The Last of Events' presenta tre pagine principali, rispettivamente note come **Home**, **Filtering** e **Response**; in particolare, si ha che:
+
+**Home**
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%201.png)
+
+La schermata Home è la prima pagina ad essere visualizzata dall'utente quando avvia la Filter-App; in particolare, essa presenta due `JButton`, rispettivamente noti come 'Entra' ed 'Exit', che propongono le seguenti funzionalità:
+* Entra: permette di accedere alla seconda schermata, nota come Filtering, in modo da poter selezionare i parametri del filtro che verrà imposto su Stati, generi e periodo personalizzato.
+* Exit: termina l'esecuzione del programma; ovviamente, se si clicca 'Exit', si imporrà la chiusura della sola parte `Front-End` dell'applicativo mentre, al contrario, il codice `Spring`  in `Back-End` su `Eclipse` continuerà la propria esecuzione fin quando non la si terminerà manualmente.
+
+**Filtering**
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%202.png)
+
+Nella seconda pagina, che è la schermata di Filtering, è possibile chiedere al programma sia di cercare e restituire gli eventi, che soddisfano i parametri inseriti nei  filtri relativi a Stati e generi, e sia di calcolare statistiche relative ad un periodo di tempo; è importante notare che, nel caso della `GUI`, l'opzione per la produzione di statistiche mensili non è implementata;
+
+Inoltre, in tale schermata, è possibile utilizzare i seguenti `JButton`:
+* Cerca: fornisce, alla schermata 'Response', i risultati filtrati mediante i paramentri inseriti
+* Svuota: permette resettare tutte le scelte compiute, ovvero tutti i parametri inseriti nei campi disponibili
+* Exit: pulsante che consente di terminare l'applicazione in esecuzione; è lo stesso `JButton` implementato nella schermata 'Home'
+* Home: permette di tornare alla prima schermata dell'App, ovvero reindirizza l'user alla schermata 'Home'
+
+**ComboBox**
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%203.0.png)
+
+ComboBox Stati: di default, il campo 'STATI' presenta una ComboBox in cui è possibile scegliere o inserire, a seconda del fatto che si clicchi con il mouse o che si scriva da tastiera, il nome dello Stato di Australia o Nuova Zelanda su cui si vuole effettuare la ricerca; in particolare, è possibile selezionare anche più di uno Stato attraverso il pulsante **+** che aggiunge, ogni volta che lo si clicca, fino ad un massimo di 7 volte, una ComboBox tesa ad ospitare un'altro stato da filtrare.
+
+Inoltre, se si vogliono calcolare statistiche globali, è possibile scegliere, contemporaneamente, tutti gli Stati mediante l'opzione 'tutti gli Stati'.
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%203.1.png)
+
+Infine, se si esegue una ricerca lasciando la ComboBox 'STATI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtering'.
+___
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%204.0.png)
+
+ComboBox Generi: di default, il campo 'Generi' presenta una ComboBox in cui è possibile scegliere o inserire, a seconda del fatto che si clicchi con il mouse o che si scriva da tastiera, il nome del genere su cui si vuole effettuare la ricerca; in particolare, è possibile selezionare anche più di un genere attraverso il pulsante **+** che aggiunge, ogni volta che lo si clicca, fino ad un massimo di 9 volte, una ComboBox tesa ad ospitare un'altro genere da filtrare.
+
+Inoltre, se si vogliono calcolare statistiche globali, è possibile scegliere, contemporaneamente, tutti i generi  mediante l'opzione 'tutti i generi'.
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%204.1.png)
+
+Infine, se si esegue una ricerca lasciando la ComboBox 'GENERI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtering'.
+___
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%205.png)
+
+ComboBox Periodo: attraverso due ComboBox, una per la data iniziale ed una per la data finale, entrambe nel formato yyyy-mm-dd, la sezione 'PERIODO' consente di determinare, obbligatoriamente, un periodo personalizzato per il calcolo delle statistiche inerenti ai risultati di ricerca ottenuti mediante i filtri; in particolare, una delle Feature relative alla voce 'PERIODO' è una calendar-like function che permette di:
+* aggiornare automaticamente l'anno selezionabile in base all'anno corrente
+* effettuare controlli sui giorni in relazione ai mesi; infatti, se si sceglie Febbraio, è possibile andare dal giorno 1 al giorno 28; inoltre, poichè il software considera automaticamente l'anno corrente, esso riconosce se l'anno è bisestile aggiornando, dunque, la data massima assumibile da Febbraio a 29.
+* effettuare controlli sulle date e genera un Warning nel caso in cui la data iniziale sia maggiore o uguale della data finale
+
+
+di default, il campo 'Generi' presenta una ComboBox in cui è possibile scegliere o inserire, a seconda del fatto che si clicchi con il mouse o che si scriva da tastiera, il nome del genere su cui si vuole effettuare la ricerca; in particolare, è possibile selezionare anche più di un genere attraverso il pulsante **+** che aggiunge, ogni volta che lo si clicca, fino ad un massimo di 9 volte, una ComboBox tesa ad ospitare un'altro genere da filtrare.
+
+Inoltre, se si vogliono calcolare statistiche globali, è possibile scegliere, contemporaneamente, tutti i generi  mediante l'opzione 'tutti i generi'.
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%206.png)
+
+Infine, se si esegue una ricerca lasciando la ComboBox 'GENERI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtering'.
+
+**Eccezioni**
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%207.png)
+
+Se non ci sono eventi disponibili per i filtri Stati e Generi, viene visualizzato un popup che genera il messaggio: 'Errore, non ci sono eventi disponibili'
+
+**Response**
+
+![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%208.png)
+
+L'ultima schermata, nota come 'Response', che permette di visualizzare il risultato prodotto dai filtri inseriti nella schermata precedente e presenta il pulsante 'Nuova Ricerca' che permette di tornare alla schermata 'Filtering' per effettuare una nuova ricerca
+
+
 ## JUnit Test
 Per facilitare la lettura e la comprensione del discorso intorno al testing dell'applicativo, è utile considerare il seguente Class Diagram:
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/readme%20images%231/uuuuuu.jpg)
@@ -321,11 +610,11 @@ La Filter-App 'The Last of Events' è stata sviluppata da:
 * [Kejvin Skiti](https://github.com/Kejvin)
 
 **Contributi e ruoli**
-Autore | Ruolo | Contributo
----- | ---- | ----
-Rocco Anzivino | Sviluppo filtro Stati, sviluppo statistica relativa al numero massimo degli eventi in ciascuno Stato, sviluppo Scanner Stati, sviluppo eccezioni e controlli, produzione JavaDoc, ottimizzazione ed estensione Parser e Controller, sviluppo della base del codice, sviluppo dell'intera GUI | contributo: 1/3
-Kevin Giusti | Sviluppo filtro periodo personalizzato, sviluppo statistiche relative a minimo, massimo e media eventi in un mese o periodo personalizzato a seconda degli Stati selezionati, sviluppo eccezioni e controlli, produzione JavaDoc, estensione Parser e Controller, produzione dell'intero readme, diagramma uml delle classi dell'api e dei casi d'uso, test JUnit 5 | contributo: 1/3
-Kejvin Skiti | Sviluppo filtro generi, sviluppo statistica relativa al numero massimo di eventi raggruppati per genere in ogni Stato, sviluppo Scanner generi, sviluppo eccezioni e controlli, estensione Parser e Controller, diagramma uml delle classi e intera produzione del diagramma uml di sequenza | contributo: 1/3
+Autore | Ruolo 
+---- | ---- 
+Rocco Anzivino | Sviluppo filtro Stati, sviluppo statistica relativa al numero massimo degli eventi in ciascuno Stato, sviluppo Scanner Stati, sviluppo eccezioni e controlli, produzione JavaDoc, ottimizzazione ed estensione Parser e Controller, sviluppo della base del codice, sviluppo dell'intera GUI 
+Kevin Giusti | Sviluppo filtro periodo personalizzato, sviluppo statistiche relative a minimo, massimo e media eventi in un mese o periodo personalizzato a seconda degli Stati selezionati, sviluppo eccezioni e controlli, produzione JavaDoc, estensione Parser e Controller, produzione dell'intero readme, diagramma uml delle classi dell'api e dei casi d'uso, test JUnit 5
+Kejvin Skiti | Sviluppo filtro generi, sviluppo statistica relativa al numero massimo di eventi raggruppati per genere in ogni Stato, sviluppo Scanner generi, sviluppo eccezioni e controlli, estensione Parser e Controller, diagramma uml delle classi e intera produzione del diagramma uml di sequenza
 
 **Nota:** il numero di `commit` effettuati da ciascun membro del team **non** è indice del contributo apportato allo sviluppo dell'applicativo poichè, impiegando il software TeamViewer, molto frequentemente è accaduto che l'operazione di `push` venisse effettuata dal pc ospitante la condivisione dello schermo anche se, effettivamente, lo sviluppo del codice fosse imputabile all'operato di più persone.
 
