@@ -20,10 +20,9 @@
   - [Rotta /stati e risposta JSON](#rotta-stati-e-risposta-json)
   - [Rotta /generi e risposta JSON](#rotta-generi-e-risposta-json)
   - [Rotta per selezionare tutti gli Stati e risposta JSON](#rotta-per-selezionare-tutti-gli-stati-e-risposta-json)
--[Configurazione GUI](#configurazione-gui)
+- [Configurazione GUI](#configurazione-gui)
 - [JUnit Test](#junit-test)
 - [Documentazione JavaDoc](#documentazione-javadoc)
-- [GUI: Premesse](#gui-premesse)
 - [Software Utilizzati](#software-utilizzati)
 - [Autori](#autori)
  
@@ -141,9 +140,6 @@ percorso e packages dell'applicativo:
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/UML_finali/Usare%20questi%20per%20sequanza%20readme/controlloGeneri.png)
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/UML/UML_finali/Usare%20questi%20per%20sequanza%20readme/filtroGeneri%20.png)
-
-### Sequence Diagram Rotta “/eventi”
---------------------------------------------------------------------------inserisci il diagramma uml delle sequenze
 
 ## Rotte
 Nel caso in cui l'interazione tra l'utente ed il software 'The last of Events' non avvenga tramite GUI, ovvero tramite Graphic User Interface, è possibile impiegare un qualsiasi tool per il testing delle Application Programming Interface come, ad esempio, Postman , reperibile all'indirizzo https://www.postman.com/downloads/, per effettuare delle chiamate API.
