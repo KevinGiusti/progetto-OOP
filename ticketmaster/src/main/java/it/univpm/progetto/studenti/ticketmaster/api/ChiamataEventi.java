@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import it.univpm.progetto.studenti.ticketmaster.model.Eventi;
 import it.univpm.progetto.studenti.ticketmaster.parser.EventiParser;
+import it.univpm.progetto.studenti.ticketmaster.scanner.APIKeyScanner;
 
 /**
  * Classe contenente la chiamata alla rotta events
@@ -30,11 +31,12 @@ public class ChiamataEventi {
 	public static Vector<Eventi> chiamata(String paese) {
 		
 		Vector<Eventi> listaEventi = new Vector<Eventi>();
+		String key = APIKeyScanner.getKey();
 		
 		try {
 			
 			URL url = new URL("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=" 
-								+ paese + "&apikey=GYG4nHiptHvMOEacUHSlhyHIYwA3zrI4");
+								+ paese + "&apikey=" + key);
 			
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 					
