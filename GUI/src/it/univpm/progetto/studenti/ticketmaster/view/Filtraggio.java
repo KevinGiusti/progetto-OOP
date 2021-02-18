@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Vector;
 
@@ -21,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
@@ -67,10 +69,7 @@ public class Filtraggio {
 
 		statiArr = statiVect.toArray(new String[statiVect.size()]);
 		generiArr = generiVect.toArray(new String[generiVect.size()]);
-		
-		
-		
-		
+
 		Date d = new Date(System.currentTimeMillis());
 		String data = d.toString();
 		String anno = data.substring(data.length() - 4, data.length());
@@ -202,6 +201,7 @@ public class Filtraggio {
 			cBStati.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 			cBStati.setBackground(Color.WHITE);
 			cBStati.setEditable(true);
+			cBStati.setSelectedItem("");
 			JTextField tF = (JTextField) cBStati.getEditor().getEditorComponent();
 			tFStatiVect.add(tF);
 		}
@@ -215,6 +215,7 @@ public class Filtraggio {
 			cBGeneri.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 			cBGeneri.setBackground(Color.WHITE);
 			cBGeneri.setEditable(true);
+			cBGeneri.setSelectedItem("");
 			JTextField tF = (JTextField) cBGeneri.getEditor().getEditorComponent();
 			tFGeneriVect.add(tF);
 		}
@@ -807,9 +808,10 @@ public class Filtraggio {
 		giornoInitBox.addFocusListener(new FocusListener() {
 
 			public void focusGained(FocusEvent e) {
-
 				Vector<String> giorniTemp = new Vector<String>();
 				giorniTemp.addAll(giorni);
+
+				String init;
 
 				switch ((String) meseInitBox.getSelectedItem()) {
 
@@ -818,29 +820,41 @@ public class Filtraggio {
 					giorniTemp.remove(giorni.size() - 2);
 					if (!((int) annoInitBox.getSelectedItem() % 4 == 0))
 						giorniTemp.remove(giorni.size() - 3);
+					init = (String) giornoInitBox.getSelectedItem();
 					giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoInitBox.setSelectedItem(init);
 					break;
 				case "04":
 					giorniTemp.remove(giorni.size() - 1);
+					init = (String) giornoInitBox.getSelectedItem();
 					giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoInitBox.setSelectedItem(init);
 					break;
 				case "06":
 					giorniTemp.remove(giorni.size() - 1);
+					init = (String) giornoInitBox.getSelectedItem();
 					giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoInitBox.setSelectedItem(init);
 					break;
 				case "09":
 					giorniTemp.remove(giorni.size() - 1);
+					init = (String) giornoInitBox.getSelectedItem();
 					giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoInitBox.setSelectedItem(init);
 					break;
 				case "11":
 					giorniTemp.remove(giorni.size() - 1);
+					init = (String) giornoInitBox.getSelectedItem();
 					giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoInitBox.setSelectedItem(init);
 					break;
 				}
 			}
 
 			public void focusLost(FocusEvent e) {
+				String init = (String) giornoInitBox.getSelectedItem();
 				giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorni));
+				giornoInitBox.setSelectedItem(init);
 			}
 
 		});
@@ -888,9 +902,10 @@ public class Filtraggio {
 		giornoFinBox.addFocusListener(new FocusListener() {
 
 			public void focusGained(FocusEvent e) {
-
 				Vector<String> giorniTemp = new Vector<String>();
 				giorniTemp.addAll(giorni);
+
+				String fin;
 
 				switch ((String) meseFinBox.getSelectedItem()) {
 
@@ -899,29 +914,41 @@ public class Filtraggio {
 					giorniTemp.remove(giorni.size() - 2);
 					if (!((int) annoFinBox.getSelectedItem() % 4 == 0))
 						giorniTemp.remove(giorni.size() - 3);
+					fin = (String) giornoFinBox.getSelectedItem();
 					giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoFinBox.setSelectedItem(fin);
 					break;
 				case "04":
 					giorniTemp.remove(giorni.size() - 1);
+					fin = (String) giornoFinBox.getSelectedItem();
 					giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoFinBox.setSelectedItem(fin);
 					break;
 				case "06":
 					giorniTemp.remove(giorni.size() - 1);
+					fin = (String) giornoFinBox.getSelectedItem();
 					giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoFinBox.setSelectedItem(fin);
 					break;
 				case "09":
 					giorniTemp.remove(giorni.size() - 1);
+					fin = (String) giornoFinBox.getSelectedItem();
 					giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoFinBox.setSelectedItem(fin);
 					break;
 				case "11":
 					giorniTemp.remove(giorni.size() - 1);
+					fin = (String) giornoFinBox.getSelectedItem();
 					giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
+					giornoFinBox.setSelectedItem(fin);
 					break;
 				}
 			}
 
 			public void focusLost(FocusEvent e) {
+				String fin = (String) giornoFinBox.getSelectedItem();
 				giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorni));
+				giornoFinBox.setSelectedItem(fin);
 			}
 
 		});
@@ -958,40 +985,60 @@ public class Filtraggio {
 
 			public void mouseClicked(MouseEvent me) {
 
-				for (int i = 0; i < cBStatiVect.size(); i++) {
-					
-					String statoPaese = (String) cBStatiVect.elementAt(i).getSelectedItem();
-					if (!statoPaese.isEmpty() && !statoPaese.equals("Tutti Gli Stati")) {
-						statiGet.add(statoPaese.substring(0, statoPaese.indexOf(",")));
-						paesiGet.add(statoPaese.substring(statoPaese.length() - 2, statoPaese.length()));
-					}
-					
-				}
-				
-				for(int i = 0; i < cBGeneriVect.size(); i++) {
-					
-					String genere = (String) cBGeneriVect.elementAt(i).getSelectedItem();
-					if (!genere.isEmpty() && !genere.equals("Tutti I Generi")) {
-						generiGet.add(genere);
-					}
-					
-				}
-				
+				boolean flag = true;
+
 				String dataInit = "";
 				dataInit += annoInitBox.getSelectedItem();
 				dataInit += "-" + meseInitBox.getSelectedItem();
 				dataInit += "-" + giornoInitBox.getSelectedItem();
-				
+
 				String dataFin = "";
 				dataFin += annoFinBox.getSelectedItem();
 				dataFin += "-" + meseFinBox.getSelectedItem();
 				dataFin += "-" + giornoFinBox.getSelectedItem();
 
+				LocalDate dataIn = LocalDate.parse(dataInit);
+				LocalDate dataFn = LocalDate.parse(dataFin);
+
+				if (!dataIn.isBefore(dataFn)) {
+					flag = false;
+					JOptionPane.showMessageDialog(null, "La data iniziale dev'essere inferiore a quella finale",
+							"Attenzione", JOptionPane.WARNING_MESSAGE);
+				}
+
 				periodoGet.add(dataInit);
 				periodoGet.add(dataFin);
-				
-				filtraggio.setVisible(false);
-				new Responso(ChiamataEventi.chiamata(statiGet, paesiGet, generiGet, periodoGet));
+
+				if (flag) {
+
+					for (int i = 0; i < cBStatiVect.size(); i++) {
+
+						String statoPaese = (String) cBStatiVect.elementAt(i).getSelectedItem();
+						if (!statoPaese.isEmpty() && !statoPaese.equals("Tutti Gli Stati")) {
+							statiGet.add(statoPaese.substring(0, statoPaese.indexOf(",")));
+							paesiGet.add(statoPaese.substring(statoPaese.length() - 2, statoPaese.length()));
+						}
+
+					}
+
+					for (int i = 0; i < cBGeneriVect.size(); i++) {
+
+						String genere = (String) cBGeneriVect.elementAt(i).getSelectedItem();
+						if (!genere.isEmpty() && !genere.equals("Tutti I Generi")) {
+							generiGet.add(genere);
+						}
+
+					}
+
+					try {
+						String responsoText = ChiamataEventi.chiamata(statiGet, paesiGet, generiGet, periodoGet);
+						filtraggio.setVisible(false);
+						new Responso(responsoText);
+					} catch (NullPointerException nPE) {
+						JOptionPane.showMessageDialog(null, "Non ci sono eventi disponibili", "Errore",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		});
 		filtraggio.add(cerca);
