@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import it.univpm.progetto.studenti.ticketmaster.api.ChiamataEventi;
 import it.univpm.progetto.studenti.ticketmaster.api.ChiamataGeneri;
 import it.univpm.progetto.studenti.ticketmaster.api.ChiamataStati;
 
@@ -40,55 +41,71 @@ public class Filtraggio {
 	private Vector<Integer> anni = new Vector<Integer>();
 	private Vector<String> mesi = new Vector<String>();
 	private Vector<String> giorni = new Vector<String>();
+	private Vector<String> statiGet = new Vector<String>();
+	private Vector<String> paesiGet = new Vector<String>();
+	private Vector<String> generiGet = new Vector<String>();
+	private Vector<String> periodoGet = new Vector<String>();
 
 	public Filtraggio() {
 
 		UIManager.put("ComboBox.selectionBackground", Color.WHITE);
+
+		for (int i = 0; i < statiVect.size(); i++) {
+			if (!statiVect.elementAt(i).equals(statiVect.lastElement())) {
+				String statoTemp = statiVect.elementAt(i);
+				statoTemp += ", AU";
+				statiVect.set(i, statoTemp);
+			} else {
+				String statoTemp = statiVect.elementAt(i);
+				statoTemp += ", NZ";
+				statiVect.set(i, statoTemp);
+			}
+		}
 
 		statiVect.add(0, "Tutti Gli Stati");
 		generiVect.add(0, "Tutti I Generi");
 
 		statiArr = statiVect.toArray(new String[statiVect.size()]);
 		generiArr = generiVect.toArray(new String[generiVect.size()]);
-
+		
+		
+		
+		
 		Date d = new Date(System.currentTimeMillis());
 		String data = d.toString();
 		String anno = data.substring(data.length() - 4, data.length());
 		int annoInt = Integer.parseInt(anno);
-		
-		
-		for(int i = annoInt - 20; i <= annoInt + 10; i++) {
+
+		for (int i = annoInt - 20; i <= annoInt + 10; i++) {
 			anni.add(i);
 		}
-		
-		for(int i = 1; i <= 12; i++) {
-			
+
+		for (int i = 1; i <= 12; i++) {
+
 			String m = new String();
-			
-			if(i < 10) {
+
+			if (i < 10) {
 				m = "0" + i;
 			} else
 				m = Integer.toString(i);
-			
-		mesi.add(m);	
-			
+
+			mesi.add(m);
+
 		}
-		
-		
-		for(int i = 1; i <= 31; i++) {
-			
+
+		for (int i = 1; i <= 31; i++) {
+
 			String g = new String();
-			
-			if(i < 10)
+
+			if (i < 10)
 				g = "0" + i;
 			else
 				g = Integer.toString(i);
-		
+
 			giorni.add(g);
-			
+
 		}
 
-		
 		JFrame filtraggio = new JFrame();
 
 		ImageIcon icona = new ImageIcon("images/Logo The Last Of Events - Icon.png");
@@ -193,7 +210,7 @@ public class Filtraggio {
 			tF.setText("Inserire uno stato...");
 			tF.setForeground(new Color(0, 0, 0, 70));
 		}
-		
+
 		for (JComboBox<String> cBGeneri : cBGeneriVect) {
 			cBGeneri.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 			cBGeneri.setBackground(Color.WHITE);
@@ -790,16 +807,16 @@ public class Filtraggio {
 		giornoInitBox.addFocusListener(new FocusListener() {
 
 			public void focusGained(FocusEvent e) {
-				
+
 				Vector<String> giorniTemp = new Vector<String>();
 				giorniTemp.addAll(giorni);
-				
-				switch((String) meseInitBox.getSelectedItem()) {
-				
+
+				switch ((String) meseInitBox.getSelectedItem()) {
+
 				case "02":
 					giorniTemp.remove(giorni.size() - 1);
 					giorniTemp.remove(giorni.size() - 2);
-					if(!((int) annoInitBox.getSelectedItem()%4==0))
+					if (!((int) annoInitBox.getSelectedItem() % 4 == 0))
 						giorniTemp.remove(giorni.size() - 3);
 					giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
 					break;
@@ -825,7 +842,7 @@ public class Filtraggio {
 			public void focusLost(FocusEvent e) {
 				giornoInitBox.setModel(new DefaultComboBoxModel<String>(giorni));
 			}
-			
+
 		});
 		filtraggio.add(giornoInitBox);
 
@@ -871,16 +888,16 @@ public class Filtraggio {
 		giornoFinBox.addFocusListener(new FocusListener() {
 
 			public void focusGained(FocusEvent e) {
-				
+
 				Vector<String> giorniTemp = new Vector<String>();
 				giorniTemp.addAll(giorni);
-				
-				switch((String) meseFinBox.getSelectedItem()) {
-				
+
+				switch ((String) meseFinBox.getSelectedItem()) {
+
 				case "02":
 					giorniTemp.remove(giorni.size() - 1);
 					giorniTemp.remove(giorni.size() - 2);
-					if(!((int) annoFinBox.getSelectedItem()%4==0))
+					if (!((int) annoFinBox.getSelectedItem() % 4 == 0))
 						giorniTemp.remove(giorni.size() - 3);
 					giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorniTemp));
 					break;
@@ -906,7 +923,7 @@ public class Filtraggio {
 			public void focusLost(FocusEvent e) {
 				giornoFinBox.setModel(new DefaultComboBoxModel<String>(giorni));
 			}
-			
+
 		});
 		filtraggio.add(giornoFinBox);
 
@@ -940,6 +957,41 @@ public class Filtraggio {
 			}
 
 			public void mouseClicked(MouseEvent me) {
+
+				for (int i = 0; i < cBStatiVect.size(); i++) {
+					
+					String statoPaese = (String) cBStatiVect.elementAt(i).getSelectedItem();
+					if (!statoPaese.isEmpty() && !statoPaese.equals("Tutti Gli Stati")) {
+						statiGet.add(statoPaese.substring(0, statoPaese.indexOf(",")));
+						paesiGet.add(statoPaese.substring(statoPaese.length() - 2, statoPaese.length()));
+					}
+					
+				}
+				
+				for(int i = 0; i < cBGeneriVect.size(); i++) {
+					
+					String genere = (String) cBGeneriVect.elementAt(i).getSelectedItem();
+					if (!genere.isEmpty() && !genere.equals("Tutti I Generi")) {
+						generiGet.add(genere);
+					}
+					
+				}
+				
+				String dataInit = "";
+				dataInit += annoInitBox.getSelectedItem();
+				dataInit += meseInitBox.getSelectedItem();
+				dataInit += giornoInitBox.getSelectedItem();
+				
+				String dataFin = "";
+				dataFin += annoFinBox.getSelectedItem();
+				dataFin += meseFinBox.getSelectedItem();
+				dataFin += giornoFinBox.getSelectedItem();
+
+				periodoGet.add(dataInit);
+				periodoGet.add(dataFin);
+				
+				ChiamataEventi.chiamata(statiGet, paesiGet, generiGet, periodoGet);
+				
 				filtraggio.setVisible(false);
 				new Responso();
 			}
@@ -976,7 +1028,8 @@ public class Filtraggio {
 			}
 
 			public void mouseClicked(MouseEvent me) {
-
+				new Filtraggio();
+				filtraggio.setVisible(false);
 			}
 		});
 		filtraggio.add(svuota);
