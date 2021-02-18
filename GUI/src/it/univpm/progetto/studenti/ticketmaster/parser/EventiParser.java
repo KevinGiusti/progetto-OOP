@@ -111,7 +111,7 @@ public class EventiParser {
 			stats += "\n   -" + stati.elementAt(i) +
 					 ":\n      •" + "Minimo: " + minimi.elementAt(i) +
 					 "\n      •" + "Massimo: " + massimi.elementAt(i) +
-					 "\n      •" + "Media: " + medie.elementAt(i);
+					 "\n      •" + "Media: " + medie.elementAt(i) + "\n";
 		}
 		
 		String eventi = "\nEventi:\n";
