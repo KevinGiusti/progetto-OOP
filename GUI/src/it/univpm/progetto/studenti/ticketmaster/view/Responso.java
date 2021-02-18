@@ -64,6 +64,7 @@ public class Responso {
 		
 		risultato.setBackground(new Color(50, 50, 50));
 		risultato.setText(responsoText);
+		risultato.setCaretPosition(0);
 		risultato.setForeground(Color.WHITE);
 		risultato.setFont(new Font("Arial", Font.PLAIN, 20));
 		risultato.setMargin(new Insets(0, 50, 0, 0));
