@@ -148,7 +148,7 @@ In particolare, le richieste che l'utente può effettuare tramite Postman devono
 
 Inoltre, all' indirizzo `localhost:8080` inserito nella barra delle richieste di Postman, è necessario specificare metodo di trasferimento dati e rotta.
 ### Filtri e Stats Richiesti
-Poichè, nel documento descrittovo del progetto, è esplicitamente richiesto che:
+Poichè, nel documento descrittivo del progetto, è esplicitamente richiesto che:
 >L'applicazione deve permettere all'utente finale di: cercare gli eventi di un determinato stato, visualizzare delle statistiche per ogni stato di 
 Australia e Nuova Zelanda **con un'unica richiesta**
 
@@ -434,24 +434,24 @@ Ovvero, otteniamo un `JSONObject` contenente un `JSONArray` in cui ciascun eleme
 In particolare, è possibile osservare che, nella chiamata di tipo `HTTP GET` appena eseguita, vengono specificati tutti i parametri che che si intende ricevere in risposta dall'`API`
 
 ## Configurazione GUI
-La graphic User Interface dell'applicativo 'The Last of Events' presenta tre pagine principali, rispettivamente note come **Home**, **Filtering** e **Response**; in particolare, si ha che:
+La graphic User Interface dell'applicativo 'The Last of Events' presenta tre pagine principali, rispettivamente note come **Home**, **Filtraggio** e **Responso**; in particolare, si ha che:
 
 **Home**
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%201.png)
 
 La schermata Home è la prima pagina ad essere visualizzata dall'utente quando avvia la Filter-App; in particolare, essa presenta due `JButton`, rispettivamente noti come 'Entra' ed 'Exit', che propongono le seguenti funzionalità:
-* Entra: permette di accedere alla seconda schermata, nota come Filtering, in modo da poter selezionare i parametri del filtro che verrà imposto su Stati, generi e periodo personalizzato.
+* Entra: permette di accedere alla seconda schermata, nota come Filtraggio, in modo da poter selezionare i parametri del filtro che verrà imposto su Stati, generi e periodo personalizzato.
 * Exit: termina l'esecuzione del programma; ovviamente, se si clicca 'Exit', si imporrà la chiusura della sola parte `Front-End` dell'applicativo mentre, al contrario, il codice `Spring`  in `Back-End` su `Eclipse` continuerà la propria esecuzione fin quando non la si terminerà manualmente.
 
-**Filtering**
+**Filtraggio**
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%202.png)
 
 Nella seconda pagina, che è la schermata di Filtering, è possibile chiedere al programma sia di cercare e restituire gli eventi, che soddisfano i parametri inseriti nei  filtri relativi a Stati e generi, e sia di calcolare statistiche relative ad un periodo di tempo; è importante notare che, nel caso della `GUI`, l'opzione per la produzione di statistiche mensili non è implementata;
 
 Inoltre, in tale schermata, è possibile utilizzare i seguenti `JButton`:
-* Cerca: fornisce, alla schermata 'Response', i risultati filtrati mediante i paramentri inseriti
+* Cerca: fornisce, alla schermata 'Responso', i risultati filtrati mediante i paramentri inseriti
 * Svuota: permette resettare tutte le scelte compiute, ovvero tutti i parametri inseriti nei campi disponibili
 * Exit: pulsante che consente di terminare l'applicazione in esecuzione; è lo stesso `JButton` implementato nella schermata 'Home'
 * Home: permette di tornare alla prima schermata dell'App, ovvero reindirizza l'user alla schermata 'Home'
@@ -466,7 +466,7 @@ Inoltre, se si vogliono calcolare statistiche globali, è possibile scegliere, c
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%203.1.png)
 
-Infine, se si esegue una ricerca lasciando la ComboBox 'STATI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtering'.
+Infine, se si esegue una ricerca lasciando la ComboBox 'STATI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtraggio'.
 ___
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%204.0.png)
@@ -477,7 +477,7 @@ Inoltre, se si vogliono calcolare statistiche globali, è possibile scegliere, c
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%204.1.png)
 
-Infine, se si esegue una ricerca lasciando la ComboBox 'GENERI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtering'.
+Infine, se si esegue una ricerca lasciando la ComboBox 'GENERI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtraggio'.
 ___
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%205.png)
@@ -494,7 +494,7 @@ Inoltre, se si vogliono calcolare statistiche globali, è possibile scegliere, c
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%206.png)
 
-Infine, se si esegue una ricerca lasciando la ComboBox 'GENERI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtering'.
+Infine, se si esegue una ricerca lasciando la ComboBox 'GENERI' vuota, il risultato sarà un Popup di errore che imporrà all'utente di inserire almeno un parametro per ogni campo fornito dalla schermata 'Filtraggio'.
 
 **Eccezioni**
 
@@ -502,11 +502,11 @@ Infine, se si esegue una ricerca lasciando la ComboBox 'GENERI' vuota, il risult
 
 Se non ci sono eventi disponibili per i filtri Stati e Generi, viene visualizzato un popup che genera il messaggio: 'Errore, non ci sono eventi disponibili'
 
-**Response**
+**Responso**
 
 ![alt text](https://raw.githubusercontent.com/KevinGiusti/progetto-OOP/main/GUI/images/GUI%20README%20images/GUI%20-%20immagine%208.png)
 
-L'ultima schermata, nota come 'Response', che permette di visualizzare il risultato prodotto dai filtri inseriti nella schermata precedente e presenta il pulsante 'Nuova Ricerca' che permette di tornare alla schermata 'Filtering' per effettuare una nuova ricerca
+L'ultima schermata, nota come 'Responso', che permette di visualizzare il risultato prodotto dai filtri inseriti nella schermata precedente e presenta il pulsante 'Nuova Ricerca' che permette di tornare alla schermata 'Filtraggio' per effettuare una nuova ricerca
 
 
 ## JUnit Test
@@ -565,16 +565,16 @@ in sintesi, datesStatisticsTest() invoca il metodo assertEquals(), i cui paramet
 Ogni package, classe, attributo e metodo che costituisce il software 'The Last of Events' è interamente e completamente documentato attraverso l'utilizzo della JavaDoc;
 
 In particolare, per accedere alla documentazione tramite pagina HTML, è necessario seguire il percorso:
-`ticketmaster > doc > index-files > index-1.html`.
+`ticketmaster > doc > index.html`.
 
-Una volta aperta la pagina `index-1.html`, è possibile accedere alla documentazione dell'intero codice selezionando:
+Una volta aperta la pagina `index.html`, è possibile accedere alla documentazione dell'intero codice selezionando:
 * la voce `OVERVIEW` che descrive ogni package del progetto
 * la voce `TREE` che descrive la gerarchia delle classi del progetto
 * la voce `INDEX` che permette di cercare packages, classi, attributi e metodi in base al carattere iniziale selezionato
 * la voce `INDEX > All Classes` che descrive ogni classe del progetto
 * la voce `INDEX > All Classes > Exception Summary` che descrive la classe di gestione eccezioni del progetto
 
-Ovviamente, cliccando il nome di una qualsiasi classe nella pagina `index-1.html`, sarà possibile accedere ad informazioni quali metodi, attributi, package di appartenenza, metodo costruttore, autore della classe, ecc...
+Ovviamente, cliccando il nome di una qualsiasi classe nella pagina `index.html`, sarà possibile accedere ad informazioni quali metodi, attributi, package di appartenenza, metodo costruttore, autore della classe, ecc...
 
 ## Software Utilizzati
 La lista di software & tools impiegati per realizzare la Filter-App è la seguente:
@@ -597,7 +597,7 @@ La lista di software & tools impiegati per realizzare la Filter-App è la seguen
 * L'IDE [Spring Tool Suite 4](https://spring.io/tools), per lo sviluppo di applicazioni Spring
 * Il tool [Spring Web](https://spring.io/guides/gs/serving-web-content/), affinchè l'applicazione possa accettare richieste `HTTP` all'indirizzo `localhost:8080`
 * Il tool [Apache Maven](https://maven.apache.org/), per la definizione della struttura del progetto mediante il file `pom.xml` 
-* Il web server locale [Apache Tomat](https://spring.io/blog/2014/03/07/deploying-spring-boot-applications), per la gestione delle richieste `HTTP`
+* Il web server locale [Apache Tomcat](https://spring.io/blog/2014/03/07/deploying-spring-boot-applications), per la gestione delle richieste `HTTP`
 
 ## Autori
 La Filter-App 'The Last of Events' è stata sviluppata da:
