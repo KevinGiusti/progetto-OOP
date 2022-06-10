@@ -623,5 +623,5 @@ Kejvin Skiti | Sviluppo filtro generi, sviluppo statistica relativa al numero ma
  Gli sviluppatori</br>
  <i>Rocco Anzivino</i></br>
  <i>Kevin Giusti</i></br>
- <i>Kejvin Skiti</i></br>
+ <i>Kejvin Skiti  </i></br>
  </p>
